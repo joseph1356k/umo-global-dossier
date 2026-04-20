@@ -297,6 +297,8 @@ main {
 
 .scene-shell canvas {
   display: block;
+  opacity: 0.94;
+  filter: saturate(1.12) contrast(1.08);
 }
 
 .scene-fallback {
@@ -890,8 +892,42 @@ main {
   margin-bottom: 54px;
 }
 
+.delivery-card-grid .archive-case-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px 12px;
+  margin-bottom: 34px;
+}
+
+.delivery-card-grid .archive-case-row span:last-child {
+  text-align: right;
+}
+
 .archive-work-tile .tile-body h3 {
   font-size: 3rem;
+}
+
+.delivery-card-grid .archive-work-tile {
+  min-height: 500px;
+}
+
+.delivery-card-grid .archive-work-tile .tile-body h3 {
+  max-width: 100%;
+  font-size: clamp(2.35rem, 3vw, 4rem);
+  line-height: 0.9;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.delivery-card-grid .archive-work-tile .tile-body p {
+  max-width: 100%;
+  font-size: 1rem;
+  line-height: 1.52;
+}
+
+.delivery-card-grid .tile-tags {
+  align-self: end;
 }
 
 .archive-work-tile .tile-body p {
@@ -1030,15 +1066,24 @@ main {
   top: 74px;
   z-index: 4;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin: 14px 0;
   padding: 12px 0;
   background: rgba(5, 5, 5, 0.78);
   backdrop-filter: blur(12px);
 }
 
-.module-nav a {
+.delivery-nav-primary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.module-nav a,
+.module-nav-indicator {
   min-height: 38px;
   display: inline-flex;
   align-items: center;
@@ -1057,6 +1102,106 @@ main {
 
 .module-nav a.active {
   color: var(--paper);
+  border-color: var(--line-red);
+  background: rgba(226, 31, 51, 0.12);
+}
+
+.module-nav-indicator {
+  color: rgba(245, 242, 232, 0.62);
+  background: rgba(255, 255, 255, 0.02);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.work-jump-dropdown {
+  position: relative;
+  width: min(260px, 100%);
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.work-jump-trigger {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--paper);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.work-jump-trigger:hover,
+.work-jump-dropdown.is-open .work-jump-trigger {
+  border-color: var(--line-red);
+  background: rgba(226, 31, 51, 0.1);
+  transform: translateY(-1px);
+}
+
+.work-jump-copy {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.work-jump-copy span,
+.work-jump-panel a span {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.work-jump-copy small,
+.work-jump-panel a small {
+  color: rgba(245, 242, 232, 0.64);
+  font-size: 0.86rem;
+}
+
+.work-jump-trigger svg {
+  transition: transform 180ms ease;
+}
+
+.work-jump-dropdown.is-open .work-jump-trigger svg {
+  transform: rotate(180deg);
+}
+
+.work-jump-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(360px, 100vw - 48px);
+  z-index: 8;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line-red);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(226, 31, 51, 0.08), transparent 45%),
+    rgba(5, 5, 5, 0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.38);
+}
+
+.work-jump-panel a {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.work-jump-panel a:hover,
+.work-jump-panel a.active {
   border-color: var(--line-red);
   background: rgba(226, 31, 51, 0.12);
 }
@@ -1992,6 +2137,16 @@ main {
   .module-head p {
     grid-column: auto;
   }
+
+  .module-nav {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .work-jump-dropdown {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 @media (max-width: 760px) {
@@ -2129,6 +2284,15 @@ main {
     backdrop-filter: none;
   }
 
+  .delivery-nav-primary {
+    width: 100%;
+  }
+
+  .module-nav-indicator {
+    width: 100%;
+    justify-content: center;
+  }
+
   .delivery-cover {
     min-height: 300px;
     padding: 20px;
@@ -2168,6 +2332,10 @@ main {
 
   .archive-work-tile .tile-body h3 {
     font-size: 2.35rem;
+  }
+
+  .delivery-card-grid .archive-work-tile .tile-body h3 {
+    font-size: clamp(2rem, 10vw, 2.9rem);
   }
 
   .archive-case-row {

@@ -1101,6 +1101,80 @@ function DeliveryFilterDropdown({
   );
 }
 
+function WorkJumpDropdown({
+  delivery,
+  locale,
+  activeModule,
+}: {
+  delivery: Delivery;
+  locale: Locale;
+  activeModule?: WorkModule | null;
+}) {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  if (delivery.modules.length === 0) return null;
+
+  return (
+    <div className={`work-jump-dropdown${open ? " is-open" : ""}`} ref={dropdownRef}>
+      <button
+        type="button"
+        className="work-jump-trigger"
+        onClick={() => setOpen((current) => !current)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      >
+        <div className="work-jump-copy">
+          <span>{activeModule ? activeModule.title[locale] : locale === "es" ? "Ir a un trabajo" : "Open a work"}</span>
+          <small>
+            {activeModule
+              ? activeModule.eyebrow[locale]
+              : locale === "es"
+                ? `${delivery.modules.length} trabajos disponibles`
+                : `${delivery.modules.length} works available`}
+          </small>
+        </div>
+        <ChevronDown size={16} />
+      </button>
+
+      {open && (
+        <div className="work-jump-panel" role="listbox" aria-label={locale === "es" ? "Selector de trabajo" : "Work selector"}>
+          {delivery.modules.map((module) => (
+            <Link
+              key={module.id}
+              className={activeModule?.id === module.id ? "active" : ""}
+              to={`/entregas/${delivery.id}/trabajos/${module.id}`}
+              onClick={() => setOpen(false)}
+            >
+              <span>{module.title[locale]}</span>
+              <small>{module.eyebrow[locale]}</small>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DeliveriesArchive({ locale }: { locale: Locale }) {
   const [deliveryFilter, setDeliveryFilter] = useState("all");
   const [workFilter, setWorkFilter] = useState("all");
@@ -1257,23 +1331,30 @@ function DeliveryHeader({
 function DeliveryContentNav({
   delivery,
   locale,
+  currentView,
+  activeModule,
 }: {
   delivery: Delivery;
   locale: Locale;
+  currentView: "overview" | "compilation" | "module";
+  activeModule?: WorkModule | null;
 }) {
   return (
     <nav className="module-nav delivery-content-nav" aria-label={locale === "es" ? "Vistas de la entrega" : "Delivery views"}>
-      <NavLink end to={`/entregas/${delivery.id}`}>
-        {locale === "es" ? "Trabajos" : "Works"}
-      </NavLink>
-      <NavLink to={`/entregas/${delivery.id}/${PRESENTATION_VIEW_ID}`}>
-        {locale === "es" ? "Recopilacion" : "Compilation"}
-      </NavLink>
-      {delivery.modules.map((module) => (
-        <NavLink key={module.id} to={`/entregas/${delivery.id}/trabajos/${module.id}`}>
-          {module.title[locale]}
+      <div className="delivery-nav-primary">
+        <NavLink end to={`/entregas/${delivery.id}`}>
+          {locale === "es" ? "Trabajos" : "Works"}
         </NavLink>
-      ))}
+        <NavLink to={`/entregas/${delivery.id}/${PRESENTATION_VIEW_ID}`}>
+          {locale === "es" ? "Recopilacion" : "Compilation"}
+        </NavLink>
+        {currentView === "module" && activeModule ? (
+          <span className="module-nav-indicator">
+            {locale === "es" ? "Actual" : "Current"} / {activeModule.title[locale]}
+          </span>
+        ) : null}
+      </div>
+      <WorkJumpDropdown delivery={delivery} locale={locale} activeModule={activeModule} />
     </nav>
   );
 }
@@ -1358,6 +1439,8 @@ function DeliveryWorkspaceShell({
   subtitle,
   eyebrow,
   tags,
+  currentView,
+  activeModule,
 }: {
   delivery: Delivery;
   locale: Locale;
@@ -1366,13 +1449,15 @@ function DeliveryWorkspaceShell({
   subtitle: string;
   eyebrow: string;
   tags: string[];
+  currentView: "overview" | "compilation" | "module";
+  activeModule?: WorkModule | null;
 }) {
   return (
     <main className="delivery-workspace">
       <DeliveriesSidebar activeDelivery={delivery} locale={locale} />
       <section className="delivery-main">
         <DeliveryHeader title={title} subtitle={subtitle} eyebrow={eyebrow} tags={tags} />
-        <DeliveryContentNav delivery={delivery} locale={locale} />
+        <DeliveryContentNav delivery={delivery} locale={locale} currentView={currentView} activeModule={activeModule} />
         {children}
       </section>
     </main>
@@ -1391,6 +1476,7 @@ function DeliveryOverview({ locale }: { locale: Locale }) {
       title={activeDelivery.title[locale]}
       subtitle={activeDelivery.summary[locale]}
       tags={activeDelivery.tags}
+      currentView="overview"
     >
       <DeliveryCardGrid delivery={activeDelivery} locale={locale} />
     </DeliveryWorkspaceShell>
@@ -1413,6 +1499,7 @@ function DeliveryPresentation({ locale }: { locale: Locale }) {
           : "This is the only card meant to view the whole delivery together. It walks through every work in one continuous presentation."
       }
       tags={[...activeDelivery.tags, "presentation"]}
+      currentView="compilation"
     >
       {activeDelivery.modules.length > 0 ? (
         <div className="module-stack">
@@ -1451,6 +1538,7 @@ function DeliveryWorkPage({ locale }: { locale: Locale }) {
         title={activeDelivery.title[locale]}
         subtitle={activeDelivery.summary[locale]}
         tags={activeDelivery.tags}
+        currentView="module"
       >
         <div className="archive-empty delivery-empty">
           <span>{locale === "es" ? "Trabajo no encontrado" : "Work not found"}</span>
@@ -1472,6 +1560,8 @@ function DeliveryWorkPage({ locale }: { locale: Locale }) {
       title={activeModule.title[locale]}
       subtitle={activeModule.summary[locale]}
       tags={getModuleTags(activeModule.id)}
+      currentView="module"
+      activeModule={activeModule}
     >
       <div className="module-stack single-module-stack">
         <WorkModuleView module={activeModule} locale={locale} />

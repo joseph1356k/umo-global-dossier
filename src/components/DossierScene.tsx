@@ -33,8 +33,17 @@ function ArchiveObject({ motion }: { motion: React.MutableRefObject<SceneMotion>
     }
     return new Float32Array(vertices);
   }, []);
+  const frameLayers = useMemo(
+    () => [
+      { position: [-1.6, 0.72, -1.6], rotation: [0.12, 0.88, -0.08], size: [0.78, 0.52, 0.03], color: "#151515", opacity: 0.34 },
+      { position: [1.45, -0.58, -1.1], rotation: [-0.18, -0.62, 0.12], size: [0.92, 0.58, 0.03], color: "#1b0709", opacity: 0.28 },
+      { position: [-0.84, -0.95, -0.4], rotation: [0.16, 0.34, -0.18], size: [0.88, 0.56, 0.04], color: "#111111", opacity: 0.42 },
+      { position: [1.18, 0.96, 0.46], rotation: [0.2, -0.44, 0.18], size: [0.72, 0.46, 0.03], color: "#24070b", opacity: 0.5 },
+    ],
+    [],
+  );
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!group.current) return;
 
     const sceneMotion = motion.current;
@@ -52,10 +61,33 @@ function ArchiveObject({ motion }: { motion: React.MutableRefObject<SceneMotion>
 
     group.current.rotation.y = sceneMotion.currentY;
     group.current.rotation.x = sceneMotion.currentX;
+    group.current.position.x += (sceneMotion.hoverX * 0.42 - group.current.position.x) * 0.06;
+    group.current.position.y += (-sceneMotion.hoverY * 0.28 - group.current.position.y) * 0.06;
+    group.current.position.z += (Math.sin(sceneMotion.currentY * 0.65) * 0.18 - group.current.position.z) * 0.08;
+    group.current.scale.setScalar(1 + Math.abs(sceneMotion.hoverX) * 0.025);
+
+    state.camera.position.x += (sceneMotion.hoverX * 0.55 - state.camera.position.x) * 0.035;
+    state.camera.position.y += (0.18 - sceneMotion.hoverY * 0.38 - state.camera.position.y) * 0.035;
+    state.camera.position.z += (5.25 + Math.abs(sceneMotion.hoverX) * 0.18 - state.camera.position.z) * 0.04;
+    state.camera.lookAt(0, 0, 0);
   });
 
   return (
     <group ref={group}>
+      <mesh rotation={[Math.PI / 2, 0.28, 0]} position={[0, 0, -2.4]}>
+        <torusGeometry args={[3.7, 0.004, 8, 112]} />
+        <meshBasicMaterial color="#f5f2e8" transparent opacity={0.08} />
+      </mesh>
+      {frameLayers.map((layer, index) => (
+        <mesh
+          key={`${layer.position.join("-")}-${index}`}
+          position={layer.position as [number, number, number]}
+          rotation={layer.rotation as [number, number, number]}
+        >
+          <boxGeometry args={layer.size as [number, number, number]} />
+          <meshBasicMaterial color={layer.color} transparent opacity={layer.opacity} />
+        </mesh>
+      ))}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[1.35, 0.008, 10, 72]} />
         <meshBasicMaterial color="#e21f33" transparent opacity={0.85} />
@@ -76,17 +108,21 @@ function ArchiveObject({ motion }: { motion: React.MutableRefObject<SceneMotion>
         <boxGeometry args={[1.25, 0.78, 0.03]} />
         <meshBasicMaterial color="#2b090c" transparent opacity={0.9} />
       </mesh>
+      <mesh position={[-0.08, -0.08, -0.08]}>
+        <boxGeometry args={[1.32, 0.84, 0.02]} />
+        <meshBasicMaterial color="#f5f2e8" transparent opacity={0.06} />
+      </mesh>
       <lineSegments>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[points, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color="#e21f33" transparent opacity={0.28} />
+        <lineBasicMaterial color="#e21f33" transparent opacity={0.34} />
       </lineSegments>
       <points>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[points, 3]} />
         </bufferGeometry>
-        <pointsMaterial color="#f5f2e8" size={0.018} transparent opacity={0.86} />
+        <pointsMaterial color="#f5f2e8" size={0.02} transparent opacity={0.92} />
       </points>
     </group>
   );
