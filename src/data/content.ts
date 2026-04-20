@@ -183,6 +183,18 @@ export const documents: DocumentItem[] = [
     actionLabel: { es: "Ir al Canva", en: "Open Canva" },
   },
   {
+    id: "canva-dofa",
+    type: "external",
+    title: { es: "DOFA en Canva", en: "SWOT in Canva" },
+    description: {
+      es: "Enlace externo del material editable o visual de la matriz DOFA.",
+      en: "External editable or visual link for the SWOT matrix material.",
+    },
+    href: "https://canva.link/yyqciefr16q7ji7",
+    category: { es: "Canva", en: "Canva" },
+    actionLabel: { es: "Abrir Canva DOFA", en: "Open SWOT Canva" },
+  },
+  {
     id: "umo-website",
     type: "external",
     title: { es: "Web oficial UMO", en: "Official UMO website" },
@@ -508,7 +520,7 @@ export const deliveries: Delivery[] = [
           { es: "Debilidad central: baja visibilidad digital y falta de CRM.", en: "Core weakness: low digital visibility and lack of CRM." },
           { es: "Oportunidad central: expansion geografica y captacion B2B.", en: "Core opportunity: geographic expansion and B2B lead generation." },
         ],
-        documents: [documents[4]],
+        documents: [documents[4], documents[6]],
       },
       {
         id: "thermo-seats-smart",
@@ -538,7 +550,7 @@ export const deliveries: Delivery[] = [
           { es: "Medible: rango de precio USD 180-220 y capacidad inicial de 1.000-1.500 sillas mensuales.", en: "Measurable: USD 180-220 price range and initial capacity of 1,000-1,500 seats per month." },
           { es: "Relevante: reduce fatiga y mejora confort del operario de paisajismo.", en: "Relevant: reduces fatigue and improves comfort for landscaping operators." },
         ],
-        documents: [documents[7]],
+        documents: [documents[8]],
       },
       {
         id: "sostenibilidad-viabilidad",
@@ -568,7 +580,7 @@ export const deliveries: Delivery[] = [
           { es: "Georgia: hub logistico por el puerto de Savannah.", en: "Georgia: logistics hub through the Port of Savannah." },
           { es: "Competencia: Milsco y Grammer AG dominan OEM, pero sus repuestos originales son costosos.", en: "Competition: Milsco and Grammer AG dominate OEM, but original spare parts are expensive." },
         ],
-        documents: [documents[7]],
+        documents: [documents[8]],
       },
     ],
   },
@@ -584,30 +596,7 @@ export const deliveries: Delivery[] = [
       en: "Prepared space for upcoming sources: market, competition, channels, pricing, interviews and commercial evidence.",
     },
     tags: ["market", "research", "pricing"],
-    modules: [
-      {
-        id: "mercado-eeuu",
-        type: "text",
-        eyebrow: { es: "Trabajo pendiente", en: "Pending work" },
-        title: { es: "Mercado de Estados Unidos", en: "U.S. market" },
-        summary: {
-          es: "Modulo reservado para organizar datos de demanda, segmentos, competidores y canales cuando llegue la siguiente entrega.",
-          en: "Reserved module to organize demand data, segments, competitors and channels when the next delivery arrives.",
-        },
-        body: [
-          {
-            es: "La estructura ya acepta resumen, interpretacion, graficas, tablas, archivos originales y enlaces externos para mantener ordenado el crecimiento del dossier.",
-            en: "The structure already accepts summary, interpretation, charts, tables, original files and external links to keep the dossier organized as it grows.",
-          },
-        ],
-        highlights: [
-          { es: "Listo para reportes de mercado.", en: "Ready for market reports." },
-          { es: "Listo para graficas y capturas.", en: "Ready for charts and screenshots." },
-          { es: "Listo para fuentes externas.", en: "Ready for external sources." },
-        ],
-        documents: [],
-      },
-    ],
+    modules: [],
   },
   {
     id: "entrega-3",
@@ -621,49 +610,7 @@ export const deliveries: Delivery[] = [
       en: "Folder prepared for upcoming work: actions, indicators, timeline, budget, charts and new documents.",
     },
     tags: ["execution", "timeline", "budget"],
-    modules: [
-      {
-        id: "plan-accion",
-        type: "text",
-        eyebrow: { es: "Trabajo pendiente", en: "Pending work" },
-        title: { es: "Plan de accion", en: "Action plan" },
-        summary: {
-          es: "Modulo reservado para convertir la estrategia en acciones, responsables, indicadores y fechas.",
-          en: "Reserved module to turn strategy into actions, owners, indicators and dates.",
-        },
-        body: [
-          {
-            es: "Cuando llegue el documento, este espacio recibira el texto extraido, la version editorial y los botones al archivo original.",
-            en: "When the document arrives, this space will receive extracted text, an editorial version and buttons to the original file.",
-          },
-        ],
-        highlights: [
-          { es: "Listo para texto, PDF, graficas o link externo.", en: "Ready for text, PDF, charts or external link." },
-        ],
-        documents: [],
-      },
-      {
-        id: "indicadores-ejecucion",
-        type: "visual",
-        eyebrow: { es: "Trabajo pendiente", en: "Pending work" },
-        title: { es: "Indicadores de ejecucion", en: "Execution indicators" },
-        summary: {
-          es: "Modulo preparado para interpretar capturas, tablas, presupuestos o diagnosticos futuros.",
-          en: "Module prepared to interpret future screenshots, tables, budgets or diagnostics.",
-        },
-        body: [
-          {
-            es: "El sistema ya acepta resumen, lectura corta, archivos originales y enlaces externos para que la entrega crezca sin cambiar arquitectura.",
-            en: "The system already accepts summary, short reading, original files and external links so the delivery can grow without changing architecture.",
-          },
-        ],
-        highlights: [
-          { es: "Escalable para nuevas entregas.", en: "Scalable for new submissions." },
-          { es: "Separacion clara entre interpretacion y fuente.", en: "Clear separation between interpretation and source." },
-        ],
-        documents: [],
-      },
-    ],
+    modules: [],
   },
 ];
 

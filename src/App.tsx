@@ -12,7 +12,7 @@ import {
   PanelLeft,
   X,
 } from "lucide-react";
-import { Suspense, lazy, useEffect, useMemo, useState } from "react";
+import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
 import {
@@ -28,9 +28,7 @@ import {
 } from "./data/content";
 import { type Locale } from "./i18n/copy";
 
-const DossierScene = lazy(() =>
-  import("./components/DossierScene").then((module) => ({ default: module.DossierScene })),
-);
+const DossierScene = lazy(() => import("./components/DossierScene"));
 
 const iconByType = {
   pdf: FileText,
@@ -87,11 +85,31 @@ const archiveItems: ArchiveItem[] = deliveries.flatMap((delivery) =>
   })),
 );
 
-const archiveTags = Array.from(new Set(archiveItems.flatMap((item) => item.tags))).sort();
-
 function getDocumentCountLabel(count: number, locale: Locale) {
   if (count === 1) return locale === "es" ? "1 documento" : "1 document";
   return locale === "es" ? `${count} documentos` : `${count} documents`;
+}
+
+function useDeferredDesktopScene() {
+  const [shouldLoadScene, setShouldLoadScene] = useState(false);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactViewport = window.matchMedia("(max-width: 760px)").matches;
+    if (prefersReducedMotion || compactViewport) return;
+
+    const loadScene = () => setShouldLoadScene(true);
+    const scheduleIdle = window.requestIdleCallback;
+    if (typeof scheduleIdle === "function") {
+      const idleId = scheduleIdle(loadScene, { timeout: 1200 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timer = setTimeout(loadScene, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return shouldLoadScene;
 }
 
 function useBackendSnapshot() {
@@ -137,7 +155,7 @@ function Loader() {
           <motion.i
             initial={{ width: "8%" }}
             animate={{ width: "100%" }}
-            transition={{ duration: 1.35, ease: "easeInOut" }}
+            transition={{ duration: 0.95, ease: "easeInOut" }}
           />
         </div>
         <small>MEDELLIN, ANTIOQUIA / ESIC / USA SIGNAL TRACE</small>
@@ -213,12 +231,16 @@ function Header({
 function CompanyHero({ locale, backend }: { locale: Locale; backend: BackendSnapshot }) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 800], [0, 80]);
+  const shouldLoadScene = useDeferredDesktopScene();
 
   return (
     <section className="hero company-hero">
-      <Suspense fallback={<div className="scene-shell scene-fallback" />}>
-        <DossierScene />
-      </Suspense>
+      <div className="scene-shell scene-fallback" />
+      {shouldLoadScene && (
+        <Suspense fallback={null}>
+          <DossierScene />
+        </Suspense>
+      )}
       <div className="scan-layer" />
       <motion.div className="hero-meta" style={{ y }}>
         <span>COMPANY PROFILE // INTERNATIONAL DOSSIER</span>
@@ -511,8 +533,8 @@ function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Loca
               <div className="metric-track">
                 <motion.i
                   className={`tone-${metric.tone}`}
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${metric.value}%` }}
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: metric.value / 100 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 />
@@ -564,12 +586,11 @@ function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale
   return <GenericModule module={module} locale={locale} />;
 }
 
-function ArchiveWorkTile({ item, locale }: { item: ArchiveItem; locale: Locale }) {
+const ArchiveWorkTile = memo(function ArchiveWorkTile({ item, locale }: { item: ArchiveItem; locale: Locale }) {
   const { delivery, module, tags } = item;
 
   return (
     <motion.article
-      layout
       className="delivery-tile archive-work-tile"
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
@@ -598,76 +619,66 @@ function ArchiveWorkTile({ item, locale }: { item: ArchiveItem; locale: Locale }
       </div>
     </motion.article>
   );
-}
+});
 
 function DeliveriesArchive({ locale }: { locale: Locale }) {
-  const [deliveryFilter, setDeliveryFilter] = useState("all");
-  const [tagFilter, setTagFilter] = useState("all");
+  const [workFilter, setWorkFilter] = useState("all");
+  const [isPending, startTransition] = useTransition();
+  const deferredWorkFilter = useDeferredValue(workFilter);
 
   const filteredItems = useMemo(
     () =>
       archiveItems.filter((item) => {
-        const deliveryMatches = deliveryFilter === "all" || item.delivery.id === deliveryFilter;
-        const tagMatches = tagFilter === "all" || item.tags.includes(tagFilter);
-        return deliveryMatches && tagMatches;
+        return deferredWorkFilter === "all" || item.module.id === deferredWorkFilter;
       }),
-    [deliveryFilter, tagFilter],
+    [deferredWorkFilter],
   );
 
+  const selectWorkFilter = (filter: string) => {
+    startTransition(() => setWorkFilter(filter));
+  };
+
   return (
-    <main className="archive-board-page">
+    <main className="archive-board-page" aria-busy={isPending}>
       <SectionIntro
         eyebrow="DOSSIER ARCHIVE / WORK BOARD"
         title={locale === "es" ? "Archivo de entregas" : "Delivery archive"}
         subtitle={
           locale === "es"
-            ? "Todos los trabajos viven en una vista filtrable. Puedes leer el archivo completo, separar por entrega o entrar al detalle de cada carpeta."
-            : "All work lives in one filterable view. Read the full archive, filter by delivery or open each folder in detail."
+            ? "Entrega 01 concentra los trabajos cargados: equipo, planeacion, diagnostico, Canvas, DOFA, SMART y sostenibilidad."
+            : "Delivery 01 contains the loaded work: team, planning, diagnostic, Canvas, SWOT, SMART and sustainability."
         }
       />
 
       <div className="archive-filter-group">
-        <span className="filter-label">{locale === "es" ? "Filtrar por entrega" : "Filter by delivery"}</span>
-        <div className="filter-strip archive-filter-strip archive-delivery-filters">
+        <span className="filter-label">{locale === "es" ? "Filtrar por trabajo" : "Filter by work"}</span>
+        <div className="filter-strip archive-filter-strip archive-work-filters">
           <button
-            className={deliveryFilter === "all" ? "active" : ""}
-            onClick={() => setDeliveryFilter("all")}
+            className={workFilter === "all" ? "active" : ""}
+            onClick={() => selectWorkFilter("all")}
           >
             Todo
           </button>
-          {deliveries.map((delivery) => (
+          {archiveItems.map((item) => (
             <button
-              key={delivery.id}
-              className={deliveryFilter === delivery.id ? "active" : ""}
-              onClick={() => setDeliveryFilter(delivery.id)}
+              key={item.module.id}
+              className={workFilter === item.module.id ? "active" : ""}
+              onClick={() => selectWorkFilter(item.module.id)}
             >
-              {delivery.code}
+              <span>{item.module.eyebrow[locale]}</span>
+              <strong>{item.module.title[locale]}</strong>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="archive-filter-group">
-        <span className="filter-label">{locale === "es" ? "Filtrar por tipo" : "Filter by type"}</span>
-        <div className="filter-strip archive-filter-strip archive-tag-filters">
-          <button className={tagFilter === "all" ? "active" : ""} onClick={() => setTagFilter("all")}>
-            Todo
-          </button>
-          {archiveTags.map((tag) => (
-            <button key={tag} className={tagFilter === tag ? "active" : ""} onClick={() => setTagFilter(tag)}>
-              {tag}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <motion.div layout className="archive-work-grid">
-        <AnimatePresence mode="popLayout">
+      <div className="archive-work-grid">
+        <AnimatePresence initial={false}>
           {filteredItems.map((item) => (
             <ArchiveWorkTile key={`${item.delivery.id}-${item.module.id}`} item={item} locale={locale} />
           ))}
         </AnimatePresence>
-      </motion.div>
+      </div>
 
       {filteredItems.length === 0 && (
         <div className="archive-empty">
@@ -734,18 +745,31 @@ function DeliveryWorkspace({ locale }: { locale: Locale }) {
             ))}
           </div>
         </div>
-        <nav className="module-nav" aria-label={locale === "es" ? "Trabajos internos" : "Internal work"}>
-          {activeDelivery.modules.map((module) => (
-            <a key={module.id} href={`#${module.id}`}>
-              {module.title[locale]}
-            </a>
-          ))}
-        </nav>
-        <div className="module-stack">
-          {activeDelivery.modules.map((module) => (
-            <WorkModuleView key={module.id} module={module} locale={locale} />
-          ))}
-        </div>
+        {activeDelivery.modules.length > 0 ? (
+          <>
+            <nav className="module-nav" aria-label={locale === "es" ? "Trabajos internos" : "Internal work"}>
+              {activeDelivery.modules.map((module) => (
+                <a key={module.id} href={`#${module.id}`}>
+                  {module.title[locale]}
+                </a>
+              ))}
+            </nav>
+            <div className="module-stack">
+              {activeDelivery.modules.map((module) => (
+                <WorkModuleView key={module.id} module={module} locale={locale} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="archive-empty delivery-empty">
+            <span>{locale === "es" ? "Sin trabajos cargados" : "No work loaded"}</span>
+            <p>
+              {locale === "es"
+                ? "Esta entrega queda como carpeta futura. Cuando subas archivos, apareceran aqui como modulos internos."
+                : "This delivery remains as a future folder. When files are uploaded, they will appear here as internal modules."}
+            </p>
+          </div>
+        )}
       </section>
     </main>
   );
@@ -757,7 +781,7 @@ function App() {
   const backend = useBackendSnapshot();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 1550);
+    const timer = window.setTimeout(() => setLoading(false), 950);
     return () => window.clearTimeout(timer);
   }, []);
 
