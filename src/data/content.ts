@@ -415,14 +415,53 @@ export const deliveries: Delivery[] = [
             en: "Shared purpose: turn individual skills into a strategic advantage, working with commitment and mutual respect to lead the core project and turn each challenge into shared learning.",
           },
           {
-            es: "La comunicacion se sostiene con daily updates martes y miercoles, grupo de WhatsApp para monitorear tareas y revision de comentarios para mejorar la calidad de cada entrega.",
-            en: "Communication is supported through Tuesday and Wednesday daily updates, a WhatsApp group to monitor tasks and review of feedback to improve each delivery.",
+            es: "Daily Update: cada martes y miercoles, antes de clase, el equipo reserva cinco minutos para responder tres preguntas base: en que estoy, que me falta y que se debe mejorar. Ese microcorte evita atrasos silenciosos y permite detectar bloqueos rapido.",
+            en: "Daily update: every Tuesday and Wednesday, before class, the team reserves five minutes to answer three core questions: what I am working on, what is missing and what needs improvement. That short checkpoint avoids silent delays and catches blockers early.",
+          },
+          {
+            es: "Grupo WhatsApp: se usa para coordinar tareas, avisar cambios, confirmar avances y sostener el seguimiento fuera del aula. Tambien funciona como canal para revisar comentarios sobre la empresa y convertirlos en mejoras concretas en las entregas.",
+            en: "WhatsApp group: it is used to coordinate tasks, report changes, confirm progress and keep follow-up active outside the classroom. It also works as a channel to review company feedback and convert it into concrete delivery improvements.",
+          },
+          {
+            es: "Retroalimentacion: durante el nucleo el grupo hace reuniones cortas cada semana para revisar que funciono, que no funciono y que debe corregirse. La opinion del profesor entra como criterio de ajuste rapido, no como comentario aislado.",
+            en: "Feedback: during the project the group holds short weekly meetings to review what worked, what did not and what needs correction. The professor's opinion is treated as a rapid adjustment criterion, not as isolated feedback.",
+          },
+          {
+            es: "Reglas de trabajo: cumplir tareas en los tiempos acordados, mantener una comunicacion clara y respetuosa, participar activamente en las reuniones, asumir responsabilidad individual, ser puntuales y apoyar a los demas cuando una parte del trabajo se atrasa.",
+            en: "Work rules: complete tasks on the agreed deadlines, keep communication clear and respectful, participate actively in meetings, assume individual ownership, be punctual and support others whenever a part of the work falls behind.",
+          },
+          {
+            es: "Consecuencias: primero hay llamado de atencion y oportunidad de corregir. Si el incumplimiento continua, la tarea puede reasignarse, se reduce la participacion en decisiones y queda registro para informar al docente. Cuando una falta afecta de forma directa una entrega, tambien puede impactar la evaluacion individual.",
+            en: "Consequences: first there is a warning and a chance to correct it. If the failure continues, the task can be reassigned, participation in decisions is reduced and a record is kept to inform the teacher. When a fault directly affects a delivery, it can also impact the individual grade.",
+          },
+          {
+            es: "Lectura de fortalezas iniciales: Thomas registro 89.8%, Agustin 93.2% y Maria Fernanda 73.1% en la prueba de entrada. El documento los interpreta como perfiles utiles para investigacion, precision estrategica, operacion y detalle, dejando claro que el equipo debe mezclar velocidad con rigor.",
+            en: "Initial strengths reading: Thomas scored 89.8%, Agustin 93.2% and Maria Fernanda 73.1% on the entry test. The document reads those results as useful profiles for research, strategic precision, operations and detail, making it clear that the team must combine speed with rigor.",
+          },
+          {
+            es: "Planeacion semanal derivada del acuerdo: lunes se definen objetivos y tiempos, de lunes a jueves se produce, el miercoles se revisa a mitad de semana, el jueves se integran aportes y el viernes se hace cierre y mejora. El acuerdo no es solo normativo: estructura la forma real de trabajar.",
+            en: "Weekly planning derived from the agreement: Monday defines goals and timing, Monday through Thursday is production time, Wednesday is a midweek review, Thursday is for integration and Friday is for closing and improvement. The agreement is not just normative: it structures the real work model.",
+          },
+          {
+            es: "Regla critica del archivo original: si alguien no entrega su parte y compromete el resultado del grupo, esa persona puede quedar fuera del trabajo puntual. Esa clausula vuelve visible que la responsabilidad no es simbolica sino operativa.",
+            en: "Critical rule from the original file: if someone does not deliver their part and compromises the group result, that person can be removed from that specific work. That clause makes it clear that responsibility is operational, not symbolic.",
+          },
+          {
+            es: "Este modulo ya no deja el archivo aislado: el texto central del acuerdo queda pegado dentro del dossier para que la entrega se lea como una pagina de trabajo, no solo como un PDF adjunto.",
+            en: "This module no longer leaves the file isolated: the core agreement text is embedded inside the dossier so the delivery reads as a working page, not just as an attached PDF.",
+          },
+          {
+            es: "La comunicacion se sostiene con daily updates, grupo de WhatsApp y revision de comentarios para mejorar la calidad de cada entrega.",
+            en: "Communication is supported through daily updates, a WhatsApp group and review of feedback to improve the quality of each delivery.",
           },
         ],
         highlights: [
-          { es: "Feedback semanal con ajustes rapidos.", en: "Weekly feedback with fast adjustments." },
-          { es: "Reglas: responsabilidad, puntualidad, respeto y apoyo entre integrantes.", en: "Rules: ownership, punctuality, respect and support between members." },
-          { es: "Consecuencia progresiva: llamado de atencion, reasignacion, registro e informe al docente.", en: "Progressive consequence: warning, reassignment, record and teacher notification." },
+          { es: "Daily Update fijo: martes y miercoles, cinco minutos antes de clase.", en: "Fixed daily update: Tuesday and Wednesday, five minutes before class." },
+          { es: "Canal operativo: WhatsApp para tareas, seguimiento y alertas.", en: "Operational channel: WhatsApp for tasks, follow-up and alerts." },
+          { es: "Feedback semanal con reuniones cortas y ajustes rapidos.", en: "Weekly feedback through short meetings and quick adjustments." },
+          { es: "Reglas: responsabilidad, puntualidad, respeto, participacion y apoyo entre integrantes.", en: "Rules: ownership, punctuality, respect, participation and support between members." },
+          { es: "Consecuencia progresiva: llamado de atencion, correccion, reasignacion y reporte al docente.", en: "Progressive consequence: warning, correction, reassignment and teacher report." },
+          { es: "Prueba de entrada: Thomas 89.8%, Agustin 93.2%, Maria Fernanda 73.1%.", en: "Entry test: Thomas 89.8%, Agustin 93.2%, Maria Fernanda 73.1%." },
         ],
         documents: [documents[0]],
       },
@@ -470,6 +509,14 @@ export const deliveries: Delivery[] = [
             es: "Las brechas principales estan en talento humano, licencias y franquicias, exportacion de servicios, inversion extranjera directa, tecnologia e innovacion y modos de entrada.",
             en: "The main gaps are talent, licenses and franchises, service exports, foreign direct investment, technology and innovation, and entry modes.",
           },
+          {
+            es: "La lectura del Excel no se queda en el porcentaje total. Dentro del dossier se usa para separar lo que UMO ya tiene resuelto de lo que debe construir antes de entrar a Estados Unidos: estructura comercial, innovacion, conocimiento de modos de entrada y fortalecimiento del frente humano.",
+            en: "The spreadsheet reading does not stop at the total score. Inside the dossier it is used to separate what UMO already has in place from what still needs to be built before entering the United States: commercial structure, innovation, entry mode knowledge and stronger human talent systems.",
+          },
+          {
+            es: "El valor real del diagnostico es priorizar. La hoja deja claro que no basta con tener producto y alianzas; tambien hace falta cerrar brechas en tecnologia, servicios y expansion internacional para no entrar al mercado con una base incompleta.",
+            en: "The real value of the diagnostic is prioritization. The sheet makes clear that having product and alliances is not enough; gaps in technology, services and international expansion also need to be closed to avoid entering the market with an incomplete base.",
+          },
         ],
         highlights: [
           { es: "Puntaje total del diagnostico: 40.03%.", en: "Total diagnostic score: 40.03%." },
@@ -492,6 +539,14 @@ export const deliveries: Delivery[] = [
             es: "El archivo visual no queda como captura suelta: se convierte en una matriz navegable que explica como UMO podria vender sillines para podadoras en Estados Unidos.",
             en: "The visual file is not left as a loose screenshot: it becomes a navigable matrix explaining how UMO could sell mower seats in the United States.",
           },
+          {
+            es: "La reconstruccion aclara el modelo en lenguaje operativo: socios para importar y distribuir, actividades ligadas a produccion y mejora del producto, propuesta de valor centrada en durabilidad y ergonomia, y canales B2B para mover volumen con rapidez.",
+            en: "The reconstruction clarifies the model in operational language: partners to import and distribute, activities tied to production and product improvement, a value proposition centered on durability and ergonomics, and B2B channels to move volume quickly.",
+          },
+          {
+            es: "Tambien deja visible que el Canvas no es solo una imagen bonita. Sirve para enlazar cliente, canal, costo e ingreso con la estrategia de entrada a Estados Unidos, y por eso el dossier muestra tanto la version interpretada como el archivo original y su link de Canva.",
+            en: "It also makes visible that the Canvas is not just a nice image. It connects customer, channel, cost and revenue with the U.S. entry strategy, which is why the dossier shows both the interpreted version and the original asset plus its Canva link.",
+          },
         ],
         highlights: [
           { es: "Incluye imagen original y enlace de Canva.", en: "Includes original image and Canva link." },
@@ -513,6 +568,14 @@ export const deliveries: Delivery[] = [
           {
             es: "La DOFA sintetiza riesgos digitales, dependencia de canales, capacidades internas y oportunidades de expansion hacia mercados internacionales.",
             en: "The SWOT synthesizes digital risks, channel dependence, internal capabilities and expansion opportunities toward international markets.",
+          },
+          {
+            es: "Fortalezas como el modelo asset-light, la neutralidad tecnologica y la estabilidad de caja muestran que UMO tiene una base operativa aprovechable. En contraste, la invisibilidad digital, los procesos manuales y la falta de CRM señalan por que la entrada internacional necesita orden comercial y no solo producto.",
+            en: "Strengths such as the asset-light model, technological neutrality and stable cash flow show that UMO has an operational base worth leveraging. In contrast, low digital visibility, manual processes and the absence of CRM show why international entry needs commercial order, not just product.",
+          },
+          {
+            es: "La oportunidad no esta planteada en abstracto: la matriz apunta a expansion geografica, social selling y formalizacion de referidos como motores reales para abrir mercado. Por eso el dossier expone la interpretacion y tambien conserva el material original y su enlace en Canva.",
+            en: "The opportunity is not stated in the abstract: the matrix points to geographic expansion, social selling and referral formalization as real market-opening drivers. That is why the dossier exposes the interpretation while also preserving the original material and its Canva link.",
           },
         ],
         highlights: [
@@ -573,6 +636,10 @@ export const deliveries: Delivery[] = [
           {
             es: "Dimension social: en Colombia genera empleo tecnico en planta; en Estados Unidos mejora salud lumbar y confort de operarios de paisajismo con jornadas extensas.",
             en: "Social dimension: in Colombia it generates technical plant employment; in the U.S. it improves lumbar health and comfort for landscaping operators with long workdays.",
+          },
+          {
+            es: "La viabilidad comercial se concentra en Texas y Georgia: el primero por volumen de maquinaria y trabajo de paisajismo, el segundo por su salida logistica a traves de Savannah. Esa lectura convierte la idea de expansion en una hipotesis territorial concreta.",
+            en: "Commercial viability focuses on Texas and Georgia: the first for machinery volume and landscaping demand, the second for logistical access through Savannah. That reading turns the expansion idea into a concrete territorial hypothesis.",
           },
         ],
         highlights: [

@@ -471,18 +471,7 @@ function ModuleFrame({
 function GenericModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
-      <div className="editorial-module">
-        <div>
-          {module.body.map((paragraph) => (
-            <p key={paragraph[locale]}>{paragraph[locale]}</p>
-          ))}
-        </div>
-        <ul>
-          {module.highlights.map((highlight) => (
-            <li key={highlight[locale]}>{highlight[locale]}</li>
-          ))}
-        </ul>
-      </div>
+      <ModuleContext module={module} locale={locale} />
     </ModuleFrame>
   );
 }
@@ -490,6 +479,7 @@ function GenericModule({ module, locale }: { module: WorkModule; locale: Locale 
 function CanvasModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
+      <ModuleContext module={module} locale={locale} />
       <div className="canvas-board">
         {canvasBlocks.map((block) => (
           <article key={block.title.es}>
@@ -505,6 +495,7 @@ function CanvasModule({ module, locale }: { module: WorkModule; locale: Locale }
 function SwotModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
+      <ModuleContext module={module} locale={locale} />
       <div className="swot-board">
         {swotBlocks.map((block) => (
           <article key={block.title.es}>
@@ -520,6 +511,7 @@ function SwotModule({ module, locale }: { module: WorkModule; locale: Locale }) 
 function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
+      <ModuleContext module={module} locale={locale} />
       <div className="diagnostic-layout compact">
         <div className="score-panel">
           <span>{locale === "es" ? "Puntaje total" : "Total score"}</span>
@@ -551,18 +543,7 @@ function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Loca
 function TeamModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
-      <div className="editorial-module team-brief">
-        <div>
-          {module.body.map((paragraph) => (
-            <p key={paragraph[locale]}>{paragraph[locale]}</p>
-          ))}
-        </div>
-        <ul>
-          {module.highlights.map((highlight) => (
-            <li key={highlight[locale]}>{highlight[locale]}</li>
-          ))}
-        </ul>
-      </div>
+      <ModuleContext module={module} locale={locale} className="team-brief" />
       <div className="team-grid">
         {team.map((member, index) => (
           <article className="member-file" key={member.name}>
@@ -620,6 +601,85 @@ const ArchiveWorkTile = memo(function ArchiveWorkTile({ item, locale }: { item: 
     </motion.article>
   );
 });
+
+function ModuleContext({
+  module,
+  locale,
+  className = "",
+}: {
+  module: WorkModule;
+  locale: Locale;
+  className?: string;
+}) {
+  if (module.body.length === 0 && module.highlights.length === 0) return null;
+
+  return (
+    <div className={`editorial-module module-context ${className}`.trim()}>
+      <div>
+        {module.body.map((paragraph) => (
+          <p key={paragraph[locale]}>{paragraph[locale]}</p>
+        ))}
+      </div>
+      <ul>
+        {module.highlights.map((highlight) => (
+          <li key={highlight[locale]}>{highlight[locale]}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function getSourceCountLabel(count: number, locale: Locale) {
+  if (count === 1) return locale === "es" ? "1 fuente" : "1 source";
+  return locale === "es" ? `${count} fuentes` : `${count} sources`;
+}
+
+function DeliveryCompilationPanel({ locale }: { locale: Locale }) {
+  return (
+    <section className="delivery-compilation">
+      <div className="compilation-head">
+        <span>DELIVERY INDEX / PROJECT MEMORY</span>
+        <h3>{locale === "es" ? "Recopilacion de entregas" : "Delivery compilation"}</h3>
+        <p>
+          {locale === "es"
+            ? "Vista concentrada del dossier: cada entrega queda identificada por alcance, cantidad de trabajos y material fuente para que el archivo siga creciendo sin perder orden."
+            : "Concentrated dossier view: each delivery is identified by scope, work count and source material so the archive can keep growing without losing order."}
+        </p>
+      </div>
+      <div className="compilation-grid">
+        {deliveries.map((delivery) => {
+          const sourceCount = delivery.modules.reduce((total, module) => total + module.documents.length, 0);
+
+          return (
+            <article key={delivery.id} className={`delivery-tile compilation-tile${delivery.modules.length === 0 ? " is-future" : ""}`}>
+              <div className="tile-body">
+                <div className="archive-case-row">
+                  <span className="tile-index">{delivery.code}</span>
+                  <span>{delivery.modules.length > 0 ? delivery.status[locale] : locale === "es" ? "Carpeta futura" : "Future folder"}</span>
+                </div>
+                <h3>{delivery.title[locale]}</h3>
+                <p>{delivery.summary[locale]}</p>
+              </div>
+              <div className="tile-tags">
+                {delivery.tags.slice(0, 4).map((tag) => (
+                  <i key={`${delivery.id}-${tag}`}>{tag}</i>
+                ))}
+              </div>
+              <div className="tile-footer">
+                <small>
+                  {delivery.modules.length} {locale === "es" ? "trabajos" : "works"} / {getSourceCountLabel(sourceCount, locale)}
+                </small>
+                <Link to={`/entregas/${delivery.id}`}>
+                  {locale === "es" ? "Abrir carpeta" : "Open folder"} <ArrowUpRight size={18} />
+                </Link>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
 
 function DeliveryFilterDropdown({
   locale,
@@ -751,6 +811,8 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
             : "Delivery 01 contains the loaded work: team, planning, diagnostic, Canvas, SWOT, SMART and sustainability."
         }
       />
+
+      <DeliveryCompilationPanel locale={locale} />
 
       <div className="archive-filter-group">
         <span className="filter-label">{locale === "es" ? "Filtrar por entrega" : "Filter by delivery"}</span>
