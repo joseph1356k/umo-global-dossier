@@ -194,60 +194,97 @@ export const documents: DocumentItem[] = [
     category: { es: "Fuente externa", en: "External source" },
     actionLabel: { es: "Ver fuente externa", en: "View external source" },
   },
+  {
+    id: "umo-smart-md",
+    type: "external",
+    title: { es: "Desarrollo Thermo Seats", en: "Thermo Seats development" },
+    description: {
+      es: "Documento base con propuesta innovadora, producto, sostenibilidad y viabilidad de internacionalizacion.",
+      en: "Source document with innovation proposal, product, sustainability and internationalization viability.",
+    },
+    href: "/assets/content/umo-smart.md",
+    category: { es: "SMART y viabilidad", en: "SMART and viability" },
+    actionLabel: { es: "Ver documento original", en: "View original document" },
+  },
 ];
 
 export const diagnosticMetrics = [
   { label: "Direccionamiento estrategico", value: 100, tone: "strong" },
   { label: "Alianzas estrategicas", value: 100, tone: "strong" },
-  { label: "Exportacion e importacion", value: 70, tone: "mid" },
+  { label: "Exportacion e importacion bienes", value: 70, tone: "mid" },
   { label: "Producto / servicio", value: 61, tone: "mid" },
-  { label: "Potencial internacional", value: 44, tone: "mid" },
+  { label: "Potencial de internacionalizacion", value: 44, tone: "mid" },
+  { label: "Sostenibilidad", value: 41, tone: "mid" },
+  { label: "Modos de entrada", value: 33, tone: "risk" },
   { label: "Tecnologia e innovacion", value: 29, tone: "risk" },
+  { label: "Inversion extranjera directa", value: 13, tone: "risk" },
+  { label: "Exportacion de servicios", value: 4, tone: "risk" },
   { label: "Talento humano", value: 0, tone: "risk" },
   { label: "Licencias y franquicias", value: 0, tone: "risk" },
 ];
 
 export const canvasBlocks = [
   {
+    title: { es: "Socios clave", en: "Key partners" },
+    text: {
+      es: "Distribuidores de maquinaria en Estados Unidos, importadores, operadores logisticos, representante comercial en Colombia y proveedores de materias primas para asegurar entrega al destino final.",
+      en: "U.S. machinery distributors, importers, logistics operators, a Colombian sales representative and raw-material suppliers to secure final delivery.",
+    },
+  },
+  {
     title: { es: "Propuesta de valor", en: "Value proposition" },
     text: {
-      es: "Confort, calidad e innovacion aplicada a soluciones de movilidad y bienestar con experiencia industrial.",
-      en: "Comfort, quality and innovation applied to mobility and wellness solutions with industrial experience.",
+      es: "Sillines de alta calidad para podadoras, con durabilidad para uso intensivo, mayor comodidad, ergonomia, resistencia climatica y mejor relacion calidad-precio.",
+      en: "High-quality mower seats with intensive-use durability, better comfort, ergonomics, weather resistance and a stronger price-quality ratio.",
     },
   },
   {
     title: { es: "Segmentos", en: "Segments" },
     text: {
-      es: "Reposicion automotriz, usuarios de moto, distribuidores, marketplaces y potenciales compradores en Estados Unidos.",
-      en: "Automotive replacement market, motorcycle users, distributors, marketplaces and potential U.S. buyers.",
+      es: "Distribuidores de maquinaria outdoor, tiendas de repuestos, empresas de paisajismo y contratistas que usan podadoras de forma constante.",
+      en: "Outdoor machinery distributors, spare-parts stores, landscaping companies and contractors that use mowers constantly.",
     },
   },
   {
     title: { es: "Canales", en: "Channels" },
     text: {
-      es: "Fabricantes, repuestos, distribuidores, ecommerce y marketplaces como ruta inicial de validacion.",
-      en: "Manufacturers, spare parts, distributors, ecommerce and marketplaces as initial validation routes.",
+      es: "Distribuidores mayoristas, importadores, ventas directas B2B, plataformas e-commerce y ferias industriales.",
+      en: "Wholesale distributors, importers, B2B direct sales, e-commerce platforms and industrial fairs.",
+    },
+  },
+  {
+    title: { es: "Relaciones con clientes", en: "Customer relationships" },
+    text: {
+      es: "Atencion y asesoria personalizada B2B, soporte tecnico, postventa y relaciones de largo plazo con distribuidores.",
+      en: "Personalized B2B support, technical assistance, after-sales service and long-term distributor relationships.",
+    },
+  },
+  {
+    title: { es: "Actividades clave", en: "Key activities" },
+    text: {
+      es: "Produccion de sillines, diseno y mejora del producto, control de calidad, logistica internacional, desarrollo de clientes B2B y marketing industrial.",
+      en: "Seat production, product design and improvement, quality control, international logistics, B2B customer development and industrial marketing.",
     },
   },
   {
     title: { es: "Recursos clave", en: "Key resources" },
     text: {
-      es: "Capacidad productiva, equipo industrial, trayectoria, certificaciones y conocimiento tecnico de producto.",
-      en: "Production capacity, industrial team, track record, certifications and technical product knowledge.",
+      es: "Planta de produccion en Colombia, experiencia industrial, certificaciones, mano de obra especializada, capacidad de produccion y red comercial.",
+      en: "Production plant in Colombia, industrial experience, certifications, skilled labor, production capacity and commercial network.",
     },
   },
   {
-    title: { es: "Aliados", en: "Partners" },
+    title: { es: "Estructura de costos", en: "Cost structure" },
     text: {
-      es: "Mas de 400 aliados y potencial de representantes comerciales para entrada internacional.",
-      en: "More than 400 allies and potential sales representatives for international entry.",
+      es: "Materiales, mano de obra, control de calidad, empaque, transporte, logistica internacional, comercializacion y construccion de confianza en el mercado.",
+      en: "Materials, labor, quality control, packaging, transport, international logistics, commercialization and market trust-building.",
     },
   },
   {
-    title: { es: "Ingresos", en: "Revenue" },
+    title: { es: "Fuentes de ingreso", en: "Revenue streams" },
     text: {
-      es: "Venta de productos basicos y referencias con mejores especificaciones entre USD 200 y USD 220.",
-      en: "Sale of basic products and higher-spec references between USD 200 and USD 220.",
+      es: "Ventas B2B a distribuidores y tiendas de repuestos, mercado aftermarket, ventas al por mayor, acuerdos comerciales estables y personalizacion.",
+      en: "B2B sales to distributors and spare-parts stores, aftermarket sales, wholesale orders, stable commercial agreements and customization.",
     },
   },
 ];
@@ -256,29 +293,29 @@ export const swotBlocks = [
   {
     title: { es: "Fortalezas", en: "Strengths" },
     text: {
-      es: "Trayectoria industrial, calidad, capacidad de produccion, certificaciones y experiencia con aliados.",
-      en: "Industrial track record, quality, production capacity, certifications and partner experience.",
+      es: "Modelo asset-light, neutralidad tecnologica, cultura de seguridad basada en protocolos y solidez financiera con flujo de caja estable.",
+      en: "Asset-light model, technological neutrality, safety culture based on protocols and financial strength with stable cash flow.",
     },
   },
   {
     title: { es: "Oportunidades", en: "Opportunities" },
     text: {
-      es: "Mercado estadounidense, canales digitales, marketplaces y posicionamiento de productos de confort.",
-      en: "U.S. market, digital channels, marketplaces and positioning for comfort products.",
+      es: "Escalabilidad geografica hacia Panama y Estados Unidos, social selling en LinkedIn, programa formal de referidos y nuevos modelos laborales especializados.",
+      en: "Geographic scalability toward Panama and the U.S., LinkedIn social selling, a formal referral program and new specialized labor models.",
     },
   },
   {
     title: { es: "Debilidades", en: "Weaknesses" },
     text: {
-      es: "Baja capacidad interna en ingles, producto ecommerce en maduracion y pocas alianzas estrategicas actuales.",
-      en: "Limited internal English capability, ecommerce product still maturing and few current strategic alliances.",
+      es: "Invisibilidad digital, procesos manuales, estructura centralizada y ausencia de un CRM formal para fidelizacion y retencion de clientes.",
+      en: "Low digital visibility, manual processes, centralized structure and lack of a formal CRM for customer loyalty and retention.",
     },
   },
   {
     title: { es: "Amenazas", en: "Threats" },
     text: {
-      es: "Competencia generica en Amazon, aranceles, exigencias de entrada y presion por precio.",
-      en: "Generic Amazon competition, tariffs, entry requirements and pricing pressure.",
+      es: "Asimetria de marketing frente a competidores, fuga de capital humano, vulnerabilidad por dependencia de referidos y saturacion del sector.",
+      en: "Marketing asymmetry against competitors, talent leakage, channel vulnerability from referral dependence and sector saturation.",
     },
   },
 ];
@@ -342,14 +379,14 @@ export const deliveries: Delivery[] = [
     id: "entrega-1",
     number: 1,
     code: "ENTREGA 01",
-    status: { es: "Base del proyecto", en: "Project baseline" },
+    status: { es: "Entrega cargada", en: "Loaded delivery" },
     date: "2026-04-17",
-    title: { es: "Fundacion del dossier", en: "Dossier foundation" },
+    title: { es: "Equipo, diagnostico y ruta UMO", en: "Team, diagnostic and UMO route" },
     summary: {
-      es: "Organiza el punto de partida: equipo, contexto empresarial, notas iniciales y reglas para trabajar el caso UMO.",
-      en: "Organizes the starting point: team, business context, initial notes and working rules for the UMO case.",
+      es: "Reune los archivos reales de la primera entrega: conformacion del equipo, diagnostico P-I, Canvas, DOFA y desarrollo Thermo Seats para Estados Unidos.",
+      en: "Collects the real files from the first delivery: team formation, P-I diagnostic, Canvas, SWOT and Thermo Seats development for the United States.",
     },
-    tags: ["team", "company", "research"],
+    tags: ["team", "diagnostic", "canvas", "swot", "smart", "viability"],
     modules: [
       {
         id: "acuerdo-equipo",
@@ -357,43 +394,181 @@ export const deliveries: Delivery[] = [
         eyebrow: { es: "Trabajo 01", en: "Work 01" },
         title: { es: "Acuerdo de equipo", en: "Team agreement" },
         summary: {
-          es: "El equipo se convierte en una celula de investigacion con rituales, feedback y responsabilidades.",
-          en: "The team becomes a research cell with rituals, feedback and responsibilities.",
+          es: "La entrega define proposito comun, fortalezas, oportunidades de mejora, comunicacion y reglas de trabajo.",
+          en: "The delivery defines shared purpose, strengths, improvement areas, communication and work rules.",
         },
         body: [
           {
-            es: "La entrega original define fortalezas individuales, oportunidades de mejora y una forma de comunicacion basada en updates cortos, WhatsApp y revisiones constantes.",
-            en: "The original delivery defines individual strengths, improvement areas and communication through short updates, WhatsApp and constant reviews.",
+            es: "Proposito comun: transformar las habilidades individuales en una ventaja estrategica, trabajando con compromiso y respeto mutuo para liderar el desarrollo del nucleo y convertir cada desafio en aprendizaje compartido.",
+            en: "Shared purpose: turn individual skills into a strategic advantage, working with commitment and mutual respect to lead the core project and turn each challenge into shared learning.",
+          },
+          {
+            es: "La comunicacion se sostiene con daily updates martes y miercoles, grupo de WhatsApp para monitorear tareas y revision de comentarios para mejorar la calidad de cada entrega.",
+            en: "Communication is supported through Tuesday and Wednesday daily updates, a WhatsApp group to monitor tasks and review of feedback to improve each delivery.",
           },
         ],
         highlights: [
-          { es: "Daily updates martes y miercoles.", en: "Daily updates on Tuesdays and Wednesdays." },
-          { es: "Feedback semanal para mejorar entregas.", en: "Weekly feedback to improve submissions." },
-          { es: "Roles flexibles y foco en calidad.", en: "Flexible roles and quality focus." },
+          { es: "Feedback semanal con ajustes rapidos.", en: "Weekly feedback with fast adjustments." },
+          { es: "Reglas: responsabilidad, puntualidad, respeto y apoyo entre integrantes.", en: "Rules: ownership, punctuality, respect and support between members." },
+          { es: "Consecuencia progresiva: llamado de atencion, reasignacion, registro e informe al docente.", en: "Progressive consequence: warning, reassignment, record and teacher notification." },
         ],
         documents: [documents[0]],
       },
       {
-        id: "descripcion-empresa",
+        id: "planeacion-equipo",
         type: "text",
         eyebrow: { es: "Trabajo 02", en: "Work 02" },
-        title: { es: "Descripcion de UMO", en: "UMO company description" },
+        title: { es: "Planeacion semanal", en: "Weekly planning" },
         summary: {
-          es: "UMO se presenta como empresa colombiana con base industrial, historia automotriz y lineas que conectan movilidad y bienestar.",
-          en: "UMO is presented as a Colombian company with industrial roots, automotive history and lines connecting mobility and wellness.",
+          es: "La forma de trabajo queda organizada en una semana operativa: planear, producir, revisar, integrar y ajustar.",
+          en: "The work method is organized into an operational week: plan, produce, review, integrate and adjust.",
         },
         body: [
           {
-            es: "Fundada en 1968, UMO acumula mas de cinco decadas fabricando autopartes y accesorios para vehiculos automotores. Su experiencia en sistemas de escape, sillines para motos y articulos de bienestar permite analizarla como una empresa con capacidades productivas reales para internacionalizacion.",
-            en: "Founded in 1968, UMO has more than five decades manufacturing auto parts and vehicle accessories. Its experience in exhaust systems, motorcycle seats and wellness products makes it a company with real production capabilities for internationalization.",
+            es: "Lunes: una hora para definir objetivos, asignar tareas y establecer tiempos. De lunes a jueves cada integrante desarrolla investigacion, redaccion o diseno segun lo asignado.",
+            en: "Monday: one hour to define goals, assign tasks and set deadlines. From Monday to Thursday each member develops research, writing or design according to the assignment.",
+          },
+          {
+            es: "Miercoles: seguimiento intermedio de 30 a 45 minutos para revisar avances y resolver dudas. Jueves: integracion de aportes, coherencia del documento y ajustes. Viernes: revision final y mejoras.",
+            en: "Wednesday: a 30 to 45 minute checkpoint to review progress and solve questions. Thursday: integration of contributions, document coherence and adjustments. Friday: final review and improvements.",
           },
         ],
         highlights: [
-          { es: "Mas de 360 empleados.", en: "More than 360 employees." },
-          { es: "Mas de 400 aliados.", en: "More than 400 allies." },
-          { es: "Certificaciones y reconocimientos industriales.", en: "Industrial certifications and recognitions." },
+          { es: "Plan semanal claro antes de producir.", en: "Clear weekly plan before production." },
+          { es: "Seguimiento a mitad de semana para corregir a tiempo.", en: "Midweek checkpoint to correct on time." },
+          { es: "Fin de semana reservado para ajustes finales si hace falta.", en: "Weekend reserved for final adjustments if needed." },
         ],
-        documents: [documents[6], documents[1]],
+        documents: [documents[0]],
+      },
+      {
+        id: "diagnostico-pi",
+        type: "diagnostic",
+        eyebrow: { es: "Trabajo 03", en: "Work 03" },
+        title: { es: "Diagnostico P-I", en: "P-I diagnostic" },
+        summary: {
+          es: "Lectura del Excel original: UMO obtiene 40.03% de preparacion internacional, con fortalezas claras y brechas criticas.",
+          en: "Reading from the original Excel: UMO scores 40.03% international readiness, with clear strengths and critical gaps.",
+        },
+        body: [
+          {
+            es: "El diagnostico marca fortalezas en direccionamiento estrategico y alianzas estrategicas, ambas al 100%. Producto/servicio alcanza 60.94% y exportacion de bienes 70%, lo que indica una base comercial y productiva aprovechable.",
+            en: "The diagnostic shows strengths in strategic direction and strategic alliances, both at 100%. Product/service reaches 60.94% and goods export reaches 70%, showing an usable commercial and production base.",
+          },
+          {
+            es: "Las brechas principales estan en talento humano, licencias y franquicias, exportacion de servicios, inversion extranjera directa, tecnologia e innovacion y modos de entrada.",
+            en: "The main gaps are talent, licenses and franchises, service exports, foreign direct investment, technology and innovation, and entry modes.",
+          },
+        ],
+        highlights: [
+          { es: "Puntaje total del diagnostico: 40.03%.", en: "Total diagnostic score: 40.03%." },
+          { es: "Direccionamiento estrategico y alianzas: 100%.", en: "Strategic direction and alliances: 100%." },
+          { es: "Talento humano y licencias/franquicias: zona critica.", en: "Talent and licenses/franchises: critical zone." },
+        ],
+        documents: [documents[2]],
+      },
+      {
+        id: "business-model-canvas",
+        type: "canvas",
+        eyebrow: { es: "Trabajo 04", en: "Work 04" },
+        title: { es: "Business Model Canvas", en: "Business Model Canvas" },
+        summary: {
+          es: "El Canvas original se reconstruye como bloques editables para leer socios, actividades, propuesta de valor, canales y fuentes de ingreso.",
+          en: "The original Canvas is rebuilt as editable blocks to read partners, activities, value proposition, channels and revenue streams.",
+        },
+        body: [
+          {
+            es: "El archivo visual no queda como captura suelta: se convierte en una matriz navegable que explica como UMO podria vender sillines para podadoras en Estados Unidos.",
+            en: "The visual file is not left as a loose screenshot: it becomes a navigable matrix explaining how UMO could sell mower seats in the United States.",
+          },
+        ],
+        highlights: [
+          { es: "Incluye imagen original y enlace de Canva.", en: "Includes original image and Canva link." },
+          { es: "Pensado para ventas B2B, distribuidores y aftermarket.", en: "Designed around B2B sales, distributors and aftermarket." },
+          { es: "Modelo listo para editar por bloques.", en: "Model ready to edit by blocks." },
+        ],
+        documents: [documents[3], documents[5]],
+      },
+      {
+        id: "dofa",
+        type: "swot",
+        eyebrow: { es: "Trabajo 05", en: "Work 05" },
+        title: { es: "Matriz DOFA", en: "SWOT matrix" },
+        summary: {
+          es: "La imagen original se reinterpreta como lectura estrategica: fortalezas, debilidades, oportunidades y amenazas.",
+          en: "The original image is reinterpreted as a strategic reading: strengths, weaknesses, opportunities and threats.",
+        },
+        body: [
+          {
+            es: "La DOFA sintetiza riesgos digitales, dependencia de canales, capacidades internas y oportunidades de expansion hacia mercados internacionales.",
+            en: "The SWOT synthesizes digital risks, channel dependence, internal capabilities and expansion opportunities toward international markets.",
+          },
+        ],
+        highlights: [
+          { es: "Fortaleza central: modelo liviano, seguridad y caja estable.", en: "Core strength: lean model, safety and stable cash flow." },
+          { es: "Debilidad central: baja visibilidad digital y falta de CRM.", en: "Core weakness: low digital visibility and lack of CRM." },
+          { es: "Oportunidad central: expansion geografica y captacion B2B.", en: "Core opportunity: geographic expansion and B2B lead generation." },
+        ],
+        documents: [documents[4]],
+      },
+      {
+        id: "thermo-seats-smart",
+        type: "text",
+        eyebrow: { es: "Trabajo 06", en: "Work 06" },
+        title: { es: "Thermo Seats SMART", en: "Thermo Seats SMART" },
+        summary: {
+          es: "El desarrollo de UMO.md se organiza como objetivo de internacionalizacion para asientos premium de podadoras Zero-Turn.",
+          en: "The UMO.md development is organized as an internationalization objective for premium Zero-Turn mower seats.",
+        },
+        body: [
+          {
+            es: "Nombre del proyecto: Thermo Seats by UMO, confort ergonomico para el paisajismo de alto rendimiento. El producto son asientos premium para el mercado aftermarket de podadoras profesionales, especialmente modelos Zero-Turn.",
+            en: "Project name: Thermo Seats by UMO, ergonomic comfort for high-performance landscaping. The product is premium seats for the professional mower aftermarket, especially Zero-Turn models.",
+          },
+          {
+            es: "La propuesta usa tecnologia Thermoliner para regular temperatura en climas extremos como Texas y Georgia, ergonomia avanzada con poliuretano de alta densidad, compatibilidad con marcas como John Deere y Toro, y materiales de alta resistencia.",
+            en: "The proposal uses Thermoliner technology to regulate temperature in extreme climates such as Texas and Georgia, advanced ergonomics with high-density polyurethane, compatibility with brands like John Deere and Toro, and high-resistance materials.",
+          },
+          {
+            es: "Objetivo SMART propuesto: validar en 12 meses la entrada de Thermo Seats al aftermarket de podadoras en Texas y Georgia mediante ventas B2B, marketplaces y distribuidores especializados, con precio objetivo entre USD 180 y USD 220.",
+            en: "Proposed SMART goal: validate within 12 months Thermo Seats' entry into the mower aftermarket in Texas and Georgia through B2B sales, marketplaces and specialized distributors, with a target price between USD 180 and USD 220.",
+          },
+        ],
+        highlights: [
+          { es: "Especifico: asientos premium para podadoras Zero-Turn.", en: "Specific: premium seats for Zero-Turn mowers." },
+          { es: "Medible: rango de precio USD 180-220 y capacidad inicial de 1.000-1.500 sillas mensuales.", en: "Measurable: USD 180-220 price range and initial capacity of 1,000-1,500 seats per month." },
+          { es: "Relevante: reduce fatiga y mejora confort del operario de paisajismo.", en: "Relevant: reduces fatigue and improves comfort for landscaping operators." },
+        ],
+        documents: [documents[7]],
+      },
+      {
+        id: "sostenibilidad-viabilidad",
+        type: "visual",
+        eyebrow: { es: "Trabajo 07", en: "Work 07" },
+        title: { es: "Sostenibilidad y viabilidad", en: "Sustainability and viability" },
+        summary: {
+          es: "El texto de UMO.md se separa en dimensiones economica, ambiental, social y lectura de mercado para Texas y Georgia.",
+          en: "The UMO.md text is separated into economic, environmental, social and market readings for Texas and Georgia.",
+        },
+        body: [
+          {
+            es: "Dimension economica: la viabilidad se apoya en una ventaja arancelaria. Colombia exporta con 10% de arancel frente al 50% que enfrenta China, lo que permite competir en precio sin abandonar calidad.",
+            en: "Economic dimension: viability relies on a tariff advantage. Colombia exports with a 10% tariff versus the 50% faced by China, enabling price competition without abandoning quality.",
+          },
+          {
+            es: "Dimension ambiental: el foco esta en durabilidad y economia circular. Asientos mas resistentes extienden la vida util de maquinaria existente y reducen reemplazos prematuros.",
+            en: "Environmental dimension: the focus is durability and circular economy. More resistant seats extend existing machinery life and reduce premature replacements.",
+          },
+          {
+            es: "Dimension social: en Colombia genera empleo tecnico en planta; en Estados Unidos mejora salud lumbar y confort de operarios de paisajismo con jornadas extensas.",
+            en: "Social dimension: in Colombia it generates technical plant employment; in the U.S. it improves lumbar health and comfort for landscaping operators with long workdays.",
+          },
+        ],
+        highlights: [
+          { es: "Texas: mercado de volumen por granjas y propiedades suburbanas extensas.", en: "Texas: volume market due to farms and large suburban properties." },
+          { es: "Georgia: hub logistico por el puerto de Savannah.", en: "Georgia: logistics hub through the Port of Savannah." },
+          { es: "Competencia: Milsco y Grammer AG dominan OEM, pero sus repuestos originales son costosos.", en: "Competition: Milsco and Grammer AG dominate OEM, but original spare parts are expensive." },
+        ],
+        documents: [documents[7]],
       },
     ],
   },
@@ -401,80 +576,36 @@ export const deliveries: Delivery[] = [
     id: "entrega-2",
     number: 2,
     code: "ENTREGA 02",
-    status: { es: "Diagnostico estrategico", en: "Strategic diagnostic" },
-    date: "2026-04-19",
-    title: { es: "Diagnostico, Canvas y DOFA", en: "Diagnostic, Canvas and SWOT" },
+    status: { es: "Proxima carpeta", en: "Next folder" },
+    date: "2026-04-30",
+    title: { es: "Investigacion comercial", en: "Commercial research" },
     summary: {
-      es: "Reinterpreta documentos y matrices en modulos visuales para entender modelo, brechas y entrada a Estados Unidos.",
-      en: "Reinterprets documents and matrices into visual modules for business model, gaps and U.S. entry understanding.",
+      es: "Espacio preparado para proximas fuentes: mercado, competencia, canales, pricing, entrevistas y evidencia comercial.",
+      en: "Prepared space for upcoming sources: market, competition, channels, pricing, interviews and commercial evidence.",
     },
-    tags: ["diagnostic", "canvas", "swot", "strategy"],
+    tags: ["market", "research", "pricing"],
     modules: [
       {
-        id: "business-model-canvas",
-        type: "canvas",
-        eyebrow: { es: "Trabajo 01", en: "Work 01" },
-        title: { es: "Business Model Canvas", en: "Business Model Canvas" },
+        id: "mercado-eeuu",
+        type: "text",
+        eyebrow: { es: "Trabajo pendiente", en: "Pending work" },
+        title: { es: "Mercado de Estados Unidos", en: "U.S. market" },
         summary: {
-          es: "El canvas se reconstruye como sistema visual editable: bloques, lectura de negocio y fuentes originales.",
-          en: "The canvas is rebuilt as an editable visual system: blocks, business reading and original sources.",
+          es: "Modulo reservado para organizar datos de demanda, segmentos, competidores y canales cuando llegue la siguiente entrega.",
+          en: "Reserved module to organize demand data, segments, competitors and channels when the next delivery arrives.",
         },
         body: [
           {
-            es: "La version web no se limita a pegar la imagen. Usa el archivo como referencia y reorganiza la informacion en bloques navegables para conectar propuesta de valor, canales, recursos, aliados e ingresos.",
-            en: "The web version does not simply paste the image. It uses the file as reference and reorganizes information into navigable blocks connecting value proposition, channels, resources, partners and revenue.",
+            es: "La estructura ya acepta resumen, interpretacion, graficas, tablas, archivos originales y enlaces externos para mantener ordenado el crecimiento del dossier.",
+            en: "The structure already accepts summary, interpretation, charts, tables, original files and external links to keep the dossier organized as it grows.",
           },
         ],
         highlights: [
-          { es: "Canvas reinterpretado dentro del frontend.", en: "Canvas reinterpreted inside the frontend." },
-          { es: "Acceso a imagen original y Canva.", en: "Access to original image and Canva." },
-          { es: "Preparado para editar bloques sin redisenar.", en: "Ready to edit blocks without redesigning." },
+          { es: "Listo para reportes de mercado.", en: "Ready for market reports." },
+          { es: "Listo para graficas y capturas.", en: "Ready for charts and screenshots." },
+          { es: "Listo para fuentes externas.", en: "Ready for external sources." },
         ],
-        documents: [documents[3], documents[5]],
-      },
-      {
-        id: "diagnostico-pi",
-        type: "diagnostic",
-        eyebrow: { es: "Trabajo 02", en: "Work 02" },
-        title: { es: "Diagnostico P-I", en: "P-I diagnostic" },
-        summary: {
-          es: "Lectura de preparacion internacional con puntaje total cercano al 40% y brechas criticas identificadas.",
-          en: "International readiness reading with a total score around 40% and critical gaps identified.",
-        },
-        body: [
-          {
-            es: "El diagnostico muestra fortalezas en direccionamiento estrategico y alianzas, mientras talento humano, tecnologia e innovacion, y licencias/franquicias aparecen como frentes a reforzar antes de escalar.",
-            en: "The diagnostic shows strengths in strategic direction and alliances, while talent, technology and innovation, and licenses/franchises appear as areas to reinforce before scaling.",
-          },
-        ],
-        highlights: [
-          { es: "Puntaje total: 40.0%.", en: "Total score: 40.0%." },
-          { es: "Direccionamiento y alianzas al 100%.", en: "Direction and alliances at 100%." },
-          { es: "Talento humano y licencias en zona critica.", en: "Talent and licenses in a critical zone." },
-        ],
-        documents: [documents[2]],
-      },
-      {
-        id: "dofa",
-        type: "swot",
-        eyebrow: { es: "Trabajo 03", en: "Work 03" },
-        title: { es: "DOFA internacional", en: "International SWOT" },
-        summary: {
-          es: "La matriz se convierte en cuatro cuadrantes editoriales para leer rapidamente capacidades y riesgos.",
-          en: "The matrix becomes four editorial quadrants to quickly read capabilities and risks.",
-        },
-        body: [
-          {
-            es: "La DOFA combina hallazgos de capacidad, mercado, canales, competencia y preparacion interna para orientar decisiones de entrada.",
-            en: "The SWOT combines findings about capacity, market, channels, competition and internal readiness to guide entry decisions.",
-          },
-        ],
-        highlights: [
-          { es: "Fortalezas productivas y trayectoria.", en: "Production strengths and track record." },
-          { es: "Oportunidad en marketplaces de Estados Unidos.", en: "Opportunity in U.S. marketplaces." },
-          { es: "Riesgos por idioma, competencia y aranceles.", en: "Risks from language, competition and tariffs." },
-        ],
-        documents: [documents[4]],
+        documents: [],
       },
     ],
   },
@@ -484,26 +615,26 @@ export const deliveries: Delivery[] = [
     code: "ENTREGA 03",
     status: { es: "Proxima carpeta", en: "Next folder" },
     date: "2026-04-30",
-    title: { es: "SMART, sostenibilidad y viabilidad", en: "SMART, sustainability and viability" },
+    title: { es: "Plan de entrada y ejecucion", en: "Entry and execution plan" },
     summary: {
-      es: "Carpeta preparada para futuros trabajos: objetivos SMART, sostenibilidad, viabilidad, graficas y nuevos documentos.",
-      en: "Folder prepared for future work: SMART goals, sustainability, viability, charts and new documents.",
+      es: "Carpeta preparada para proximos trabajos: acciones, indicadores, cronograma, presupuesto, graficas y nuevos documentos.",
+      en: "Folder prepared for upcoming work: actions, indicators, timeline, budget, charts and new documents.",
     },
-    tags: ["smart", "sustainability", "viability"],
+    tags: ["execution", "timeline", "budget"],
     modules: [
       {
-        id: "objetivo-smart",
+        id: "plan-accion",
         type: "text",
         eyebrow: { es: "Trabajo pendiente", en: "Pending work" },
-        title: { es: "Objetivo SMART", en: "SMART goal" },
+        title: { es: "Plan de accion", en: "Action plan" },
         summary: {
-          es: "Modulo reservado para formular objetivos medibles de internacionalizacion.",
-          en: "Reserved module for measurable internationalization goals.",
+          es: "Modulo reservado para convertir la estrategia en acciones, responsables, indicadores y fechas.",
+          en: "Reserved module to turn strategy into actions, owners, indicators and dates.",
         },
         body: [
           {
-            es: "Cuando el documento este listo, este espacio recibira el texto extraido, la version editorial y los botones al archivo original.",
-            en: "When the document is ready, this space will receive extracted text, an editorial version and buttons to the original file.",
+            es: "Cuando llegue el documento, este espacio recibira el texto extraido, la version editorial y los botones al archivo original.",
+            en: "When the document arrives, this space will receive extracted text, an editorial version and buttons to the original file.",
           },
         ],
         highlights: [
@@ -512,13 +643,13 @@ export const deliveries: Delivery[] = [
         documents: [],
       },
       {
-        id: "sostenibilidad",
+        id: "indicadores-ejecucion",
         type: "visual",
         eyebrow: { es: "Trabajo pendiente", en: "Pending work" },
-        title: { es: "Sostenibilidad y viabilidad", en: "Sustainability and viability" },
+        title: { es: "Indicadores de ejecucion", en: "Execution indicators" },
         summary: {
-          es: "Modulo preparado para interpretar capturas, tablas o diagnosticos futuros.",
-          en: "Module prepared to interpret future screenshots, tables or diagnostics.",
+          es: "Modulo preparado para interpretar capturas, tablas, presupuestos o diagnosticos futuros.",
+          en: "Module prepared to interpret future screenshots, tables, budgets or diagnostics.",
         },
         body: [
           {

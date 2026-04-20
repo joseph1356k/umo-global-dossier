@@ -61,12 +61,16 @@ type ArchiveItem = {
 
 const moduleArchiveTags: Record<string, string[]> = {
   "acuerdo-equipo": ["team", "planning", "governance"],
+  "planeacion-equipo": ["team", "planning", "governance"],
   "descripcion-empresa": ["company", "research", "source"],
   "business-model-canvas": ["canvas", "model", "canva", "strategy"],
   "diagnostico-pi": ["diagnostic", "market", "data"],
   dofa: ["swot", "strategy", "analysis"],
-  "objetivo-smart": ["smart", "strategy", "planning"],
-  sostenibilidad: ["sustainability", "viability", "visual"],
+  "thermo-seats-smart": ["smart", "strategy", "product"],
+  "sostenibilidad-viabilidad": ["sustainability", "viability", "market"],
+  "mercado-eeuu": ["market", "research", "pricing"],
+  "plan-accion": ["execution", "timeline", "planning"],
+  "indicadores-ejecucion": ["execution", "data", "budget"],
 };
 
 const archiveItems: ArchiveItem[] = deliveries.flatMap((delivery) =>
@@ -525,6 +529,18 @@ function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Loca
 function TeamModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
+      <div className="editorial-module team-brief">
+        <div>
+          {module.body.map((paragraph) => (
+            <p key={paragraph[locale]}>{paragraph[locale]}</p>
+          ))}
+        </div>
+        <ul>
+          {module.highlights.map((highlight) => (
+            <li key={highlight[locale]}>{highlight[locale]}</li>
+          ))}
+        </ul>
+      </div>
       <div className="team-grid">
         {team.map((member, index) => (
           <article className="member-file" key={member.name}>

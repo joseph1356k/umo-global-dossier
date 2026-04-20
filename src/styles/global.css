@@ -1146,6 +1146,12 @@ main {
   gap: 12px;
 }
 
+.team-brief {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
 .member-file {
   min-height: 310px;
   padding: 20px;
