@@ -1,0 +1,7 @@
+/dist
+/verification
+/*.pdf
+/*.xlsx
+/*.png
+/*.jpeg
+/.codex-vite*.log
