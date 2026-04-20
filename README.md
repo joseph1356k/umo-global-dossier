@@ -5,8 +5,8 @@ Frontend inmersivo y backend serverless para el proyecto de internacionalizacion
 La arquitectura separa la portada corporativa de UMO del archivo de entregas:
 
 - `/`: portada editorial de UMO con contexto empresarial, trayectoria, lineas de negocio y marco de internacionalizacion.
-- `/entregas`: workspace del dossier con menu lateral izquierdo.
-- `/entregas/:id`: carpeta de entrega con modulos internos, contenido reinterpretado y botones a fuentes originales.
+- `/entregas`: tablero general del dossier con todos los trabajos y filtros por entrega o tipo de contenido.
+- `/entregas/:id`: carpeta de entrega con menu lateral izquierdo, modulos internos, contenido reinterpretado y botones a fuentes originales.
 
 ## Desarrollo local
 

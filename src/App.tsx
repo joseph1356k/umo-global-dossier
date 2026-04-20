@@ -53,6 +53,43 @@ type BackendSnapshot = {
   };
 };
 
+type ArchiveItem = {
+  delivery: Delivery;
+  module: WorkModule;
+  tags: string[];
+};
+
+const moduleArchiveTags: Record<string, string[]> = {
+  "acuerdo-equipo": ["team", "planning", "governance"],
+  "descripcion-empresa": ["company", "research", "source"],
+  "business-model-canvas": ["canvas", "model", "canva", "strategy"],
+  "diagnostico-pi": ["diagnostic", "market", "data"],
+  dofa: ["swot", "strategy", "analysis"],
+  "objetivo-smart": ["smart", "strategy", "planning"],
+  sostenibilidad: ["sustainability", "viability", "visual"],
+};
+
+const archiveItems: ArchiveItem[] = deliveries.flatMap((delivery) =>
+  delivery.modules.map((module) => ({
+    delivery,
+    module,
+    tags: Array.from(
+      new Set([
+        ...(moduleArchiveTags[module.id] ?? []),
+        module.type,
+        ...module.documents.map((document) => document.type),
+      ]),
+    ),
+  })),
+);
+
+const archiveTags = Array.from(new Set(archiveItems.flatMap((item) => item.tags))).sort();
+
+function getDocumentCountLabel(count: number, locale: Locale) {
+  if (count === 1) return locale === "es" ? "1 documento" : "1 document";
+  return locale === "es" ? `${count} documentos` : `${count} documents`;
+}
+
 function useBackendSnapshot() {
   const [snapshot, setSnapshot] = useState<BackendSnapshot>({ online: false });
 
@@ -511,6 +548,125 @@ function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale
   return <GenericModule module={module} locale={locale} />;
 }
 
+function ArchiveWorkTile({ item, locale }: { item: ArchiveItem; locale: Locale }) {
+  const { delivery, module, tags } = item;
+
+  return (
+    <motion.article
+      layout
+      className="delivery-tile archive-work-tile"
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 18 }}
+      transition={{ duration: 0.28 }}
+    >
+      <div className="tile-body">
+        <div className="archive-case-row">
+          <span className="tile-index">{delivery.code}</span>
+          <span>{module.eyebrow[locale]}</span>
+        </div>
+        <span>{delivery.status[locale]}</span>
+        <h3>{module.title[locale]}</h3>
+        <p>{module.summary[locale]}</p>
+      </div>
+      <div className="tile-tags">
+        {tags.slice(0, 4).map((tag) => (
+          <i key={`${module.id}-${tag}`}>{tag}</i>
+        ))}
+      </div>
+      <div className="tile-footer">
+        <small>{getDocumentCountLabel(module.documents.length, locale)}</small>
+        <Link to={`/entregas/${delivery.id}#${module.id}`}>
+          {locale === "es" ? "Abrir trabajo" : "Open work"} <ArrowUpRight size={18} />
+        </Link>
+      </div>
+    </motion.article>
+  );
+}
+
+function DeliveriesArchive({ locale }: { locale: Locale }) {
+  const [deliveryFilter, setDeliveryFilter] = useState("all");
+  const [tagFilter, setTagFilter] = useState("all");
+
+  const filteredItems = useMemo(
+    () =>
+      archiveItems.filter((item) => {
+        const deliveryMatches = deliveryFilter === "all" || item.delivery.id === deliveryFilter;
+        const tagMatches = tagFilter === "all" || item.tags.includes(tagFilter);
+        return deliveryMatches && tagMatches;
+      }),
+    [deliveryFilter, tagFilter],
+  );
+
+  return (
+    <main className="archive-board-page">
+      <SectionIntro
+        eyebrow="DOSSIER ARCHIVE / WORK BOARD"
+        title={locale === "es" ? "Archivo de entregas" : "Delivery archive"}
+        subtitle={
+          locale === "es"
+            ? "Todos los trabajos viven en una vista filtrable. Puedes leer el archivo completo, separar por entrega o entrar al detalle de cada carpeta."
+            : "All work lives in one filterable view. Read the full archive, filter by delivery or open each folder in detail."
+        }
+      />
+
+      <div className="archive-filter-group">
+        <span className="filter-label">{locale === "es" ? "Filtrar por entrega" : "Filter by delivery"}</span>
+        <div className="filter-strip archive-filter-strip archive-delivery-filters">
+          <button
+            className={deliveryFilter === "all" ? "active" : ""}
+            onClick={() => setDeliveryFilter("all")}
+          >
+            Todo
+          </button>
+          {deliveries.map((delivery) => (
+            <button
+              key={delivery.id}
+              className={deliveryFilter === delivery.id ? "active" : ""}
+              onClick={() => setDeliveryFilter(delivery.id)}
+            >
+              {delivery.code}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="archive-filter-group">
+        <span className="filter-label">{locale === "es" ? "Filtrar por tipo" : "Filter by type"}</span>
+        <div className="filter-strip archive-filter-strip archive-tag-filters">
+          <button className={tagFilter === "all" ? "active" : ""} onClick={() => setTagFilter("all")}>
+            Todo
+          </button>
+          {archiveTags.map((tag) => (
+            <button key={tag} className={tagFilter === tag ? "active" : ""} onClick={() => setTagFilter(tag)}>
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <motion.div layout className="archive-work-grid">
+        <AnimatePresence mode="popLayout">
+          {filteredItems.map((item) => (
+            <ArchiveWorkTile key={`${item.delivery.id}-${item.module.id}`} item={item} locale={locale} />
+          ))}
+        </AnimatePresence>
+      </motion.div>
+
+      {filteredItems.length === 0 && (
+        <div className="archive-empty">
+          <span>{locale === "es" ? "Sin resultados" : "No results"}</span>
+          <p>
+            {locale === "es"
+              ? "No hay trabajos cargados para esta combinacion de filtros."
+              : "No work has been loaded for this filter combination."}
+          </p>
+        </div>
+      )}
+    </main>
+  );
+}
+
 function DeliveriesSidebar({
   activeDelivery,
   locale,
@@ -595,7 +751,7 @@ function App() {
       <Header locale={locale} setLocale={setLocale} />
       <Routes>
         <Route path="/" element={<CompanyHome locale={locale} backend={backend} />} />
-        <Route path="/entregas" element={<DeliveryWorkspace locale={locale} />} />
+        <Route path="/entregas" element={<DeliveriesArchive locale={locale} />} />
         <Route path="/entregas/:id" element={<DeliveryWorkspace locale={locale} />} />
       </Routes>
       <footer className="site-footer">
