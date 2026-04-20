@@ -111,18 +111,24 @@ function useDeferredDesktopScene() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    const loadScene = () => setShouldLoadScene(true);
-    const scheduleIdle = window.requestIdleCallback;
-    if (typeof scheduleIdle === "function") {
-      const idleId = scheduleIdle(loadScene, { timeout: 1200 });
-      return () => window.cancelIdleCallback(idleId);
-    }
+    let frameId = 0;
+    let timer = 0;
 
-    const timer = setTimeout(loadScene, 500);
-    return () => clearTimeout(timer);
+    frameId = window.requestAnimationFrame(() => {
+      timer = window.setTimeout(() => setShouldLoadScene(true), 120);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.clearTimeout(timer);
+    };
   }, []);
 
   return shouldLoadScene;
+}
+
+function ScenePlaceholder() {
+  return <div className="scene-shell scene-fallback scene-fallback-motion" aria-hidden="true" />;
 }
 
 function useBackendSnapshot() {
@@ -248,9 +254,9 @@ function CompanyHero({ locale, backend }: { locale: Locale; backend: BackendSnap
 
   return (
     <section className="hero company-hero">
-      <div className="scene-shell scene-fallback" />
+      <ScenePlaceholder />
       {shouldLoadScene && (
-        <Suspense fallback={null}>
+        <Suspense fallback={<ScenePlaceholder />}>
           <DossierScene />
         </Suspense>
       )}

@@ -307,6 +307,42 @@ main {
   background-size: 46px 46px;
 }
 
+.scene-fallback-motion {
+  overflow: hidden;
+}
+
+.scene-fallback-motion::before,
+.scene-fallback-motion::after {
+  position: absolute;
+  content: "";
+  inset: auto;
+  pointer-events: none;
+}
+
+.scene-fallback-motion::before {
+  top: 14%;
+  left: -10%;
+  width: 120%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 31, 51, 0.55), transparent);
+  opacity: 0.8;
+  animation: dossierSweep 5.8s linear infinite;
+}
+
+.scene-fallback-motion::after {
+  top: 20%;
+  left: 50%;
+  width: 44vw;
+  max-width: 620px;
+  height: 44vw;
+  max-height: 620px;
+  border: 1px solid rgba(124, 246, 255, 0.14);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 60px rgba(124, 246, 255, 0.06);
+  animation: dossierOrbit 10s linear infinite;
+}
+
 .scan-layer {
   position: absolute;
   inset: 0;
@@ -314,6 +350,32 @@ main {
   background:
     linear-gradient(90deg, rgba(226, 31, 51, 0.2), transparent 24%, transparent 72%, rgba(124, 246, 255, 0.09)),
     linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.12) 45%, rgba(5, 5, 5, 0.88) 100%);
+}
+
+@keyframes dossierSweep {
+  0% {
+    transform: translateY(-10vh);
+    opacity: 0.14;
+  }
+  20% {
+    opacity: 0.72;
+  }
+  100% {
+    transform: translateY(72vh);
+    opacity: 0.08;
+  }
+}
+
+@keyframes dossierOrbit {
+  from {
+    transform: translateX(-50%) rotate(0deg) scale(0.96);
+  }
+  50% {
+    transform: translateX(-50%) rotate(180deg) scale(1.02);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg) scale(0.96);
+  }
 }
 
 .hero-meta {
