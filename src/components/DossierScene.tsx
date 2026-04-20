@@ -1,5 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Group } from "three";
 
 function seededRandom(seed: number) {
@@ -7,7 +8,20 @@ function seededRandom(seed: number) {
   return next - Math.floor(next);
 }
 
-function ArchiveObject() {
+type SceneMotion = {
+  currentX: number;
+  currentY: number;
+  targetX: number;
+  targetY: number;
+  velocityX: number;
+  hoverX: number;
+  hoverY: number;
+  dragging: boolean;
+  lastClientX: number;
+  lastClientY: number;
+};
+
+function ArchiveObject({ motion }: { motion: React.MutableRefObject<SceneMotion> }) {
   const group = useRef<Group>(null);
   const points = useMemo(() => {
     const vertices: number[] = [];
@@ -20,10 +34,24 @@ function ArchiveObject() {
     return new Float32Array(vertices);
   }, []);
 
-  useFrame(({ clock, pointer }) => {
+  useFrame((_, delta) => {
     if (!group.current) return;
-    group.current.rotation.y = clock.elapsedTime * 0.08 + pointer.x * 0.18;
-    group.current.rotation.x = -0.16 + pointer.y * 0.08;
+
+    const sceneMotion = motion.current;
+
+    if (!sceneMotion.dragging) {
+      sceneMotion.targetY += delta * 0.42 + sceneMotion.velocityX;
+      sceneMotion.velocityX *= 0.94;
+      sceneMotion.targetX = -0.14 + sceneMotion.hoverY * 0.18;
+    } else {
+      sceneMotion.velocityX *= 0.88;
+    }
+
+    sceneMotion.currentY += (sceneMotion.targetY - sceneMotion.currentY) * 0.08;
+    sceneMotion.currentX += (sceneMotion.targetX - sceneMotion.currentX) * 0.1;
+
+    group.current.rotation.y = sceneMotion.currentY;
+    group.current.rotation.x = sceneMotion.currentX;
   });
 
   return (
@@ -64,18 +92,84 @@ function ArchiveObject() {
   );
 }
 
-export default function DossierScene() {
+function DossierScene() {
+  const [dragging, setDragging] = useState(false);
+  const motion = useRef<SceneMotion>({
+    currentX: -0.14,
+    currentY: 0,
+    targetX: -0.14,
+    targetY: 0,
+    velocityX: 0,
+    hoverX: 0,
+    hoverY: 0,
+    dragging: false,
+    lastClientX: 0,
+    lastClientY: 0,
+  });
+
+  const updateHover = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    motion.current.hoverX = (event.clientX - rect.left) / rect.width - 0.5;
+    motion.current.hoverY = (event.clientY - rect.top) / rect.height - 0.5;
+  }, []);
+
+  const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    motion.current.dragging = true;
+    motion.current.lastClientX = event.clientX;
+    motion.current.lastClientY = event.clientY;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDragging(true);
+  }, []);
+
+  const handlePointerMove = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    updateHover(event);
+
+    if (!motion.current.dragging) return;
+
+    const deltaX = event.clientX - motion.current.lastClientX;
+    const deltaY = event.clientY - motion.current.lastClientY;
+
+    motion.current.targetY += deltaX * 0.018;
+    motion.current.targetX = Math.max(-0.72, Math.min(0.72, motion.current.targetX + deltaY * 0.006));
+    motion.current.velocityX = deltaX * 0.00042;
+    motion.current.lastClientX = event.clientX;
+    motion.current.lastClientY = event.clientY;
+  }, [updateHover]);
+
+  const endDrag = useCallback(() => {
+    motion.current.dragging = false;
+    setDragging(false);
+  }, []);
+
+  const handlePointerLeave = useCallback(() => {
+    motion.current.hoverX = 0;
+    motion.current.hoverY = 0;
+    if (!motion.current.dragging) {
+      motion.current.targetX = -0.14;
+    }
+  }, []);
+
   return (
-    <div className="scene-shell" aria-hidden="true">
+    <div
+      className={`scene-shell scene-interactive${dragging ? " is-dragging" : ""}`}
+      aria-hidden="true"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onPointerLeave={handlePointerLeave}
+    >
       <Canvas
         camera={{ position: [0, 0.2, 5.4], fov: 42 }}
         gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
-        dpr={[1, 1.25]}
+        dpr={[1, 1.2]}
       >
         <color attach="background" args={["#070707"]} />
         <fog attach="fog" args={["#070707", 4, 9]} />
-        <ArchiveObject />
+        <ArchiveObject motion={motion} />
       </Canvas>
     </div>
   );
 }
+
+export default memo(DossierScene);

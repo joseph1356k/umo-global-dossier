@@ -286,6 +286,15 @@ main {
   inset: 0;
 }
 
+.scene-interactive {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.scene-interactive.is-dragging {
+  cursor: grabbing;
+}
+
 .scene-shell canvas {
   display: block;
 }

@@ -95,8 +95,7 @@ function useDeferredDesktopScene() {
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const compactViewport = window.matchMedia("(max-width: 760px)").matches;
-    if (prefersReducedMotion || compactViewport) return;
+    if (prefersReducedMotion) return;
 
     const loadScene = () => setShouldLoadScene(true);
     const scheduleIdle = window.requestIdleCallback;
