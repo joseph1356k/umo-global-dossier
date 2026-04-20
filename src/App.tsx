@@ -12,7 +12,7 @@ import {
   PanelLeft,
   X,
 } from "lucide-react";
-import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useState, useTransition } from "react";
+import { Suspense, lazy, memo, useDeferredValue, useEffect, useId, useMemo, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
 import {
@@ -621,17 +621,36 @@ const ArchiveWorkTile = memo(function ArchiveWorkTile({ item, locale }: { item: 
 });
 
 function DeliveriesArchive({ locale }: { locale: Locale }) {
+  const deliveryFilterId = useId();
+  const [deliveryFilter, setDeliveryFilter] = useState("all");
   const [workFilter, setWorkFilter] = useState("all");
   const [isPending, startTransition] = useTransition();
+  const deferredDeliveryFilter = useDeferredValue(deliveryFilter);
   const deferredWorkFilter = useDeferredValue(workFilter);
+
+  const availableWorkItems = useMemo(
+    () =>
+      archiveItems.filter((item) => deferredDeliveryFilter === "all" || item.delivery.id === deferredDeliveryFilter),
+    [deferredDeliveryFilter],
+  );
+
+  useEffect(() => {
+    if (workFilter === "all") return;
+    const workStillAvailable = availableWorkItems.some((item) => item.module.id === workFilter);
+    if (!workStillAvailable) {
+      setWorkFilter("all");
+    }
+  }, [availableWorkItems, workFilter]);
 
   const filteredItems = useMemo(
     () =>
-      archiveItems.filter((item) => {
-        return deferredWorkFilter === "all" || item.module.id === deferredWorkFilter;
-      }),
-    [deferredWorkFilter],
+      availableWorkItems.filter((item) => deferredWorkFilter === "all" || item.module.id === deferredWorkFilter),
+    [availableWorkItems, deferredWorkFilter],
   );
+
+  const selectDeliveryFilter = (filter: string) => {
+    startTransition(() => setDeliveryFilter(filter));
+  };
 
   const selectWorkFilter = (filter: string) => {
     startTransition(() => setWorkFilter(filter));
@@ -650,6 +669,25 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
       />
 
       <div className="archive-filter-group">
+        <span className="filter-label">{locale === "es" ? "Filtrar por entrega" : "Filter by delivery"}</span>
+        <label className="delivery-select-shell" htmlFor={deliveryFilterId}>
+          <select
+            id={deliveryFilterId}
+            className="delivery-select"
+            value={deliveryFilter}
+            onChange={(event) => selectDeliveryFilter(event.target.value)}
+          >
+            <option value="all">{locale === "es" ? "Todas las entregas" : "All deliveries"}</option>
+            {deliveries.map((delivery) => (
+              <option key={delivery.id} value={delivery.id}>
+                {delivery.code} - {delivery.title[locale]}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="archive-filter-group">
         <span className="filter-label">{locale === "es" ? "Filtrar por trabajo" : "Filter by work"}</span>
         <div className="filter-strip archive-filter-strip archive-work-filters">
           <button
@@ -658,7 +696,7 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
           >
             Todo
           </button>
-          {archiveItems.map((item) => (
+          {availableWorkItems.map((item) => (
             <button
               key={item.module.id}
               className={workFilter === item.module.id ? "active" : ""}
