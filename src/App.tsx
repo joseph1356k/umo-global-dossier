@@ -3,6 +3,7 @@ import {
   ArrowUpRight,
   Box,
   Building2,
+  ChevronDown,
   Database,
   ExternalLink,
   FileText,
@@ -12,7 +13,7 @@ import {
   PanelLeft,
   X,
 } from "lucide-react";
-import { Suspense, lazy, memo, useDeferredValue, useEffect, useId, useMemo, useState, useTransition } from "react";
+import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
 import {
@@ -620,8 +621,91 @@ const ArchiveWorkTile = memo(function ArchiveWorkTile({ item, locale }: { item: 
   );
 });
 
+function DeliveryFilterDropdown({
+  locale,
+  value,
+  onChange,
+}: {
+  locale: Locale;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  const options = [
+    {
+      value: "all",
+      label: locale === "es" ? "Todas las entregas" : "All deliveries",
+      meta: locale === "es" ? "Archivo completo" : "Full archive",
+    },
+    ...deliveries.map((delivery) => ({
+      value: delivery.id,
+      label: delivery.code,
+      meta: delivery.title[locale],
+    })),
+  ];
+
+  const selected = options.find((option) => option.value === value) ?? options[0];
+
+  return (
+    <div className={`delivery-dropdown${open ? " is-open" : ""}`} ref={dropdownRef}>
+      <button
+        type="button"
+        className="delivery-dropdown-trigger"
+        onClick={() => setOpen((current) => !current)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      >
+        <div className="delivery-dropdown-copy">
+          <span>{selected.label}</span>
+          <small>{selected.meta}</small>
+        </div>
+        <ChevronDown size={18} />
+      </button>
+
+      {open && (
+        <div className="delivery-dropdown-panel" role="listbox" aria-label={locale === "es" ? "Filtro por entrega" : "Delivery filter"}>
+          {options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              className={option.value === value ? "active" : ""}
+              onClick={() => {
+                onChange(option.value);
+                setOpen(false);
+              }}
+            >
+              <span>{option.label}</span>
+              <small>{option.meta}</small>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DeliveriesArchive({ locale }: { locale: Locale }) {
-  const deliveryFilterId = useId();
   const [deliveryFilter, setDeliveryFilter] = useState("all");
   const [workFilter, setWorkFilter] = useState("all");
   const [isPending, startTransition] = useTransition();
@@ -670,21 +754,7 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
 
       <div className="archive-filter-group">
         <span className="filter-label">{locale === "es" ? "Filtrar por entrega" : "Filter by delivery"}</span>
-        <label className="delivery-select-shell" htmlFor={deliveryFilterId}>
-          <select
-            id={deliveryFilterId}
-            className="delivery-select"
-            value={deliveryFilter}
-            onChange={(event) => selectDeliveryFilter(event.target.value)}
-          >
-            <option value="all">{locale === "es" ? "Todas las entregas" : "All deliveries"}</option>
-            {deliveries.map((delivery) => (
-              <option key={delivery.id} value={delivery.id}>
-                {delivery.code} - {delivery.title[locale]}
-              </option>
-            ))}
-          </select>
-        </label>
+        <DeliveryFilterDropdown locale={locale} value={deliveryFilter} onChange={selectDeliveryFilter} />
       </div>
 
       <div className="archive-filter-group">
