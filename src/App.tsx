@@ -71,6 +71,8 @@ type ArchiveItem = {
   tags: string[];
 };
 
+const PRESENTATION_VIEW_ID = "recopilacion";
+
 const moduleArchiveTags: Record<string, string[]> = {
   "acuerdo-equipo": ["team", "planning", "governance"],
   "planeacion-equipo": ["team", "planning", "governance"],
@@ -98,6 +100,14 @@ const archiveItems: ArchiveItem[] = deliveries.flatMap((delivery) =>
     ),
   })),
 );
+
+function getDeliveryById(id?: string) {
+  return deliveries.find((delivery) => delivery.id === id) ?? deliveries[0];
+}
+
+function getModuleTags(moduleId: string) {
+  return moduleArchiveTags[moduleId] ?? [];
+}
 
 function getDocumentCountLabel(count: number, locale: Locale) {
   if (count === 1) return locale === "es" ? "1 documento" : "1 document";
@@ -893,7 +903,7 @@ const ArchiveWorkTile = memo(function ArchiveWorkTile({ item, locale }: { item: 
       </div>
       <div className="tile-footer">
         <small>{getDocumentCountLabel(module.documents.length, locale)}</small>
-        <Link to={`/entregas/${delivery.id}#${module.id}`}>
+        <Link to={`/entregas/${delivery.id}/trabajos/${module.id}`}>
           {locale === "es" ? "Abrir trabajo" : "Open work"} <ArrowUpRight size={18} />
         </Link>
       </div>
@@ -1219,54 +1229,254 @@ function DeliveriesSidebar({
   );
 }
 
-function DeliveryWorkspace({ locale }: { locale: Locale }) {
-  const params = useParams();
-  const activeDelivery = useMemo(
-    () => deliveries.find((delivery) => delivery.id === params.id) ?? deliveries[0],
-    [params.id],
+function DeliveryHeader({
+  title,
+  subtitle,
+  eyebrow,
+  tags,
+}: {
+  title: string;
+  subtitle: string;
+  eyebrow: string;
+  tags: string[];
+}) {
+  return (
+    <div className="delivery-cover">
+      <span>{eyebrow}</span>
+      <h1>{title}</h1>
+      <p>{subtitle}</p>
+      <div className="tile-tags">
+        {tags.map((tag) => (
+          <i key={tag}>{tag}</i>
+        ))}
+      </div>
+    </div>
   );
+}
+
+function DeliveryContentNav({
+  delivery,
+  locale,
+}: {
+  delivery: Delivery;
+  locale: Locale;
+}) {
+  return (
+    <nav className="module-nav delivery-content-nav" aria-label={locale === "es" ? "Vistas de la entrega" : "Delivery views"}>
+      <NavLink end to={`/entregas/${delivery.id}`}>
+        {locale === "es" ? "Trabajos" : "Works"}
+      </NavLink>
+      <NavLink to={`/entregas/${delivery.id}/${PRESENTATION_VIEW_ID}`}>
+        {locale === "es" ? "Recopilacion" : "Compilation"}
+      </NavLink>
+      {delivery.modules.map((module) => (
+        <NavLink key={module.id} to={`/entregas/${delivery.id}/trabajos/${module.id}`}>
+          {module.title[locale]}
+        </NavLink>
+      ))}
+    </nav>
+  );
+}
+
+function DeliveryCardGrid({ delivery, locale }: { delivery: Delivery; locale: Locale }) {
+  if (delivery.modules.length === 0) {
+    return (
+      <div className="archive-empty delivery-empty">
+        <span>{locale === "es" ? "Sin trabajos cargados" : "No work loaded"}</span>
+        <p>
+          {locale === "es"
+            ? "Esta entrega queda como carpeta futura. Cuando subas archivos, apareceran aqui como trabajos individuales."
+            : "This delivery remains as a future folder. When files are uploaded, they will appear here as individual works."}
+        </p>
+      </div>
+    );
+  }
+
+  const totalSources = delivery.modules.reduce((sum, module) => sum + module.documents.length, 0);
 
   return (
-    <main className="delivery-workspace">
-      <DeliveriesSidebar activeDelivery={activeDelivery} locale={locale} />
-      <section className="delivery-main">
-        <div className="delivery-cover">
-          <span>{activeDelivery.code}</span>
-          <h1>{activeDelivery.title[locale]}</h1>
-          <p>{activeDelivery.summary[locale]}</p>
+    <div className="delivery-grid delivery-card-grid">
+      <article className="delivery-tile delivery-summary-card is-special">
+        <div className="tile-body">
+          <div className="archive-case-row">
+            <span className="tile-index">{delivery.code}</span>
+            <span>{locale === "es" ? "Tarjeta general" : "General card"}</span>
+          </div>
+          <h3>{locale === "es" ? "Recopilacion general" : "General compilation"}</h3>
+          <p>
+            {locale === "es"
+              ? "Vista completa para presentar: reúne todos los trabajos de la entrega en una sola navegación y deja ver el contenido integrado de principio a fin."
+              : "Complete presentation view: gathers every work in the delivery within a single navigation and shows the integrated content end to end."}
+          </p>
+        </div>
+        <div className="tile-tags">
+          <i>{delivery.modules.length} {locale === "es" ? "trabajos" : "works"}</i>
+          <i>{getSourceCountLabel(totalSources, locale)}</i>
+          <i>{locale === "es" ? "presentacion" : "presentation"}</i>
+        </div>
+        <div className="tile-footer">
+          <small>{locale === "es" ? "Todo organizado junto" : "Everything organized together"}</small>
+          <Link to={`/entregas/${delivery.id}/${PRESENTATION_VIEW_ID}`}>
+            {locale === "es" ? "Abrir recopilacion" : "Open compilation"} <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </article>
+
+      {delivery.modules.map((module) => (
+        <article key={module.id} className="delivery-tile archive-work-tile">
+          <div className="tile-body">
+            <div className="archive-case-row">
+              <span className="tile-index">{delivery.code}</span>
+              <span>{module.eyebrow[locale]}</span>
+            </div>
+            <span>{locale === "es" ? "Trabajo individual" : "Individual work"}</span>
+            <h3>{module.title[locale]}</h3>
+            <p>{module.summary[locale]}</p>
+          </div>
           <div className="tile-tags">
-            {activeDelivery.tags.map((tag) => (
-              <i key={tag}>{tag}</i>
+            {getModuleTags(module.id).slice(0, 4).map((tag) => (
+              <i key={`${module.id}-${tag}`}>{tag}</i>
             ))}
           </div>
-        </div>
-        {activeDelivery.modules.length > 0 ? (
-          <>
-            <nav className="module-nav" aria-label={locale === "es" ? "Trabajos internos" : "Internal work"}>
-              {activeDelivery.modules.map((module) => (
-                <a key={module.id} href={`#${module.id}`}>
-                  {module.title[locale]}
-                </a>
-              ))}
-            </nav>
-            <div className="module-stack">
-              {activeDelivery.modules.map((module) => (
-                <WorkModuleView key={module.id} module={module} locale={locale} />
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="archive-empty delivery-empty">
-            <span>{locale === "es" ? "Sin trabajos cargados" : "No work loaded"}</span>
-            <p>
-              {locale === "es"
-                ? "Esta entrega queda como carpeta futura. Cuando subas archivos, apareceran aqui como modulos internos."
-                : "This delivery remains as a future folder. When files are uploaded, they will appear here as internal modules."}
-            </p>
+          <div className="tile-footer">
+            <small>{getDocumentCountLabel(module.documents.length, locale)}</small>
+            <Link to={`/entregas/${delivery.id}/trabajos/${module.id}`}>
+              {locale === "es" ? "Abrir trabajo" : "Open work"} <ArrowUpRight size={18} />
+            </Link>
           </div>
-        )}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function DeliveryWorkspaceShell({
+  delivery,
+  locale,
+  children,
+  title,
+  subtitle,
+  eyebrow,
+  tags,
+}: {
+  delivery: Delivery;
+  locale: Locale;
+  children: ReactNode;
+  title: string;
+  subtitle: string;
+  eyebrow: string;
+  tags: string[];
+}) {
+  return (
+    <main className="delivery-workspace">
+      <DeliveriesSidebar activeDelivery={delivery} locale={locale} />
+      <section className="delivery-main">
+        <DeliveryHeader title={title} subtitle={subtitle} eyebrow={eyebrow} tags={tags} />
+        <DeliveryContentNav delivery={delivery} locale={locale} />
+        {children}
       </section>
     </main>
+  );
+}
+
+function DeliveryOverview({ locale }: { locale: Locale }) {
+  const params = useParams();
+  const activeDelivery = useMemo(() => getDeliveryById(params.id), [params.id]);
+
+  return (
+    <DeliveryWorkspaceShell
+      delivery={activeDelivery}
+      locale={locale}
+      eyebrow={activeDelivery.code}
+      title={activeDelivery.title[locale]}
+      subtitle={activeDelivery.summary[locale]}
+      tags={activeDelivery.tags}
+    >
+      <DeliveryCardGrid delivery={activeDelivery} locale={locale} />
+    </DeliveryWorkspaceShell>
+  );
+}
+
+function DeliveryPresentation({ locale }: { locale: Locale }) {
+  const params = useParams();
+  const activeDelivery = useMemo(() => getDeliveryById(params.id), [params.id]);
+
+  return (
+    <DeliveryWorkspaceShell
+      delivery={activeDelivery}
+      locale={locale}
+      eyebrow={`${activeDelivery.code} / ${locale === "es" ? "Vista general" : "General view"}`}
+      title={locale === "es" ? "Recopilacion general" : "General compilation"}
+      subtitle={
+        locale === "es"
+          ? "Esta es la unica tarjeta pensada para ver toda la entrega junta. Recorre todos los trabajos en una sola presentacion continua."
+          : "This is the only card meant to view the whole delivery together. It walks through every work in one continuous presentation."
+      }
+      tags={[...activeDelivery.tags, "presentation"]}
+    >
+      {activeDelivery.modules.length > 0 ? (
+        <div className="module-stack">
+          {activeDelivery.modules.map((module) => (
+            <WorkModuleView key={module.id} module={module} locale={locale} />
+          ))}
+        </div>
+      ) : (
+        <div className="archive-empty delivery-empty">
+          <span>{locale === "es" ? "Sin trabajos cargados" : "No work loaded"}</span>
+          <p>
+            {locale === "es"
+              ? "Esta entrega aun no tiene trabajos para recopilar."
+              : "This delivery does not yet have work to compile."}
+          </p>
+        </div>
+      )}
+    </DeliveryWorkspaceShell>
+  );
+}
+
+function DeliveryWorkPage({ locale }: { locale: Locale }) {
+  const params = useParams();
+  const activeDelivery = useMemo(() => getDeliveryById(params.id), [params.id]);
+  const activeModule = useMemo(
+    () => activeDelivery.modules.find((module) => module.id === params.moduleId) ?? activeDelivery.modules[0],
+    [activeDelivery, params.moduleId],
+  );
+
+  if (!activeModule) {
+    return (
+      <DeliveryWorkspaceShell
+        delivery={activeDelivery}
+        locale={locale}
+        eyebrow={activeDelivery.code}
+        title={activeDelivery.title[locale]}
+        subtitle={activeDelivery.summary[locale]}
+        tags={activeDelivery.tags}
+      >
+        <div className="archive-empty delivery-empty">
+          <span>{locale === "es" ? "Trabajo no encontrado" : "Work not found"}</span>
+          <p>
+            {locale === "es"
+              ? "No se encontro el trabajo solicitado dentro de esta entrega."
+              : "The requested work was not found inside this delivery."}
+          </p>
+        </div>
+      </DeliveryWorkspaceShell>
+    );
+  }
+
+  return (
+    <DeliveryWorkspaceShell
+      delivery={activeDelivery}
+      locale={locale}
+      eyebrow={`${activeDelivery.code} / ${activeModule.eyebrow[locale]}`}
+      title={activeModule.title[locale]}
+      subtitle={activeModule.summary[locale]}
+      tags={getModuleTags(activeModule.id)}
+    >
+      <div className="module-stack single-module-stack">
+        <WorkModuleView module={activeModule} locale={locale} />
+      </div>
+    </DeliveryWorkspaceShell>
   );
 }
 
@@ -1287,7 +1497,9 @@ function App() {
       <Routes>
         <Route path="/" element={<CompanyHome locale={locale} backend={backend} />} />
         <Route path="/entregas" element={<DeliveriesArchive locale={locale} />} />
-        <Route path="/entregas/:id" element={<DeliveryWorkspace locale={locale} />} />
+        <Route path="/entregas/:id" element={<DeliveryOverview locale={locale} />} />
+        <Route path="/entregas/:id/recopilacion" element={<DeliveryPresentation locale={locale} />} />
+        <Route path="/entregas/:id/trabajos/:moduleId" element={<DeliveryWorkPage locale={locale} />} />
       </Routes>
       <footer className="site-footer">
         <div>

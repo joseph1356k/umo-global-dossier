@@ -1055,6 +1055,29 @@ main {
   border-color: var(--red);
 }
 
+.module-nav a.active {
+  color: var(--paper);
+  border-color: var(--line-red);
+  background: rgba(226, 31, 51, 0.12);
+}
+
+.delivery-card-grid {
+  margin-top: 18px;
+}
+
+.delivery-summary-card.is-special {
+  grid-column: 1 / -1;
+  min-height: 320px;
+}
+
+.delivery-summary-card.is-special .tile-body h3 {
+  font-size: 3rem;
+}
+
+.single-module-stack .work-module {
+  margin-top: 4px;
+}
+
 .module-stack {
   display: grid;
   gap: 18px;
