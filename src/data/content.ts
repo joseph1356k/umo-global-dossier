@@ -45,6 +45,41 @@ export type TeamMember = {
   focus: Localized;
 };
 
+export type InsightCard = {
+  title: Localized;
+  text: Localized;
+};
+
+export type EntryProfile = {
+  name: string;
+  score: string;
+  reading: Localized;
+};
+
+export type WeeklyCadenceRow = {
+  day: Localized;
+  time: Localized;
+  focus: Localized;
+  outcome: Localized;
+};
+
+export type DiagnosticSnapshot = {
+  label: string;
+  obtained: string;
+  maximum: string;
+};
+
+export type RadarDataset = {
+  title: Localized;
+  labels: Localized[];
+  values: number[];
+};
+
+export type BulletGroup = {
+  title: Localized;
+  items: Localized[];
+};
+
 export const companyProfile = {
   name: "UMO S.A.",
   founded: "1968-10-18",
@@ -395,6 +430,385 @@ export const team: TeamMember[] = [
     focus: {
       es: "Gestion del tiempo, foco y reduccion de distracciones.",
       en: "Time management, focus and distraction reduction.",
+    },
+  },
+];
+
+export const agreementPillars: InsightCard[] = [
+  {
+    title: { es: "Proposito comun", en: "Shared purpose" },
+    text: {
+      es: "Transformar las habilidades individuales en una ventaja estrategica para liderar el nucleo con compromiso, respeto mutuo y aprendizaje compartido.",
+      en: "Turn individual skills into a strategic advantage to lead the project with commitment, mutual respect and shared learning.",
+    },
+  },
+  {
+    title: { es: "Comunicacion operativa", en: "Operational communication" },
+    text: {
+      es: "Daily update martes y miercoles, grupo de WhatsApp para seguimiento y revision permanente de comentarios para corregir a tiempo.",
+      en: "Tuesday and Wednesday daily updates, a WhatsApp group for follow-up and constant review of feedback to correct on time.",
+    },
+  },
+  {
+    title: { es: "Feedback y mejora", en: "Feedback and improvement" },
+    text: {
+      es: "Reuniones cortas cada semana para revisar que funciono, que fallo y que debe ajustarse antes de la siguiente entrega.",
+      en: "Short weekly meetings to review what worked, what failed and what must be adjusted before the next delivery.",
+    },
+  },
+  {
+    title: { es: "Responsabilidad compartida", en: "Shared accountability" },
+    text: {
+      es: "Cada integrante responde por su parte, pero tambien apoya el cierre colectivo para que la calidad final no dependa de una sola persona.",
+      en: "Each member is responsible for their part, but also supports the collective finish so final quality does not depend on a single person.",
+    },
+  },
+];
+
+export const agreementRules: Localized[] = [
+  {
+    es: "Cumplir las tareas en los tiempos acordados y avisar con anticipacion si aparece un bloqueo.",
+    en: "Complete tasks on agreed deadlines and warn early if a blocker appears.",
+  },
+  {
+    es: "Mantener una comunicacion clara, respetuosa y util para la toma de decisiones.",
+    en: "Keep communication clear, respectful and useful for decision making.",
+  },
+  {
+    es: "Participar activamente en reuniones, revisiones y ajustes colectivos.",
+    en: "Participate actively in meetings, reviews and collective adjustments.",
+  },
+  {
+    es: "Sostener puntualidad, responsabilidad individual y apoyo entre integrantes.",
+    en: "Maintain punctuality, individual ownership and support among members.",
+  },
+];
+
+export const agreementConsequences: Localized[] = [
+  {
+    es: "Llamado de atencion inicial con oportunidad de corregir antes de la siguiente revision.",
+    en: "Initial warning with a chance to correct before the next review.",
+  },
+  {
+    es: "Reasignacion de tareas y reduccion de participacion en decisiones si el incumplimiento persiste.",
+    en: "Task reassignment and reduced participation in decisions if non-compliance continues.",
+  },
+  {
+    es: "Registro del caso e informe al docente cuando la falta compromete una entrega o el trabajo del grupo.",
+    en: "Record and teacher notification when the fault compromises a delivery or the group's work.",
+  },
+];
+
+export const entryTestProfiles: EntryProfile[] = [
+  {
+    name: "Thomas Ochoa",
+    score: "89.8%",
+    reading: {
+      es: "Buen nivel de comprension y rapidez para investigar, estructurar ideas y detectar inconsistencias antes de entregar.",
+      en: "Strong comprehension and speed to research, structure ideas and detect inconsistencies before delivery.",
+    },
+  },
+  {
+    name: "Agustin Barreneche",
+    score: "93.2%",
+    reading: {
+      es: "Base solida en negocios internacionales; aporta precision estrategica y lectura comercial, aunque debe cuidar mas el detalle final.",
+      en: "Strong base in international business; brings strategic precision and commercial reading, though final detail still needs care.",
+    },
+  },
+  {
+    name: "Maria Fernanda Burgos",
+    score: "73.1%",
+    reading: {
+      es: "Buen potencial operativo y criterio practico; necesita reforzar pausa analitica y rigurosidad en diagnostico y planeacion.",
+      en: "Good operational potential and practical judgment; needs to strengthen analytical pause and rigor in diagnosis and planning.",
+    },
+  },
+];
+
+export const weeklyCadence: WeeklyCadenceRow[] = [
+  {
+    day: { es: "Lunes", en: "Monday" },
+    time: { es: "1 hora", en: "1 hour" },
+    focus: {
+      es: "Definir objetivos, asignar tareas, repartir tiempos y dejar claro el entregable de la semana.",
+      en: "Define goals, assign tasks, split timing and make the week's deliverable explicit.",
+    },
+    outcome: { es: "Plan operativo claro", en: "Clear operational plan" },
+  },
+  {
+    day: { es: "Lunes a jueves", en: "Monday to Thursday" },
+    time: { es: "Bloques de produccion", en: "Production blocks" },
+    focus: {
+      es: "Investigar, redactar, disenar y consolidar avances segun el frente de cada integrante.",
+      en: "Research, write, design and consolidate progress according to each member's work front.",
+    },
+    outcome: { es: "Avances concretos", en: "Concrete progress" },
+  },
+  {
+    day: { es: "Miercoles", en: "Wednesday" },
+    time: { es: "30-45 min", en: "30-45 min" },
+    focus: {
+      es: "Revisar avances intermedios, resolver dudas y corregir desalineaciones antes del cierre.",
+      en: "Review midweek progress, solve questions and correct misalignment before closing.",
+    },
+    outcome: { es: "Correccion a tiempo", en: "On-time correction" },
+  },
+  {
+    day: { es: "Jueves", en: "Thursday" },
+    time: { es: "1-2 horas", en: "1-2 hours" },
+    focus: {
+      es: "Integrar aportes, revisar coherencia, limpiar redaccion y dejar la version consolidada.",
+      en: "Integrate contributions, review coherence, clean writing and leave the consolidated version ready.",
+    },
+    outcome: { es: "Documento integrado", en: "Integrated document" },
+  },
+  {
+    day: { es: "Viernes", en: "Friday" },
+    time: { es: "1 hora", en: "1 hour" },
+    focus: {
+      es: "Revisar calidad final, detectar mejoras y preparar la entrega o exposicion.",
+      en: "Review final quality, detect improvements and prepare the delivery or presentation.",
+    },
+    outcome: { es: "Version final mejorada", en: "Improved final version" },
+  },
+];
+
+export const diagnosticSnapshots: DiagnosticSnapshot[] = [
+  { label: "Talento Humano", obtained: "0,01%", maximum: "12,50%" },
+  { label: "Direccionamiento estrategico", obtained: "7,50%", maximum: "7,50%" },
+  { label: "Tecnologia e innovacion", obtained: "4,38%", maximum: "15,00%" },
+  { label: "Sostenibilidad", obtained: "6,19%", maximum: "15,00%" },
+  { label: "Potencial de internacionalizacion", obtained: "21,95%", maximum: "50,00%" },
+  { label: "Modos de entrada", obtained: "9,77%", maximum: "30,00%" },
+  { label: "Exportacion e Importacion (Bienes)", obtained: "5,60%", maximum: "8,00%" },
+  { label: "Exportacion (Servicios)", obtained: "0,17%", maximum: "4,00%" },
+  { label: "Inversion Extranjera Directa", obtained: "1,00%", maximum: "8,00%" },
+  { label: "Licencias y Franquicias", obtained: "0,00%", maximum: "7,00%" },
+  { label: "Alianzas Estrategicas", obtained: "3,00%", maximum: "3,00%" },
+  { label: "Producto / Servicio", obtained: "12,19%", maximum: "20,00%" },
+];
+
+export const diagnosticRadarSets: RadarDataset[] = [
+  {
+    title: { es: "Diagnostico completo", en: "Full diagnostic" },
+    labels: [
+      { es: "Talento Humano", en: "Talent" },
+      { es: "Direccionamiento", en: "Direction" },
+      { es: "Tecnologia", en: "Technology" },
+      { es: "Sostenibilidad", en: "Sustainability" },
+      { es: "Servicio", en: "Service" },
+    ],
+    values: [0, 100, 29, 41, 61],
+  },
+  {
+    title: { es: "Potencial de internacionalizacion", en: "Internationalization potential" },
+    labels: [
+      { es: "Bienes", en: "Goods" },
+      { es: "IED", en: "FDI" },
+      { es: "Licencias", en: "Licenses" },
+      { es: "Alianzas", en: "Alliances" },
+      { es: "Producto", en: "Product" },
+    ],
+    values: [70, 13, 0, 100, 61],
+  },
+];
+
+export const diagnosticFactors: BulletGroup[] = [
+  {
+    title: { es: "Factores Macro", en: "Macro factors" },
+    items: [
+      {
+        es: "Alta demanda de maquinaria agricola y de jardineria profesional en los cinturones productivos de EE. UU.",
+        en: "High demand for agricultural and professional landscaping machinery in U.S. productive belts.",
+      },
+      {
+        es: "Efecto nearshoring favorable para fabricantes latinoamericanos frente a costos de flete y reposicion asiatica.",
+        en: "A favorable nearshoring effect for Latin American manufacturers compared with Asian freight and replenishment costs.",
+      },
+      {
+        es: "TLC con Estados Unidos como ventaja para reducir barreras arancelarias de entrada.",
+        en: "Free trade agreement with the United States as an advantage to reduce entry tariff barriers.",
+      },
+    ],
+  },
+  {
+    title: { es: "Factores Micro (Empresa)", en: "Micro factors (Company)" },
+    items: [
+      {
+        es: "Capacidad instalada para escalar produccion gracias a estandarizacion, ensamblaje y conocimiento industrial acumulado.",
+        en: "Installed capacity to scale production thanks to standardization, assembly and accumulated industrial know-how.",
+      },
+      {
+        es: "Control experto en inyeccion de poliuretano y tapizado impermeable, superando competidores de bajo costo.",
+        en: "Expert control in polyurethane injection and waterproof upholstery, outperforming low-cost competitors.",
+      },
+      {
+        es: "Posibilidad de adaptar el producto como repuesto universal o bajo diseno propietario para distribuidores especializados.",
+        en: "Ability to adapt the product as a universal spare part or under proprietary design for specialized distributors.",
+      },
+    ],
+  },
+];
+
+export const canvasHighlights: InsightCard[] = [
+  {
+    title: { es: "Rendimiento termico y mecanico", en: "Thermal and mechanical performance" },
+    text: {
+      es: "El uso de poliuretano de alta resiliencia y mallas 3D neutraliza vibraciones y disipa el calor solar para jornadas intensas.",
+      en: "High-resilience polyurethane and 3D meshes neutralize vibrations and dissipate solar heat during intense workdays.",
+    },
+  },
+  {
+    title: { es: "Personalizacion industrial", en: "Industrial customization" },
+    text: {
+      es: "Se plantea branding, materiales y acabados integrados a la propuesta estetica de cada distribuidor o fabricante.",
+      en: "Branding, materials and finishes are designed to integrate with each distributor's or manufacturer's visual proposal.",
+    },
+  },
+  {
+    title: { es: "Entrada comercial gradual", en: "Gradual commercial entry" },
+    text: {
+      es: "La validacion inicia con marketplaces y distribuidores especializados antes de escalar acuerdos mas robustos en EE. UU.",
+      en: "Validation starts with marketplaces and specialized distributors before scaling stronger agreements in the U.S.",
+    },
+  },
+];
+
+export const swotDetailedBlocks: BulletGroup[] = [
+  {
+    title: { es: "Fortalezas", en: "Strengths" },
+    items: [
+      {
+        es: "Direccion estrategica clara, experiencia industrial y capacidad de adaptar producto con criterio tecnico.",
+        en: "Clear strategic direction, industrial experience and the ability to adapt product with technical judgment.",
+      },
+      {
+        es: "Alianzas estrategicas y conocimiento de negociacion con actores clave en Colombia y EE. UU.",
+        en: "Strategic alliances and negotiation knowledge with key actors in Colombia and the U.S.",
+      },
+      {
+        es: "Modelo asset-light y cultura de seguridad que sostienen operacion eficiente.",
+        en: "Asset-light model and safety culture that support efficient operations.",
+      },
+    ],
+  },
+  {
+    title: { es: "Oportunidades", en: "Opportunities" },
+    items: [
+      {
+        es: "Tecnologia de confort y enfriamiento como palanca diferencial para podadoras y tractores profesionales.",
+        en: "Comfort and cooling technology as a differentiating lever for professional mowers and tractors.",
+      },
+      {
+        es: "Ventaja competitiva en precio frente a alternativas OEM o repuestos premium existentes.",
+        en: "Competitive price advantage versus existing OEM or premium replacement alternatives.",
+      },
+      {
+        es: "TLC con Estados Unidos y crecimiento de canales digitales y distribuidores de nicho.",
+        en: "Trade agreement with the United States and growth of digital channels and niche distributors.",
+      },
+    ],
+  },
+  {
+    title: { es: "Debilidades", en: "Weaknesses" },
+    items: [
+      {
+        es: "Brecha en talento humano con competencias internacionales y manejo comercial en ingles.",
+        en: "Gap in talent with international skills and commercial English capabilities.",
+      },
+      {
+        es: "Procesos comerciales y de CRM todavia poco estructurados para una expansion sostenida.",
+        en: "Commercial and CRM processes still under-structured for sustained expansion.",
+      },
+      {
+        es: "Dependencia de una estructura centralizada para decisiones clave y seguimiento.",
+        en: "Dependence on a centralized structure for key decisions and follow-up.",
+      },
+    ],
+  },
+  {
+    title: { es: "Amenazas", en: "Threats" },
+    items: [
+      {
+        es: "Riesgo de depender de un solo canal o de un unico producto en la primera entrada comercial.",
+        en: "Risk of depending on a single channel or a single product in the first commercial entry.",
+      },
+      {
+        es: "Marcas ya posicionadas y distribuidores locales con relaciones comerciales maduras.",
+        en: "Already established brands and local distributors with mature commercial relationships.",
+      },
+      {
+        es: "Talento tercerizado o no propio como limitante para el crecimiento internacional sostenido.",
+        en: "Outsourced or non-core talent as a limitation for sustained international growth.",
+      },
+    ],
+  },
+];
+
+export const smartObjective = {
+  es: "UMO buscara ingresar de manera gradual y sostenible al mercado de Estados Unidos durante los proximos 12 meses, mediante la exportacion de sillas aftermarket para tractores y podadoras profesionales, priorizando los estados de Texas y Georgia, con una estrategia de entrada basada en marketplaces y en la vinculacion progresiva de distribuidores, talleres o concesionarios especializados. Como meta inicial, la empresa pretende comercializar entre 50 y 70 unidades en esta primera fase, manteniendo un rango de precio de entre USD 180 y USD 220 por silla, validando asi la aceptacion comercial del producto, su competitividad frente a marcas existentes y la viabilidad operativa de su oferta internacional. Este objetivo es especifico porque define con claridad el producto, el mercado, los estados objetivo, el canal y el volumen inicial esperado; es medible porque establece metas concretas de unidades vendidas, precio y plazo; es alcanzable y realista porque se ajusta a la capacidad actual de produccion de UMO, a su experiencia previa en exportacion de bienes y a su nivel actual de preparacion internacional; y es retador porque exige pasar del analisis y desarrollo del producto a una primera insercion comercial real en Estados Unidos. Ademas, este objetivo se relaciona directamente con el diagnostico de potencialidades de internacionalizacion, ya que la empresa presenta fortalezas en direccionamiento estrategico, capacidad productiva, adaptabilidad del producto y posibilidad de exportacion de bienes, pero aun debe fortalecer aspectos como el talento humano con competencias internacionales, el dominio del ingles y la consolidacion de una estructura comercial externa mas robusta.",
+  en: "UMO will seek a gradual and sustainable entry into the United States market during the next 12 months through the export of aftermarket seats for tractors and professional mowers, prioritizing Texas and Georgia, with an entry strategy based on marketplaces and the progressive linkage of distributors, workshops or specialized dealerships. As an initial target, the company aims to commercialize between 50 and 70 units in this first phase, keeping a price range between USD 180 and USD 220 per seat, thereby validating product acceptance, competitiveness against existing brands and the operating viability of its international offer. This goal is specific because it clearly defines the product, market, target states, channel and expected initial volume; measurable because it sets concrete targets for units sold, price and timing; achievable and realistic because it fits UMO's current production capacity, prior experience exporting goods and current level of international readiness; and challenging because it requires moving from analysis and product development to a first real commercial insertion in the United States. It is also directly linked to the diagnosis of internationalization potential, since the company shows strengths in strategic direction, production capacity, product adaptability and export potential, but still needs to strengthen international talent, English proficiency and a more robust external commercial structure.",
+};
+
+export const smartCriteria: InsightCard[] = [
+  {
+    title: { es: "Especifico", en: "Specific" },
+    text: {
+      es: "Define producto, mercado, estados objetivo, canal de entrada y volumen esperado en la primera fase.",
+      en: "Defines product, market, target states, entry channel and expected first-phase volume.",
+    },
+  },
+  {
+    title: { es: "Medible", en: "Measurable" },
+    text: {
+      es: "Fija 50-70 unidades, precio de USD 180-220 y plazo de 12 meses para validar la hipotesis comercial.",
+      en: "Sets 50-70 units, a USD 180-220 price range and a 12-month window to validate the commercial hypothesis.",
+    },
+  },
+  {
+    title: { es: "Alcanzable", en: "Achievable" },
+    text: {
+      es: "Se apoya en la capacidad actual de produccion, la experiencia exportadora de UMO y su adaptabilidad tecnica.",
+      en: "It relies on current production capacity, UMO's export experience and its technical adaptability.",
+    },
+  },
+  {
+    title: { es: "Retador y relevante", en: "Challenging and relevant" },
+    text: {
+      es: "Obliga a pasar del analisis a una insercion comercial real, alineada con las fortalezas y brechas detectadas en el diagnostico.",
+      en: "It forces a move from analysis to real commercial entry, aligned with the strengths and gaps found in the diagnostic.",
+    },
+  },
+];
+
+export const viabilityPillars: InsightCard[] = [
+  {
+    title: { es: "Dimension economica", en: "Economic dimension" },
+    text: {
+      es: "Ventaja arancelaria colombiana, posicion de precio competitiva y posibilidad de validar volumen sin comprometer calidad.",
+      en: "Colombian tariff advantage, competitive pricing position and the ability to validate volume without compromising quality.",
+    },
+  },
+  {
+    title: { es: "Dimension ambiental", en: "Environmental dimension" },
+    text: {
+      es: "Mayor durabilidad y menor reemplazo prematuro como argumento de economia circular para maquinaria ya instalada.",
+      en: "Greater durability and fewer premature replacements as a circular-economy argument for already-installed machinery.",
+    },
+  },
+  {
+    title: { es: "Dimension social", en: "Social dimension" },
+    text: {
+      es: "Empleo tecnico en Colombia y mejora del confort lumbar para operarios de paisajismo en Estados Unidos.",
+      en: "Technical employment in Colombia and improved lumbar comfort for landscaping operators in the United States.",
+    },
+  },
+  {
+    title: { es: "Viabilidad territorial", en: "Territorial viability" },
+    text: {
+      es: "Texas concentra demanda por volumen; Georgia facilita logistica, reposicion y acceso al puerto de Savannah.",
+      en: "Texas concentrates volume demand; Georgia enables logistics, replenishment and access to the Port of Savannah.",
     },
   },
 ];

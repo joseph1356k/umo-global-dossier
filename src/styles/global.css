@@ -1038,6 +1038,265 @@ main {
   gap: 16px;
 }
 
+.insight-grid,
+.agreement-grid,
+.entry-profile-grid,
+.radar-grid,
+.factor-grid,
+.territory-strip,
+.smart-support-grid,
+.swot-summary-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.insight-grid,
+.entry-profile-grid,
+.radar-grid,
+.factor-grid,
+.smart-support-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.agreement-grid,
+.territory-strip,
+.swot-summary-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.insight-card,
+.bullet-stack,
+.entry-profile-card,
+.radar-card,
+.factor-card,
+.territory-card,
+.smart-objective-card,
+.cadence-table,
+.snapshot-table,
+.matrix-shell {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(226, 31, 51, 0.08), transparent 42%),
+    rgba(8, 8, 8, 0.78);
+}
+
+.insight-card,
+.bullet-stack,
+.entry-profile-card,
+.factor-card,
+.territory-card {
+  padding: 18px;
+}
+
+.insight-card span,
+.bullet-stack span,
+.entry-profile-card span,
+.radar-card span,
+.factor-card span,
+.territory-card span,
+.smart-objective-card span,
+.cadence-head span,
+.snapshot-table-head span,
+.matrix-head span {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--red);
+}
+
+.insight-card p,
+.bullet-stack li,
+.entry-profile-card p,
+.factor-card li,
+.territory-card,
+.smart-objective-card p,
+.cadence-head p,
+.cadence-row p,
+.snapshot-table-head p,
+.snapshot-row strong,
+.matrix-head p {
+  color: rgba(245, 242, 232, 0.8);
+}
+
+.insight-card.compact p {
+  font-size: 1rem;
+}
+
+.bullet-stack ul,
+.factor-card ul,
+.swot-board.detailed ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.entry-profile-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 0.96;
+}
+
+.entry-profile-card strong {
+  display: inline-block;
+  margin: 12px 0 10px;
+  font-family: var(--font-mono);
+  color: var(--cyan);
+  font-size: 1.1rem;
+}
+
+.team-brief-shell {
+  margin-bottom: 14px;
+}
+
+.matrix-shell {
+  padding: 18px;
+}
+
+.matrix-head {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.canvas-highlight-grid,
+.smart-support-grid {
+  margin-bottom: 14px;
+}
+
+.swot-summary-grid,
+.radar-grid,
+.factor-grid,
+.snapshot-table,
+.territory-strip {
+  margin-top: 18px;
+}
+
+.swot-board.detailed article {
+  min-height: 260px;
+}
+
+.swot-board.detailed li {
+  color: rgba(245, 242, 232, 0.8);
+  line-height: 1.55;
+}
+
+.cadence-table,
+.snapshot-table {
+  padding: 18px;
+  margin-top: 18px;
+}
+
+.cadence-head,
+.snapshot-table-head {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.38fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.cadence-grid,
+.snapshot-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.cadence-row,
+.snapshot-row {
+  display: grid;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cadence-row {
+  grid-template-columns: minmax(140px, 0.28fr) minmax(0, 1fr) minmax(160px, 0.24fr);
+}
+
+.cadence-row strong,
+.snapshot-row strong {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 0.95;
+}
+
+.cadence-row small,
+.snapshot-row span,
+.snapshot-row small {
+  font-family: var(--font-mono);
+  color: var(--cyan);
+}
+
+.cadence-row span {
+  color: var(--paper);
+  font-size: 0.98rem;
+}
+
+.snapshot-row {
+  grid-template-columns: minmax(0, 1fr) 120px 120px;
+}
+
+.snapshot-row small {
+  color: var(--muted);
+}
+
+.radar-card {
+  padding: 18px;
+}
+
+.radar-card svg {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  overflow: visible;
+}
+
+.radar-grid-line,
+.radar-axis {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 1;
+}
+
+.radar-data {
+  fill: rgba(255, 142, 105, 0.34);
+  stroke: rgba(255, 164, 128, 0.9);
+  stroke-width: 2;
+}
+
+.radar-label {
+  fill: rgba(245, 242, 232, 0.78);
+  font-size: 10px;
+  text-anchor: middle;
+  font-family: var(--font-mono);
+}
+
+.smart-objective-card {
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.smart-objective-card p {
+  font-size: 1.16rem;
+  line-height: 1.7;
+}
+
+.factor-card li {
+  line-height: 1.6;
+}
+
+.territory-card {
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
 .editorial-module ul {
   margin: 0;
   padding: 0;
@@ -1605,6 +1864,14 @@ main {
   .delivery-grid,
   .compilation-grid,
   .archive-work-grid,
+  .insight-grid,
+  .entry-profile-grid,
+  .radar-grid,
+  .factor-grid,
+  .agreement-grid,
+  .territory-strip,
+  .smart-support-grid,
+  .swot-summary-grid,
   .team-grid,
   .goal-rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1614,6 +1881,8 @@ main {
   .detail-grid,
   .company-grid,
   .compilation-head,
+  .cadence-head,
+  .snapshot-table-head,
   .entry-panel,
   .editorial-module,
   .module-head,
@@ -1711,6 +1980,14 @@ main {
   .delivery-grid,
   .compilation-grid,
   .archive-work-grid,
+  .insight-grid,
+  .entry-profile-grid,
+  .radar-grid,
+  .factor-grid,
+  .agreement-grid,
+  .territory-strip,
+  .smart-support-grid,
+  .swot-summary-grid,
   .visual-docs,
   .business-lines,
   .timeline-strip,
@@ -1833,6 +2110,11 @@ main {
   .metric-track {
     grid-column: 1 / -1;
     grid-row: 2;
+  }
+
+  .cadence-row,
+  .snapshot-row {
+    grid-template-columns: 1fr;
   }
 
   .document-panel {

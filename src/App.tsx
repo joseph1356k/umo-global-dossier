@@ -17,12 +17,25 @@ import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useRef, use
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
 import {
+  agreementConsequences,
+  agreementPillars,
+  agreementRules,
   canvasBlocks,
+  canvasHighlights,
   companyProfile,
   deliveries,
+  diagnosticFactors,
   diagnosticMetrics,
+  diagnosticRadarSets,
+  diagnosticSnapshots,
+  entryTestProfiles,
+  smartCriteria,
+  smartObjective,
   swotBlocks,
+  swotDetailedBlocks,
   team,
+  viabilityPillars,
+  weeklyCadence,
   type Delivery,
   type DocumentItem,
   type WorkModule,
@@ -500,10 +513,140 @@ function GenericModule({ module, locale }: { module: WorkModule; locale: Locale 
   );
 }
 
+function InsightGrid({
+  items,
+  locale,
+  className = "",
+}: {
+  items: { title: Record<Locale, string>; text: Record<Locale, string> }[];
+  locale: Locale;
+  className?: string;
+}) {
+  return (
+    <div className={`insight-grid ${className}`.trim()}>
+      {items.map((item) => (
+        <article key={item.title[locale]} className="insight-card">
+          <span>{item.title[locale]}</span>
+          <p>{item.text[locale]}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function BulletStack({
+  title,
+  items,
+  locale,
+}: {
+  title: string;
+  items: Record<Locale, string>[];
+  locale: Locale;
+}) {
+  return (
+    <article className="bullet-stack">
+      <span>{title}</span>
+      <ul>
+        {items.map((item) => (
+          <li key={item[locale]}>{item[locale]}</li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function RadarCard({
+  title,
+  labels,
+  values,
+  locale,
+}: {
+  title: Record<Locale, string>;
+  labels: Record<Locale, string>[];
+  values: number[];
+  locale: Locale;
+}) {
+  const center = 120;
+  const radius = 78;
+  const total = labels.length;
+  const levels = [20, 40, 60, 80, 100];
+
+  const toPoint = (value: number, index: number) => {
+    const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
+    const scaled = (radius * value) / 100;
+    const x = center + Math.cos(angle) * scaled;
+    const y = center + Math.sin(angle) * scaled;
+    return `${x},${y}`;
+  };
+
+  const polygon = values.map((value, index) => toPoint(value, index)).join(" ");
+
+  return (
+    <article className="radar-card">
+      <span>{title[locale]}</span>
+      <svg viewBox="0 0 240 240" aria-hidden="true">
+        {levels.map((level) => {
+          const points = labels.map((_, index) => toPoint(level, index)).join(" ");
+          return <polygon key={level} points={points} className="radar-grid-line" />;
+        })}
+        {labels.map((label, index) => {
+          const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
+          const x = center + Math.cos(angle) * 92;
+          const y = center + Math.sin(angle) * 92;
+          return (
+            <g key={label[locale]}>
+              <line x1={center} y1={center} x2={x} y2={y} className="radar-axis" />
+              <text x={center + Math.cos(angle) * 108} y={center + Math.sin(angle) * 108} className="radar-label">
+                {label[locale]}
+              </text>
+            </g>
+          );
+        })}
+        <polygon points={polygon} className="radar-data" />
+      </svg>
+    </article>
+  );
+}
+
+function PlanningModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  return (
+    <ModuleFrame module={module} locale={locale}>
+      <ModuleContext module={module} locale={locale} />
+      <div className="cadence-table">
+        <div className="cadence-head">
+          <span>{locale === "es" ? "Cronograma operativo" : "Operational cadence"}</span>
+          <p>
+            {locale === "es"
+              ? "La planeacion ya no queda escondida en texto corrido. Aqui se ve como se reparte la semana de trabajo y que sale de cada bloque."
+              : "Planning no longer stays hidden in a paragraph. This shows how the work week is distributed and what comes out of each block."}
+          </p>
+        </div>
+        <div className="cadence-grid">
+          {weeklyCadence.map((row) => (
+            <article key={row.day[locale]} className="cadence-row">
+              <div>
+                <strong>{row.day[locale]}</strong>
+                <small>{row.time[locale]}</small>
+              </div>
+              <p>{row.focus[locale]}</p>
+              <span>{row.outcome[locale]}</span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </ModuleFrame>
+  );
+}
+
 function CanvasModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
     <ModuleFrame module={module} locale={locale}>
       <ModuleContext module={module} locale={locale} />
+      <InsightGrid items={canvasHighlights} locale={locale} className="canvas-highlight-grid" />
+      <div className="matrix-shell">
+        <div className="matrix-head">
+          <span>{locale === "es" ? "Descripcion del bien y business model canvas" : "Product description and business model canvas"}</span>
+        </div>
       <div className="canvas-board">
         {canvasBlocks.map((block) => (
           <article key={block.title.es}>
@@ -512,6 +655,8 @@ function CanvasModule({ module, locale }: { module: WorkModule; locale: Locale }
           </article>
         ))}
       </div>
+      </div>
+      <DocumentPreviewList documents={module.documents} locale={locale} />
     </ModuleFrame>
   );
 }
@@ -520,14 +665,27 @@ function SwotModule({ module, locale }: { module: WorkModule; locale: Locale }) 
   return (
     <ModuleFrame module={module} locale={locale}>
       <ModuleContext module={module} locale={locale} />
-      <div className="swot-board">
+      <div className="swot-summary-grid">
         {swotBlocks.map((block) => (
-          <article key={block.title.es}>
+          <article key={block.title.es} className="insight-card compact">
             <span>{block.title[locale]}</span>
             <p>{block.text[locale]}</p>
           </article>
         ))}
       </div>
+      <div className="swot-board detailed">
+        {swotDetailedBlocks.map((block) => (
+          <article key={block.title[locale]}>
+            <span>{block.title[locale]}</span>
+            <ul>
+              {block.items.map((item) => (
+                <li key={item[locale]}>{item[locale]}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <DocumentPreviewList documents={module.documents} locale={locale} />
     </ModuleFrame>
   );
 }
@@ -560,15 +718,79 @@ function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Loca
           ))}
         </div>
       </div>
+      <div className="radar-grid">
+        {diagnosticRadarSets.map((dataset) => (
+          <RadarCard
+            key={dataset.title[locale]}
+            title={dataset.title}
+            labels={dataset.labels}
+            values={dataset.values}
+            locale={locale}
+          />
+        ))}
+      </div>
+      <div className="snapshot-table">
+        <div className="snapshot-table-head">
+          <span>{locale === "es" ? "Lectura del Excel" : "Spreadsheet reading"}</span>
+          <p>
+            {locale === "es"
+              ? "La tabla baja a pantalla las dimensiones del diagnostico, con puntaje obtenido y techo maximo, para que la decision se lea sin abrir el archivo."
+              : "The table brings the diagnostic dimensions to screen, with achieved and maximum scores, so the decision can be read without opening the file."}
+          </p>
+        </div>
+        <div className="snapshot-grid">
+          {diagnosticSnapshots.map((row) => (
+            <article key={row.label} className="snapshot-row">
+              <strong>{row.label}</strong>
+              <span>{row.obtained}</span>
+              <small>{row.maximum}</small>
+            </article>
+          ))}
+        </div>
+      </div>
+      <div className="factor-grid">
+        {diagnosticFactors.map((group) => (
+          <article key={group.title[locale]} className="factor-card">
+            <span>{group.title[locale]}</span>
+            <ul>
+              {group.items.map((item) => (
+                <li key={item[locale]}>{item[locale]}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
       <DocumentPreviewList documents={module.documents} locale={locale} />
     </ModuleFrame>
   );
 }
 
 function TeamModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  const agreementModule = {
+    ...module,
+    body: module.body.filter((_, index) => ![7, 9, 10].includes(index)),
+  };
+
   return (
     <ModuleFrame module={module} locale={locale}>
-      <ModuleContext module={module} locale={locale} className="team-brief" />
+      <div className="team-brief-shell">
+        <ModuleContext module={agreementModule} locale={locale} className="team-brief" />
+      </div>
+      <InsightGrid items={agreementPillars} locale={locale} />
+      <div className="agreement-grid">
+        <BulletStack title={locale === "es" ? "Reglas de trabajo" : "Work rules"} items={agreementRules} locale={locale} />
+        <BulletStack title={locale === "es" ? "Consecuencias" : "Consequences"} items={agreementConsequences} locale={locale} />
+      </div>
+      <div className="entry-profile-grid">
+        {entryTestProfiles.map((profile) => (
+          <article key={profile.name} className="entry-profile-card">
+            <span>{locale === "es" ? "Prueba de entrada" : "Entry test"}</span>
+            <h3>{profile.name}</h3>
+            <strong>{profile.score}</strong>
+            <p>{profile.reading[locale]}</p>
+          </article>
+        ))}
+      </div>
       <div className="team-grid">
         {team.map((member, index) => (
           <article className="member-file" key={member.name}>
@@ -584,7 +806,53 @@ function TeamModule({ module, locale }: { module: WorkModule; locale: Locale }) 
   );
 }
 
+function SmartModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  return (
+    <ModuleFrame module={module} locale={locale}>
+      <div className="smart-objective-card">
+        <span>{locale === "es" ? "Objetivo SMART integrado" : "Integrated SMART goal"}</span>
+        <p>{smartObjective[locale]}</p>
+        <div className="tile-tags">
+          <i>12 meses</i>
+          <i>Texas</i>
+          <i>Georgia</i>
+          <i>50-70 unidades</i>
+          <i>USD 180-220</i>
+        </div>
+      </div>
+      <InsightGrid items={smartCriteria} locale={locale} />
+      <div className="smart-support-grid">
+        {module.body.slice(0, 2).map((paragraph) => (
+          <article key={paragraph[locale]} className="insight-card">
+            <span>{locale === "es" ? "Soporte del producto" : "Product support"}</span>
+            <p>{paragraph[locale]}</p>
+          </article>
+        ))}
+      </div>
+    </ModuleFrame>
+  );
+}
+
+function ViabilityModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  return (
+    <ModuleFrame module={module} locale={locale}>
+      <ModuleContext module={module} locale={locale} />
+      <InsightGrid items={viabilityPillars} locale={locale} />
+      <div className="territory-strip">
+        {module.highlights.map((highlight) => (
+          <article key={highlight[locale]} className="territory-card">
+            <HighlightText text={highlight[locale]} />
+          </article>
+        ))}
+      </div>
+    </ModuleFrame>
+  );
+}
+
 function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale }) {
+  if (module.id === "planeacion-equipo") return <PlanningModule module={module} locale={locale} />;
+  if (module.id === "thermo-seats-smart") return <SmartModule module={module} locale={locale} />;
+  if (module.id === "sostenibilidad-viabilidad") return <ViabilityModule module={module} locale={locale} />;
   if (module.type === "canvas") return <CanvasModule module={module} locale={locale} />;
   if (module.type === "swot") return <SwotModule module={module} locale={locale} />;
   if (module.type === "diagnostic") return <DiagnosticModule module={module} locale={locale} />;
