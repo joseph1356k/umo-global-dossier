@@ -180,7 +180,7 @@ export const documents: DocumentItem[] = [
     },
     href: "https://canva.link/yyqciefr16q7ji7",
     category: { es: "Canva", en: "Canva" },
-    actionLabel: { es: "Ir al Canva", en: "Open Canva" },
+    actionLabel: { es: "Abrir Canva Canvas", en: "Open Canvas Canva" },
   },
   {
     id: "canva-dofa",
