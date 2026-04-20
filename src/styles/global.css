@@ -458,8 +458,8 @@ main {
 .work-module p {
   margin: 0;
   color: rgba(245, 242, 232, 0.74);
-  font-size: 1.08rem;
-  line-height: 1.58;
+  font-size: 1.14rem;
+  line-height: 1.64;
 }
 
 .company-stats {
@@ -1049,6 +1049,19 @@ main {
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
   color: rgba(245, 242, 232, 0.8);
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+
+.editorial-module li strong {
+  color: var(--paper);
+  font-weight: 700;
+}
+
+.highlight-value {
+  color: var(--cyan);
+  font-style: normal;
+  font-weight: 700;
 }
 
 .canvas-board {
@@ -1324,6 +1337,7 @@ main {
 
 .visual-docs {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
 }
 
 .document-panel {

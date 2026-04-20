@@ -439,6 +439,30 @@ function DocumentActions({ documents, locale }: { documents: DocumentItem[]; loc
   );
 }
 
+function DocumentPreviewList({ documents, locale }: { documents: DocumentItem[]; locale: Locale }) {
+  const previewDocuments = documents.filter((document) => document.type === "image" && document.preview);
+
+  if (previewDocuments.length === 0) return null;
+
+  return (
+    <div className="visual-docs">
+      {previewDocuments.map((document) => (
+        <article key={document.id} className="document-panel">
+          <img src={document.preview} alt={document.title[locale]} loading="lazy" />
+          <div>
+            <span>{document.category[locale]}</span>
+            <h3>{document.title[locale]}</h3>
+            <p>{document.description[locale]}</p>
+            <a href={document.href} target="_blank" rel="noreferrer">
+              {document.actionLabel[locale]} <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function ModuleFrame({
   module,
   locale,
@@ -536,6 +560,7 @@ function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Loca
           ))}
         </div>
       </div>
+      <DocumentPreviewList documents={module.documents} locale={locale} />
     </ModuleFrame>
   );
 }
@@ -622,10 +647,37 @@ function ModuleContext({
       </div>
       <ul>
         {module.highlights.map((highlight) => (
-          <li key={highlight[locale]}>{highlight[locale]}</li>
+          <li key={highlight[locale]}>
+            <HighlightText text={highlight[locale]} />
+          </li>
         ))}
       </ul>
     </div>
+  );
+}
+
+function HighlightText({ text }: { text: string }) {
+  const [label, ...rest] = text.split(":");
+  const hasLabel = rest.length > 0;
+  const content = hasLabel ? rest.join(":").trim() : text;
+  const fragments = content.split(/(\d+(?:[.,]\d+)?%?)/g).filter(Boolean);
+
+  return (
+    <>
+      {hasLabel ? <strong>{label.trim()}:</strong> : null}{" "}
+      {fragments.map((fragment, index) => {
+        const isValue = /^\d+(?:[.,]\d+)?%?$/.test(fragment);
+        if (isValue) {
+          return (
+            <em key={`${fragment}-${index}`} className="highlight-value">
+              {fragment}
+            </em>
+          );
+        }
+
+        return <span key={`${fragment}-${index}`}>{fragment}</span>;
+      })}
+    </>
   );
 }
 

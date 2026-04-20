@@ -218,6 +218,19 @@ export const documents: DocumentItem[] = [
     category: { es: "SMART y viabilidad", en: "SMART and viability" },
     actionLabel: { es: "Ver documento original", en: "View original document" },
   },
+  {
+    id: "diagnostic-capture",
+    type: "image",
+    title: { es: "Resumen visual del diagnostico", en: "Diagnostic visual summary" },
+    description: {
+      es: "Captura del Excel con dimensiones, puntaje obtenido y puntaje maximo para leer el estado general de preparacion.",
+      en: "Spreadsheet capture with dimensions, achieved score and maximum score to read the overall readiness status.",
+    },
+    href: "/assets/content/diagnostico-pi-resumen.png",
+    preview: "/assets/content/diagnostico-pi-resumen.png",
+    category: { es: "Captura Excel", en: "Excel capture" },
+    actionLabel: { es: "Ver captura completa", en: "View full capture" },
+  },
 ];
 
 export const diagnosticMetrics = [
@@ -523,7 +536,7 @@ export const deliveries: Delivery[] = [
           { es: "Direccionamiento estrategico y alianzas: 100%.", en: "Strategic direction and alliances: 100%." },
           { es: "Talento humano y licencias/franquicias: zona critica.", en: "Talent and licenses/franchises: critical zone." },
         ],
-        documents: [documents[2]],
+        documents: [documents[2], documents[9]],
       },
       {
         id: "business-model-canvas",
