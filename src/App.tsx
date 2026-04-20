@@ -2,26 +2,31 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import {
   ArrowUpRight,
   Box,
-  ChevronRight,
+  Building2,
   Database,
+  ExternalLink,
   FileText,
   Image as ImageIcon,
   Languages,
   Menu,
+  PanelLeft,
   X,
 } from "lucide-react";
 import { Suspense, lazy, useEffect, useMemo, useState } from "react";
-import { Link, NavLink, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import type { ReactNode } from "react";
+import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
 import {
+  canvasBlocks,
+  companyProfile,
   deliveries,
   diagnosticMetrics,
-  documents,
-  objectives,
+  swotBlocks,
   team,
   type Delivery,
   type DocumentItem,
+  type WorkModule,
 } from "./data/content";
-import { copy, type Locale } from "./i18n/copy";
+import { type Locale } from "./i18n/copy";
 
 const DossierScene = lazy(() =>
   import("./components/DossierScene").then((module) => ({ default: module.DossierScene })),
@@ -31,6 +36,7 @@ const iconByType = {
   pdf: FileText,
   image: ImageIcon,
   spreadsheet: Database,
+  external: ExternalLink,
 };
 
 type BackendSnapshot = {
@@ -46,10 +52,6 @@ type BackendSnapshot = {
     objectives: number;
   };
 };
-
-function useCopy(locale: Locale) {
-  return copy[locale];
-}
 
 function useBackendSnapshot() {
   const [snapshot, setSnapshot] = useState<BackendSnapshot>({ online: false });
@@ -110,14 +112,10 @@ function Header({
   locale: Locale;
   setLocale: (locale: Locale) => void;
 }) {
-  const t = useCopy(locale);
   const [open, setOpen] = useState(false);
   const navItems = [
-    { href: "/entregas", label: t.nav.archive },
-    { href: "/#diagnostico", label: t.nav.diagnostic },
-    { href: "/#canvas", label: t.nav.canvas },
-    { href: "/#equipo", label: t.nav.team },
-    { href: "/#objetivos", label: t.nav.goals },
+    { href: "/", label: locale === "es" ? "UMO" : "UMO" },
+    { href: "/entregas", label: locale === "es" ? "Entregas" : "Deliveries" },
   ];
 
   return (
@@ -127,17 +125,14 @@ function Header({
         <small>Global Dossier</small>
       </Link>
       <nav className="desktop-nav" aria-label="Principal">
-        {navItems.map((item) =>
-          item.href.startsWith("/#") ? (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ) : (
-            <NavLink key={item.href} to={item.href}>
-              {item.label}
-            </NavLink>
-          ),
-        )}
+        {navItems.map((item) => (
+          <NavLink key={item.href} to={item.href} end={item.href === "/"}>
+            {item.label}
+          </NavLink>
+        ))}
+        <a href={companyProfile.website} target="_blank" rel="noreferrer">
+          {locale === "es" ? "Web oficial" : "Official site"}
+        </a>
       </nav>
       <div className="header-actions">
         <button className="lang-toggle" onClick={() => setLocale(locale === "es" ? "en" : "es")}>
@@ -159,17 +154,14 @@ function Header({
             <button onClick={() => setOpen(false)} aria-label="Cerrar menu">
               <X size={22} />
             </button>
-            {navItems.map((item) =>
-              item.href.startsWith("/#") ? (
-                <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
-                  {item.label}
-                </a>
-              ) : (
-                <Link key={item.href} to={item.href} onClick={() => setOpen(false)}>
-                  {item.label}
-                </Link>
-              ),
-            )}
+            {navItems.map((item) => (
+              <Link key={item.href} to={item.href} onClick={() => setOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
+            <a href={companyProfile.website} target="_blank" rel="noreferrer">
+              {locale === "es" ? "Web oficial" : "Official site"}
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -177,21 +169,19 @@ function Header({
   );
 }
 
-function Hero({ locale, backend }: { locale: Locale; backend: BackendSnapshot }) {
-  const t = useCopy(locale);
+function CompanyHero({ locale, backend }: { locale: Locale; backend: BackendSnapshot }) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 800], [0, 80]);
-  const readiness = backend.project?.readiness ?? 40;
 
   return (
-    <section className="hero">
+    <section className="hero company-hero">
       <Suspense fallback={<div className="scene-shell scene-fallback" />}>
         <DossierScene />
       </Suspense>
       <div className="scan-layer" />
       <motion.div className="hero-meta" style={{ y }}>
-        <span>{t.hero.kicker}</span>
-        <span>LAT 6.280 / LON -75.443</span>
+        <span>COMPANY PROFILE // INTERNATIONAL DOSSIER</span>
+        <span>MEDELLIN, ANTIOQUIA / ESIC</span>
       </motion.div>
       <motion.div
         className="hero-copy"
@@ -199,15 +189,19 @@ function Hero({ locale, backend }: { locale: Locale; backend: BackendSnapshot })
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.75, delay: 1.1 }}
       >
-        <span className="case-label">{t.hero.status}</span>
-        <h1>{t.hero.title}</h1>
-        <p>{t.hero.subtitle}</p>
+        <span className="case-label">{locale === "es" ? "Empresa foco" : "Focus company"}</span>
+        <h1>UMO S.A.</h1>
+        <p>
+          {locale === "es"
+            ? "Empresa colombiana con mas de cinco decadas de experiencia industrial en autopartes, accesorios para movilidad y soluciones de bienestar. Este dossier organiza su ruta de internacionalizacion hacia Estados Unidos."
+            : "Colombian company with more than five decades of industrial experience in auto parts, mobility accessories and wellness solutions. This dossier organizes its internationalization route into the United States."}
+        </p>
         <div className="hero-actions">
           <Link to="/entregas" className="primary-action">
-            {t.hero.primary} <ArrowUpRight size={18} />
+            {locale === "es" ? "Entrar al archivo" : "Enter archive"} <ArrowUpRight size={18} />
           </Link>
-          <a href="#diagnostico" className="secondary-action">
-            {t.hero.secondary}
+          <a href={companyProfile.website} target="_blank" rel="noreferrer" className="secondary-action">
+            {locale === "es" ? "Ver web oficial" : "Open official site"}
           </a>
         </div>
       </motion.div>
@@ -218,16 +212,16 @@ function Hero({ locale, backend }: { locale: Locale; backend: BackendSnapshot })
         transition={{ duration: 0.7, delay: 1.25 }}
       >
         <div>
-          <small>{t.hero.market}</small>
-          <strong>USA</strong>
+          <small>{locale === "es" ? "Fundacion" : "Founded"}</small>
+          <strong>1968</strong>
         </div>
         <div>
-          <small>{t.hero.route}</small>
-          <strong>ACTIVE</strong>
+          <small>{locale === "es" ? "Experiencia" : "Experience"}</small>
+          <strong>{companyProfile.experience} YEARS</strong>
         </div>
         <div>
-          <small>READINESS</small>
-          <strong>{readiness}%</strong>
+          <small>{locale === "es" ? "Equipo" : "Team"}</small>
+          <strong>{companyProfile.employees}</strong>
         </div>
         <div>
           <small>BACKEND</small>
@@ -256,69 +250,219 @@ function SectionIntro({
   );
 }
 
-function DeliveryTile({ delivery, locale, index }: { delivery: Delivery; locale: Locale; index: number }) {
-  const t = useCopy(locale);
+function CompanyHome({ locale, backend }: { locale: Locale; backend: BackendSnapshot }) {
   return (
-    <motion.article
-      className="delivery-tile"
-      initial={{ opacity: 0, y: 26 }}
+    <>
+      <CompanyHero locale={locale} backend={backend} />
+      <main>
+        <section className="company-section">
+          <SectionIntro
+            eyebrow="UMO / CONTEXT"
+            title={locale === "es" ? "Industria, confort y movilidad" : "Industry, comfort and mobility"}
+            subtitle={
+              locale === "es"
+                ? "La home funciona como portada editorial de la empresa: quien es, que produce y por que su caso tiene sentido para internacionalizacion."
+                : "The homepage works as the company's editorial cover: who it is, what it makes and why it makes sense as an internationalization case."
+            }
+          />
+          <div className="company-grid">
+            <article className="company-profile">
+              <Building2 size={24} />
+              <h3>{locale === "es" ? "Quienes son" : "Who they are"}</h3>
+              <p>
+                {locale === "es"
+                  ? "UMO S.A. es una empresa colombiana fundada el 18 de octubre de 1968. Su trayectoria combina fabricacion de autopartes, sillines para motos, almohadas y soluciones de bienestar con practicas empresariales responsables."
+                  : "UMO S.A. is a Colombian company founded on October 18, 1968. Its track record combines auto parts, motorcycle seats, pillows and wellness solutions with responsible business practices."}
+              </p>
+            </article>
+            <div className="company-stats">
+              <div>
+                <small>{locale === "es" ? "Empleados" : "Employees"}</small>
+                <strong>{companyProfile.employees}</strong>
+              </div>
+              <div>
+                <small>{locale === "es" ? "Aliados" : "Allies"}</small>
+                <strong>{companyProfile.allies}</strong>
+              </div>
+              <div>
+                <small>{locale === "es" ? "Certificaciones" : "Certifications"}</small>
+                <strong>{companyProfile.certifications.length}</strong>
+              </div>
+            </div>
+          </div>
+          <div className="business-lines">
+            {companyProfile.lines.map((line) => (
+              <article key={line.title.es}>
+                <span>{line.title[locale]}</span>
+                <p>{line.text[locale]}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="company-section">
+          <SectionIntro
+            eyebrow="TIMELINE / INDUSTRIAL MEMORY"
+            title={locale === "es" ? "Una empresa con historia productiva" : "A company with productive history"}
+            subtitle={
+              locale === "es"
+                ? "El dossier parte de una empresa con trayectoria real, no de una idea abstracta. Esa historia sostiene el analisis de entrada a Estados Unidos."
+                : "The dossier starts from a company with a real track record, not an abstract idea. That history supports the U.S. entry analysis."
+            }
+          />
+          <div className="timeline-strip">
+            {companyProfile.milestones.map((milestone) => (
+              <article key={milestone.year}>
+                <strong>{milestone.year}</strong>
+                <p>{milestone.text[locale]}</p>
+              </article>
+            ))}
+          </div>
+          <div className="cert-strip">
+            {companyProfile.certifications.map((certification) => (
+              <span key={certification}>{certification}</span>
+            ))}
+          </div>
+        </section>
+
+        <section className="company-section">
+          <SectionIntro
+            eyebrow="USA ENTRY / PROJECT FRAME"
+            title={locale === "es" ? "Por que internacionalizar" : "Why internationalize"}
+            subtitle={
+              locale === "es"
+                ? "El proyecto no solo guarda archivos: convierte entregas, matrices y diagnosticos en una lectura ordenada para decidir como UMO podria entrar al mercado estadounidense."
+                : "The project does not just store files: it turns submissions, matrices and diagnostics into an organized reading for deciding how UMO could enter the U.S. market."
+            }
+          />
+          <div className="entry-panel">
+            <p>
+              {locale === "es"
+                ? "La entrada a Estados Unidos exige conectar capacidad productiva, canales digitales, representantes comerciales, precio, certificaciones, idioma y diferenciacion de producto. Por eso las entregas viven en un archivo separado, modular y preparado para crecer."
+                : "Entering the United States requires connecting production capacity, digital channels, sales representatives, pricing, certifications, language and product differentiation. That is why deliveries live in a separate modular archive ready to scale."}
+            </p>
+            <Link to="/entregas" className="primary-action">
+              {locale === "es" ? "Ver sistema de entregas" : "View delivery system"}
+              <ArrowUpRight size={18} />
+            </Link>
+          </div>
+        </section>
+      </main>
+    </>
+  );
+}
+
+function DocumentActions({ documents, locale }: { documents: DocumentItem[]; locale: Locale }) {
+  if (documents.length === 0) {
+    return (
+      <div className="source-actions empty">
+        <span>{locale === "es" ? "Sin archivo cargado aun" : "No file uploaded yet"}</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="source-actions">
+      {documents.map((document) => {
+        const Icon = iconByType[document.type];
+        return (
+          <a key={document.id} href={document.href} target="_blank" rel="noreferrer">
+            <Icon size={16} />
+            {document.actionLabel[locale]}
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+function ModuleFrame({
+  module,
+  locale,
+  children,
+}: {
+  module: WorkModule;
+  locale: Locale;
+  children: ReactNode;
+}) {
+  return (
+    <motion.section
+      id={module.id}
+      className="work-module"
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.48, delay: index * 0.08 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.45 }}
     >
-      <div className="tile-index">{delivery.code}</div>
-      <div className="tile-body">
-        <span>{delivery.status[locale]}</span>
-        <h3>{delivery.title[locale]}</h3>
-        <p>{delivery.summary[locale]}</p>
+      <div className="module-head">
+        <span>{module.eyebrow[locale]}</span>
+        <h2>{module.title[locale]}</h2>
+        <p>{module.summary[locale]}</p>
       </div>
-      <div className="tile-tags">
-        {delivery.tags.map((tag) => (
-          <i key={tag}>{tag}</i>
-        ))}
-      </div>
-      <div className="tile-footer">
-        <small>
-          {delivery.documents.length} {t.archive.docs}
-        </small>
-        <Link to={`/entregas/${delivery.id}`}>
-          {t.archive.open} <ChevronRight size={16} />
-        </Link>
-      </div>
-    </motion.article>
+      {children}
+      <DocumentActions documents={module.documents} locale={locale} />
+    </motion.section>
   );
 }
 
-function ArchivePreview({ locale }: { locale: Locale }) {
-  const t = useCopy(locale);
+function GenericModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
-    <section className="archive-section" id="entregas">
-      <SectionIntro eyebrow="ARCHIVE / 01" title={t.archive.title} subtitle={t.archive.subtitle} />
-      <div className="delivery-grid">
-        {deliveries.map((delivery, index) => (
-          <DeliveryTile key={delivery.id} delivery={delivery} locale={locale} index={index} />
-        ))}
+    <ModuleFrame module={module} locale={locale}>
+      <div className="editorial-module">
+        <div>
+          {module.body.map((paragraph) => (
+            <p key={paragraph[locale]}>{paragraph[locale]}</p>
+          ))}
+        </div>
+        <ul>
+          {module.highlights.map((highlight) => (
+            <li key={highlight[locale]}>{highlight[locale]}</li>
+          ))}
+        </ul>
       </div>
-    </section>
+    </ModuleFrame>
   );
 }
 
-function Diagnostic({ locale }: { locale: Locale }) {
-  const t = useCopy(locale);
+function CanvasModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
-    <section className="diagnostic-section" id="diagnostico">
-      <SectionIntro eyebrow="RADAR / 02" title={t.diagnostic.title} subtitle={t.diagnostic.subtitle} />
-      <div className="diagnostic-layout">
-        <motion.div
-          className="score-panel"
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-        >
-          <span>{t.diagnostic.total}</span>
+    <ModuleFrame module={module} locale={locale}>
+      <div className="canvas-board">
+        {canvasBlocks.map((block) => (
+          <article key={block.title.es}>
+            <span>{block.title[locale]}</span>
+            <p>{block.text[locale]}</p>
+          </article>
+        ))}
+      </div>
+    </ModuleFrame>
+  );
+}
+
+function SwotModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  return (
+    <ModuleFrame module={module} locale={locale}>
+      <div className="swot-board">
+        {swotBlocks.map((block) => (
+          <article key={block.title.es}>
+            <span>{block.title[locale]}</span>
+            <p>{block.text[locale]}</p>
+          </article>
+        ))}
+      </div>
+    </ModuleFrame>
+  );
+}
+
+function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  return (
+    <ModuleFrame module={module} locale={locale}>
+      <div className="diagnostic-layout compact">
+        <div className="score-panel">
+          <span>{locale === "es" ? "Puntaje total" : "Total score"}</span>
           <strong>40.0%</strong>
-          <p>{t.diagnostic.insight}</p>
-        </motion.div>
+          <p>{module.body[0]?.[locale]}</p>
+        </div>
         <div className="metric-list">
           {diagnosticMetrics.map((metric) => (
             <div className="metric-row" key={metric.label}>
@@ -337,192 +481,99 @@ function Diagnostic({ locale }: { locale: Locale }) {
           ))}
         </div>
       </div>
-    </section>
+    </ModuleFrame>
   );
 }
 
-function DocumentPanel({ item, locale }: { item: DocumentItem; locale: Locale }) {
-  const t = useCopy(locale);
-  const Icon = iconByType[item.type];
+function TeamModule({ module, locale }: { module: WorkModule; locale: Locale }) {
   return (
-    <article className="document-panel">
-      {item.preview ? (
-        <img src={item.preview} alt={item.title[locale]} />
-      ) : (
-        <div className="document-icon">
-          <Icon size={34} />
-        </div>
-      )}
-      <div>
-        <span>{item.category[locale]}</span>
-        <h3>{item.title[locale]}</h3>
-        <p>{item.description[locale]}</p>
-        <a href={item.href} target="_blank" rel="noreferrer">
-          {item.type === "image" ? t.archive.view : t.archive.download}
-          <ArrowUpRight size={16} />
-        </a>
-      </div>
-    </article>
-  );
-}
-
-function CanvasAndMatrices({ locale }: { locale: Locale }) {
-  const t = useCopy(locale);
-  const visualDocs = documents.filter((doc) => doc.type === "image" && doc.id !== "umo-panorama");
-  return (
-    <section className="canvas-section" id="canvas">
-      <SectionIntro eyebrow="MODELS / 03" title={t.canvas.title} subtitle={t.canvas.subtitle} />
-      <div className="visual-docs">
-        {visualDocs.map((doc) => (
-          <DocumentPanel key={doc.id} item={doc} locale={locale} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Team({ locale }: { locale: Locale }) {
-  const t = useCopy(locale);
-  return (
-    <section className="team-section" id="equipo">
-      <SectionIntro eyebrow="CREW / 04" title={t.team.title} subtitle={t.team.subtitle} />
-      <div className="purpose-band">
-        <span>{t.team.purpose}</span>
-        <p>{t.team.purposeText}</p>
-      </div>
+    <ModuleFrame module={module} locale={locale}>
       <div className="team-grid">
         {team.map((member, index) => (
-          <motion.article
-            className="member-file"
-            key={member.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.06 }}
-          >
+          <article className="member-file" key={member.name}>
             <small>SUBJECT 0{index + 1}</small>
             <h3>{member.name}</h3>
             <span>{member.role[locale]}</span>
             <p>{member.strengths[locale]}</p>
             <i>{member.focus[locale]}</i>
-          </motion.article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Goals({ locale }: { locale: Locale }) {
-  const t = useCopy(locale);
-  return (
-    <section className="goals-section" id="objetivos">
-      <SectionIntro eyebrow="MISSION / 05" title={t.goals.title} subtitle={t.goals.subtitle} />
-      <div className="goal-rail">
-        {objectives.map((objective, index) => (
-          <article key={objective.id}>
-            <small>0{index + 1}</small>
-            <h3>{objective.label[locale]}</h3>
-            <p>{objective.text[locale]}</p>
           </article>
         ))}
       </div>
-    </section>
+    </ModuleFrame>
   );
 }
 
-function HomePage({ locale, backend }: { locale: Locale; backend: BackendSnapshot }) {
+function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale }) {
+  if (module.type === "canvas") return <CanvasModule module={module} locale={locale} />;
+  if (module.type === "swot") return <SwotModule module={module} locale={locale} />;
+  if (module.type === "diagnostic") return <DiagnosticModule module={module} locale={locale} />;
+  if (module.type === "team") return <TeamModule module={module} locale={locale} />;
+  return <GenericModule module={module} locale={locale} />;
+}
+
+function DeliveriesSidebar({
+  activeDelivery,
+  locale,
+}: {
+  activeDelivery: Delivery;
+  locale: Locale;
+}) {
   return (
-    <>
-      <Hero locale={locale} backend={backend} />
-      <main>
-        <ArchivePreview locale={locale} />
-        <Diagnostic locale={locale} />
-        <CanvasAndMatrices locale={locale} />
-        <Team locale={locale} />
-        <Goals locale={locale} />
-      </main>
-    </>
+    <aside className="delivery-sidebar">
+      <div className="sidebar-title">
+        <PanelLeft size={18} />
+        <span>{locale === "es" ? "Entregas" : "Deliveries"}</span>
+      </div>
+      <nav aria-label={locale === "es" ? "Navegacion de entregas" : "Delivery navigation"}>
+        {deliveries.map((delivery) => (
+          <NavLink
+            key={delivery.id}
+            to={`/entregas/${delivery.id}`}
+            className={delivery.id === activeDelivery.id ? "active" : ""}
+          >
+            <small>{delivery.code}</small>
+            <strong>{delivery.title[locale]}</strong>
+            <span>{delivery.modules.length} modulos</span>
+          </NavLink>
+        ))}
+      </nav>
+    </aside>
   );
 }
 
-function ArchivePage({ locale }: { locale: Locale }) {
-  const t = useCopy(locale);
-  const [filter, setFilter] = useState("all");
-  const tags = useMemo(() => Array.from(new Set(deliveries.flatMap((delivery) => delivery.tags))), []);
-  const visible = filter === "all" ? deliveries : deliveries.filter((delivery) => delivery.tags.includes(filter));
-
-  return (
-    <main className="page-shell archive-page">
-      <SectionIntro eyebrow="FULL ARCHIVE" title={t.archive.title} subtitle={t.archive.subtitle} />
-      <div className="filter-strip">
-        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>
-          {t.archive.all}
-        </button>
-        {tags.map((tag) => (
-          <button className={filter === tag ? "active" : ""} key={tag} onClick={() => setFilter(tag)}>
-            {tag}
-          </button>
-        ))}
-      </div>
-      <div className="delivery-grid archive-grid">
-        {visible.map((delivery, index) => (
-          <DeliveryTile key={delivery.id} delivery={delivery} locale={locale} index={index} />
-        ))}
-      </div>
-    </main>
-  );
-}
-
-function DeliveryDetail({ locale }: { locale: Locale }) {
+function DeliveryWorkspace({ locale }: { locale: Locale }) {
   const params = useParams();
-  const navigate = useNavigate();
-  const t = useCopy(locale);
-  const delivery = deliveries.find((item) => item.id === params.id);
-
-  if (!delivery) {
-    return (
-      <main className="page-shell">
-        <button className="back-button" onClick={() => navigate("/entregas")}>
-          {t.nav.back}
-        </button>
-        <h1>404</h1>
-      </main>
-    );
-  }
+  const activeDelivery = useMemo(
+    () => deliveries.find((delivery) => delivery.id === params.id) ?? deliveries[0],
+    [params.id],
+  );
 
   return (
-    <main className="page-shell detail-page">
-      <button className="back-button" onClick={() => navigate("/entregas")}>
-        {t.nav.back}
-      </button>
-      <section className="detail-hero">
-        <span>{delivery.code}</span>
-        <h1>{delivery.title[locale]}</h1>
-        <p>{delivery.summary[locale]}</p>
-        <div className="tile-tags">
-          {delivery.tags.map((tag) => (
-            <i key={tag}>{tag}</i>
-          ))}
-        </div>
-      </section>
-      <section className="detail-grid">
-        <div>
-          <h2>{t.detail.contents}</h2>
-          <div className="document-stack">
-            {delivery.documents.map((doc) => (
-              <DocumentPanel key={doc.id} item={doc} locale={locale} />
+    <main className="delivery-workspace">
+      <DeliveriesSidebar activeDelivery={activeDelivery} locale={locale} />
+      <section className="delivery-main">
+        <div className="delivery-cover">
+          <span>{activeDelivery.code}</span>
+          <h1>{activeDelivery.title[locale]}</h1>
+          <p>{activeDelivery.summary[locale]}</p>
+          <div className="tile-tags">
+            {activeDelivery.tags.map((tag) => (
+              <i key={tag}>{tag}</i>
             ))}
           </div>
         </div>
-        <aside className="signals-panel">
-          <span>{t.detail.signals}</span>
-          {delivery.signals.map((signal, index) => (
-            <p key={signal[locale]}>
-              <small>0{index + 1}</small>
-              {signal[locale]}
-            </p>
+        <nav className="module-nav" aria-label={locale === "es" ? "Trabajos internos" : "Internal work"}>
+          {activeDelivery.modules.map((module) => (
+            <a key={module.id} href={`#${module.id}`}>
+              {module.title[locale]}
+            </a>
           ))}
-        </aside>
+        </nav>
+        <div className="module-stack">
+          {activeDelivery.modules.map((module) => (
+            <WorkModuleView key={module.id} module={module} locale={locale} />
+          ))}
+        </div>
       </section>
     </main>
   );
@@ -543,9 +594,9 @@ function App() {
       <AnimatePresence>{loading && <Loader />}</AnimatePresence>
       <Header locale={locale} setLocale={setLocale} />
       <Routes>
-        <Route path="/" element={<HomePage locale={locale} backend={backend} />} />
-        <Route path="/entregas" element={<ArchivePage locale={locale} />} />
-        <Route path="/entregas/:id" element={<DeliveryDetail locale={locale} />} />
+        <Route path="/" element={<CompanyHome locale={locale} backend={backend} />} />
+        <Route path="/entregas" element={<DeliveryWorkspace locale={locale} />} />
+        <Route path="/entregas/:id" element={<DeliveryWorkspace locale={locale} />} />
       </Routes>
       <footer className="site-footer">
         <div>

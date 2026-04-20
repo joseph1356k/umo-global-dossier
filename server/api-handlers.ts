@@ -148,7 +148,12 @@ export function handleSearch(request: Request) {
       localizedText(delivery.summary, locale),
       localizedText(delivery.status, locale),
       delivery.tags.join(" "),
-      ...delivery.signals.map((signal) => localizedText(signal, locale)),
+      ...delivery.modules.flatMap((module) => [
+        localizedText(module.title, locale),
+        localizedText(module.summary, locale),
+        ...module.body.map((paragraph) => localizedText(paragraph, locale)),
+        ...module.highlights.map((highlight) => localizedText(highlight, locale)),
+      ]),
     ].join(" ");
     return normalize(haystack).includes(query);
   });
