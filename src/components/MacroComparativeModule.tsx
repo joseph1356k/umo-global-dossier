@@ -25,6 +25,8 @@ const floridaLabel = {
   en: "Florida",
 } satisfies Record<Locale, string>;
 
+const indicatorDisplayOrder = ["inflacion", "ingreso", "agricultura", "turfgrass", "fiscal", "desempleo"];
+
 function formatValue(value: number, unit: MacroIndicator["unit"], locale: Locale, precision = 1) {
   if (unit === "percent") return `${value.toFixed(precision)}%`;
 
@@ -45,12 +47,37 @@ function formatCompactValue(value: number, unit: MacroIndicator["unit"]) {
   return `USD ${value.toFixed(1)}B`;
 }
 
+function formatScoreValue(value: number) {
+  return value.toFixed(2).replace(/\.?0+$/, "");
+}
+
 function getStateStronger(indicator: MacroIndicator, locale: Locale) {
   if (indicator.texasScore === indicator.floridaScore) {
     return locale === "es" ? "Lectura compartida" : "Shared reading";
   }
 
   return indicator.texasScore > indicator.floridaScore ? texasLabel[locale] : floridaLabel[locale];
+}
+
+function getTooltipProps(index: number, total: number, left: string) {
+  if (index <= 0) {
+    return {
+      className: "macro-chart-tooltip is-left-edge",
+      style: undefined,
+    };
+  }
+
+  if (index >= total - 1) {
+    return {
+      className: "macro-chart-tooltip is-right-edge",
+      style: undefined,
+    };
+  }
+
+  return {
+    className: "macro-chart-tooltip",
+    style: { left },
+  };
 }
 
 function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator; locale: Locale }) {
@@ -100,6 +127,7 @@ function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator;
   const tooltipLeft = activePoint
     ? `${((activePoint.x - chart.left) / chart.plotWidth) * 100}%`
     : "50%";
+  const tooltipProps = getTooltipProps(activeIndex, chart.points.length, tooltipLeft);
 
   return (
     <div className="macro-chart-shell">
@@ -112,7 +140,7 @@ function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator;
       </div>
       <div className="macro-chart-frame">
         {activePoint ? (
-          <div className="macro-chart-tooltip" style={{ left: tooltipLeft }}>
+          <div className={tooltipProps.className} style={tooltipProps.style}>
             <strong>{activePoint.year}</strong>
             <span>{texasLabel[locale]}: {formatValue(activePoint.texas, indicator.unit, locale, indicator.precision ?? 1)}</span>
             <span>{floridaLabel[locale]}: {formatValue(activePoint.florida, indicator.unit, locale, indicator.precision ?? 1)}</span>
@@ -236,6 +264,7 @@ function BarComparisonChart({ indicator, locale }: { indicator: MacroIndicator; 
   const tooltipLeft = activePoint
     ? `${((activePoint.groupX - chart.left) / chart.plotWidth) * 100}%`
     : "50%";
+  const tooltipProps = getTooltipProps(activeIndex, chart.points.length, tooltipLeft);
 
   return (
     <div className="macro-chart-shell">
@@ -245,7 +274,7 @@ function BarComparisonChart({ indicator, locale }: { indicator: MacroIndicator; 
       </div>
       <div className="macro-chart-frame">
         {activePoint ? (
-          <div className="macro-chart-tooltip" style={{ left: tooltipLeft }}>
+          <div className={tooltipProps.className} style={tooltipProps.style}>
             <strong>{activePoint.year}</strong>
             <span>{texasLabel[locale]}: {formatValue(activePoint.texas, indicator.unit, locale, indicator.precision ?? 1)}</span>
             <span>{floridaLabel[locale]}: {formatValue(activePoint.florida, indicator.unit, locale, indicator.precision ?? 1)}</span>
@@ -405,11 +434,11 @@ function IndicatorCard({ indicator, locale }: { indicator: MacroIndicator; local
         <div className="score-pair">
           <div className="score-chip">
             <small>{texasLabel[locale]}</small>
-            <strong>{indicator.texasScore.toFixed(1)}</strong>
+            <strong>{formatScoreValue(indicator.texasScore)}</strong>
           </div>
           <div className="score-chip">
             <small>{floridaLabel[locale]}</small>
-            <strong>{indicator.floridaScore.toFixed(1)}</strong>
+            <strong>{formatScoreValue(indicator.floridaScore)}</strong>
           </div>
         </div>
       </header>
@@ -436,8 +465,8 @@ function IndicatorCard({ indicator, locale }: { indicator: MacroIndicator; local
         </article>
         <article className="analysis-block rating-block">
           <span>{locale === "es" ? "Calificacion" : "Rating"}</span>
-          <p><strong>{texasLabel[locale]} {indicator.texasScore.toFixed(1)}/5:</strong> {indicator.texasReason[locale]}</p>
-          <p><strong>{floridaLabel[locale]} {indicator.floridaScore.toFixed(1)}/5:</strong> {indicator.floridaReason[locale]}</p>
+          <p><strong>{texasLabel[locale]} {formatScoreValue(indicator.texasScore)}/5:</strong> {indicator.texasReason[locale]}</p>
+          <p><strong>{floridaLabel[locale]} {formatScoreValue(indicator.floridaScore)}/5:</strong> {indicator.floridaReason[locale]}</p>
         </article>
       </div>
 
@@ -464,7 +493,9 @@ function IndicatorCard({ indicator, locale }: { indicator: MacroIndicator; local
 
 function SummaryMatrix({ locale }: { locale: Locale }) {
   const summary = useMemo(() => {
-    const rows = macroIndicators.map((indicator) => ({
+    const rows = [...macroIndicators]
+      .sort((left, right) => indicatorDisplayOrder.indexOf(left.id) - indicatorDisplayOrder.indexOf(right.id))
+      .map((indicator) => ({
       id: indicator.id,
       title: indicator.title[locale],
       texas: indicator.texasScore,
@@ -507,16 +538,16 @@ function SummaryMatrix({ locale }: { locale: Locale }) {
             {summary.rows.map((row) => (
               <tr key={row.id}>
                 <th>{row.title}</th>
-                <td>{row.texas.toFixed(1)}</td>
-                <td>{row.florida.toFixed(1)}</td>
+                <td>{formatScoreValue(row.texas)}</td>
+                <td>{formatScoreValue(row.florida)}</td>
                 <td>{row.stronger}</td>
                 <td>{row.reading}</td>
               </tr>
             ))}
             <tr className="summary-average-row">
               <th>{locale === "es" ? "Promedio final" : "Final average"}</th>
-              <td>{summary.texasAverage.toFixed(1)}</td>
-              <td>{summary.floridaAverage.toFixed(1)}</td>
+              <td>{formatScoreValue(summary.texasAverage)}</td>
+              <td>{formatScoreValue(summary.floridaAverage)}</td>
               <td>{summary.texasAverage > summary.floridaAverage ? texasLabel[locale] : floridaLabel[locale]}</td>
               <td>
                 {summary.texasAverage > summary.floridaAverage
@@ -536,6 +567,14 @@ function SummaryMatrix({ locale }: { locale: Locale }) {
 }
 
 export default function MacroComparativeModule({ locale }: { locale: Locale }) {
+  const orderedIndicators = useMemo(
+    () =>
+      [...macroIndicators].sort(
+        (left, right) => indicatorDisplayOrder.indexOf(left.id) - indicatorDisplayOrder.indexOf(right.id),
+      ),
+    [],
+  );
+
   return (
     <div className="macro-module-shell">
       <section className="macro-executive-hero">
@@ -590,7 +629,7 @@ export default function MacroComparativeModule({ locale }: { locale: Locale }) {
       </section>
 
       <section className="indicator-stack">
-        {macroIndicators.map((indicator) => (
+        {orderedIndicators.map((indicator) => (
           <IndicatorCard key={indicator.id} indicator={indicator} locale={locale} />
         ))}
       </section>

@@ -127,8 +127,8 @@ export const macroPresentationCards = [
 export const macroMethodology = {
   title: { es: "Metodologia de calificacion", en: "Scoring methodology" },
   text: {
-    es: "La calificacion de 1 a 5 mide que tan favorable es cada indicador para la internacionalizacion de UMO. La escala no busca declarar un estado como ganador absoluto, sino identificar el rol estrategico de cada mercado. El Excel del equipo se usa como fuente principal para series historicas; el indicador de desempleo se completa con BLS porque no venia cargado en la hoja original.",
-    en: "The 1 to 5 score measures how favorable each indicator is for UMO's internationalization. The scale does not try to declare an absolute winner, but rather identify the strategic role of each market. The team spreadsheet is used as the primary source for historical series; the unemployment indicator is completed with BLS because it was not included in the original workbook.",
+    es: "La calificacion se normaliza sobre 5. En cada indicador, el estado con mejor desempeno recibe 5 y el otro se calcula proporcionalmente con base en ese valor. Esto permite comparar magnitudes distintas con una misma escala sin perder la lectura estrategica. El Excel del equipo se usa como fuente principal para series historicas; el indicador de desempleo se completa con BLS porque no venia cargado en la hoja original.",
+    en: "The score is normalized to 5. In each indicator, the stronger state receives 5 and the other is calculated proportionally from that value. This makes it possible to compare different magnitudes on a common scale without losing the strategic reading. The team workbook is used as the primary source for historical series; the unemployment indicator is completed with BLS because it was not included in the original file.",
   },
   scale: [
     { label: { es: "1 = Muy desfavorable", en: "1 = Very unfavorable" } },
@@ -181,15 +181,15 @@ export const macroIndicators: MacroIndicator[] = [
       es: "Ayuda a entrar con una oferta de valor mas clara en repuestos premium y reduce volatilidad comercial durante el piloto.",
       en: "It helps enter with a clearer premium-aftermarket value proposition and reduces commercial volatility during the pilot.",
     },
-    texasScore: 4.2,
-    floridaScore: 4.5,
+    texasScore: 3.5,
+    floridaScore: 5,
     texasReason: {
-      es: "Texas mantiene estabilidad suficiente y soporta mejor presion de precios por volumen y resiliencia operativa.",
-      en: "Texas remains stable enough and supports price pressure better through volume and operational resilience.",
+      es: "Texas queda en 3.5/5 porque su inflacion de referencia es mas alta que la de Florida en la lectura comparativa usada por el equipo.",
+      en: "Texas lands at 3.5/5 because its reference inflation is higher than Florida's in the team's comparison model.",
     },
     floridaReason: {
-      es: "Florida muestra la salida inflacionaria mas limpia hacia 2026, lo que favorece una prueba comercial con menor ruido de precios.",
-      en: "Florida shows the cleanest inflation exit into 2026, favoring a commercial test with less pricing noise.",
+      es: "Florida recibe 5/5 porque muestra la mejor estabilidad relativa de precios en el punto de comparacion utilizado para calificar.",
+      en: "Florida receives 5/5 because it shows the strongest relative price stability at the comparison point used for scoring.",
     },
     strategicReading: {
       es: "Florida reduce incertidumbre de precio; Texas la compensa con escala y resiliencia.",
@@ -239,14 +239,14 @@ export const macroIndicators: MacroIndicator[] = [
       en: "It allows UMO to defend specialized seats and cushions against low-cost brands with a value and lifespan argument.",
     },
     texasScore: 5,
-    floridaScore: 4.8,
+    floridaScore: 4.94,
     texasReason: {
       es: "Texas combina ingreso alto con mas escala economica, mayor base B2B y mas volumen potencial para expansion.",
       en: "Texas combines high income with more economic scale, a larger B2B base and more potential volume for expansion.",
     },
     floridaReason: {
-      es: "Florida mantiene un ingreso casi equivalente, suficiente para sostener segmentos premium, residenciales y de paisajismo.",
-      en: "Florida maintains almost equivalent income, enough to sustain premium, residential and landscaping segments.",
+      es: "Florida queda en 4.94/5 porque su ingreso per capita es casi equivalente al de Texas y conserva capacidad de compra muy alta.",
+      en: "Florida lands at 4.94/5 because its per capita income is almost equivalent to Texas and preserves strong purchasing power.",
     },
     strategicReading: {
       es: "Texas lidera por escala; Florida sigue siendo solvente para un posicionamiento premium y residencial.",
@@ -269,7 +269,7 @@ export const macroIndicators: MacroIndicator[] = [
   {
     id: "desempleo",
     title: { es: "Tasa de desempleo y estabilidad laboral", en: "Unemployment rate and labor stability" },
-    kicker: { es: "Indicador 03", en: "Indicator 03" },
+    kicker: { es: "Indicador 06", en: "Indicator 06" },
     chart: "line",
     unit: "percent",
     precision: 1,
@@ -285,8 +285,8 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Unemployment grounds the purchasing-power reading. High income alone is not enough; labor stability also matters. Florida keeps lower rates from 2022 through 2025, suggesting a more continuous service and consumption base. Texas does not show a negative signal, but it moves in a slightly higher range. For UMO this matters because its products depend on operators, contractors, workshops, landscapers and companies that renew equipment when activity stays stable.",
     },
     keyData: {
-      es: "Florida mantiene menor desempleo anual promedio desde 2022; Texas se estabiliza alrededor de 4.0%-4.1%.",
-      en: "Florida keeps lower annual average unemployment from 2022 onward; Texas stabilizes around 4.0%-4.1%.",
+      es: "En 2025 Florida cierra en 3.8% y Texas en 4.1%; por eso Florida toma el 5 y Texas se calcula relativo a ese valor.",
+      en: "In 2025 Florida closes at 3.8% and Texas at 4.1%; Florida takes the 5 and Texas is calculated relative to that value.",
     },
     meaning: {
       es: "Un mercado con empleo mas estable sostiene mejor compras recurrentes y contratos de mantenimiento.",
@@ -296,23 +296,23 @@ export const macroIndicators: MacroIndicator[] = [
       es: "Refuerza la viabilidad de vender accesorios y repuestos a empresas de paisajismo, mantenimiento y operacion de maquinaria.",
       en: "It reinforces the viability of selling accessories and spare parts to landscaping, maintenance and machinery-operation businesses.",
     },
-    texasScore: 4.2,
-    floridaScore: 4.6,
+    texasScore: 4.63,
+    floridaScore: 5,
     texasReason: {
-      es: "Texas sigue siendo estable para negocios y flotas, aunque con una tasa anual promedio un poco mas alta que Florida.",
-      en: "Texas remains stable for businesses and fleets, although with a slightly higher annual average rate than Florida.",
+      es: "Texas queda en 4.63/5 porque su desempleo es ligeramente mas alto que el de Florida en el cierre comparado.",
+      en: "Texas lands at 4.63/5 because its unemployment rate is slightly higher than Florida's in the closing comparison.",
     },
     floridaReason: {
-      es: "Florida sostiene mejor continuidad laboral y complementa muy bien la lectura de ingreso per capita.",
-      en: "Florida sustains labor continuity better and complements the per capita income reading well.",
+      es: "Florida recibe 5/5 porque registra la mejor estabilidad laboral relativa dentro de la comparacion construida para este indicador.",
+      en: "Florida receives 5/5 because it records the strongest relative labor stability in the comparison built for this indicator.",
     },
     strategicReading: {
-      es: "Florida refuerza la continuidad del consumo; Texas conserva dinamica suficiente para una base operativa amplia.",
-      en: "Florida reinforces continuity of demand; Texas preserves enough momentum for a broad operating base.",
+      es: "Florida sostiene mejor continuidad laboral; Texas sigue siendo funcional para operar a escala, pero con una ligera desventaja relativa.",
+      en: "Florida sustains better labor continuity; Texas remains functional for scale, but with a slight relative disadvantage.",
     },
     footnote: {
-      es: "Este es el unico indicador completado fuera del Excel original porque la hoja no venia con serie de desempleo. Se usaron promedios anuales oficiales de BLS.",
-      en: "This is the only indicator completed outside the original workbook because the sheet did not include an unemployment series. Official BLS annual averages were used.",
+      es: "Este es el unico indicador completado fuera del Excel original porque la hoja no venia con serie de desempleo. Se usaron datos oficiales de BLS y la misma regla comparativa de 5 puntos.",
+      en: "This is the only indicator completed outside the original workbook because the sheet did not include an unemployment series. Official BLS data and the same 5-point comparison rule were used.",
     },
     sources: [
       { label: { es: "BLS Local Area Unemployment Statistics", en: "BLS Local Area Unemployment Statistics" }, href: "https://www.bls.gov/lau/" },
@@ -326,7 +326,7 @@ export const macroIndicators: MacroIndicator[] = [
   {
     id: "agricultura",
     title: { es: "Valor de la produccion agricola", en: "Agricultural production value" },
-    kicker: { es: "Indicador 04", en: "Indicator 04" },
+    kicker: { es: "Indicador 03", en: "Indicator 03" },
     chart: "bar",
     unit: "billions",
     precision: 1,
@@ -354,14 +354,14 @@ export const macroIndicators: MacroIndicator[] = [
       en: "It reinforces Texas as the first territory to open relationships with distributors, workshops and machinery operators.",
     },
     texasScore: 5,
-    floridaScore: 3.8,
+    floridaScore: 1.16,
     texasReason: {
       es: "La escala agricola y la relacion con maquinaria convierten a Texas en el mejor punto de arranque productivo.",
       en: "Agricultural scale and its link to machinery make Texas the best productive starting point.",
     },
     floridaReason: {
-      es: "Florida tiene agricultura relevante, pero mas limitada para una entrada basada en volumen y aftermarket mecanizado.",
-      en: "Florida has relevant agriculture, but is more limited for an entry based on volume and mechanized aftermarket demand.",
+      es: "Florida queda en 1.16/5 porque su escala agricola es muy inferior a la de Texas en la comparacion 2025 usada para calificar.",
+      en: "Florida lands at 1.16/5 because its agricultural scale is far below Texas in the 2025 comparison used for scoring.",
     },
     strategicReading: {
       es: "Texas domina por escala y cercania al uso intensivo de maquinaria.",
@@ -385,7 +385,7 @@ export const macroIndicators: MacroIndicator[] = [
   {
     id: "turfgrass",
     title: { es: "Industria turfgrass y cesped profesional", en: "Turfgrass and professional lawn industry" },
-    kicker: { es: "Indicador 05", en: "Indicator 05" },
+    kicker: { es: "Indicador 04", en: "Indicator 04" },
     chart: "bar",
     unit: "billions",
     precision: 1,
@@ -412,11 +412,11 @@ export const macroIndicators: MacroIndicator[] = [
       es: "Florida encaja muy bien para vender mejoras de confort y reposicion en podadoras de paisajismo, hoteleria y servicios verdes.",
       en: "Florida fits very well for selling comfort upgrades and replacement parts for landscaping, hospitality and green-service mowers.",
     },
-    texasScore: 4.7,
+    texasScore: 4.47,
     floridaScore: 5,
     texasReason: {
-      es: "Texas conserva una industria amplia y rentable, con volumen suficiente para operar tambien este frente.",
-      en: "Texas still keeps a large and profitable industry, with enough volume to operate this front as well.",
+      es: "Texas queda en 4.47/5 porque sigue siendo grande, pero Florida marca la referencia maxima en turfgrass.",
+      en: "Texas lands at 4.47/5 because it remains large, but Florida sets the maximum reference in turfgrass.",
     },
     floridaReason: {
       es: "Florida domina por continuidad climatica, mantenimiento de areas verdes y consumo premium ligado a paisajismo y turismo.",
@@ -443,7 +443,7 @@ export const macroIndicators: MacroIndicator[] = [
   {
     id: "fiscal",
     title: { es: "Contexto fiscal estatal e impuestos aplicables", en: "State tax context and applicable taxes" },
-    kicker: { es: "Indicador 06", en: "Indicator 06" },
+    kicker: { es: "Indicador 05", en: "Indicator 05" },
     chart: "fiscal",
     unit: "percent",
     summary: {
@@ -463,18 +463,18 @@ export const macroIndicators: MacroIndicator[] = [
       en: "It allows UMO to prepare distribution, billing and compliance with a more ordered and realistic entry model.",
     },
     texasScore: 4.8,
-    floridaScore: 4.5,
+    floridaScore: 5,
     texasReason: {
-      es: "Texas favorece el arranque por su nexus mas alto y por no usar impuesto corporativo tradicional, aunque puede aplicar franchise tax.",
-      en: "Texas favors early-stage entry thanks to its higher nexus threshold and lack of a traditional corporate income tax, although franchise tax may apply.",
+      es: "Texas queda en 4.8/5 en la comparacion de sales tax, porque 6.25% es ligeramente superior al 6% de Florida.",
+      en: "Texas lands at 4.8/5 in the sales-tax comparison because 6.25% is slightly above Florida's 6%.",
     },
     floridaReason: {
-      es: "Florida sigue siendo amigable para negocios, pero exige leer mejor la carga corporativa y la activacion temprana de nexus.",
-      en: "Florida remains business-friendly, but it requires closer attention to corporate tax and earlier nexus activation.",
+      es: "Florida recibe 5/5 por la menor tasa base de sales tax en la regla comparativa del cuadro, aunque sigue exigiendo lectura de impuesto corporativo y nexus.",
+      en: "Florida receives 5/5 because of the lower base sales-tax rate in the comparison rule, although it still requires attention to corporate tax and nexus.",
     },
     strategicReading: {
-      es: "Texas ofrece una rampa operativa mas amplia; Florida sigue siendo competitivo, pero con mayor disciplina fiscal desde el inicio.",
-      en: "Texas offers a wider operational runway; Florida remains competitive, but with tighter tax discipline from the start.",
+      es: "Florida gana la comparacion de tasa base; Texas conserva atractivo operativo por franchise tax y umbral de nexus mas amplio.",
+      en: "Florida wins the base-rate comparison; Texas keeps operational appeal through franchise tax treatment and a wider nexus threshold.",
     },
     footnote: {
       es: "Este indicador se presenta como contexto de operacion, no como comercio exterior. La recomendacion fiscal no reemplaza asesoria tributaria local.",
