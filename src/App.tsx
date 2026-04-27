@@ -16,6 +16,7 @@ import {
 import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
+import MacroComparativeModuleContent from "./components/MacroComparativeModule";
 import {
   agreementConsequences,
   agreementPillars,
@@ -82,6 +83,7 @@ const moduleArchiveTags: Record<string, string[]> = {
   dofa: ["swot", "strategy", "analysis"],
   "thermo-seats-smart": ["smart", "strategy", "product"],
   "sostenibilidad-viabilidad": ["sustainability", "viability", "market"],
+  "macro-texas-florida": ["market", "research", "macro", "states"],
   "mercado-eeuu": ["market", "research", "pricing"],
   "plan-accion": ["execution", "timeline", "planning"],
   "indicadores-ejecucion": ["execution", "data", "budget"],
@@ -118,14 +120,11 @@ function useDeferredDesktopScene() {
   const [shouldLoadScene, setShouldLoadScene] = useState(false);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
     let frameId = 0;
     let timer = 0;
 
     frameId = window.requestAnimationFrame(() => {
-      timer = window.setTimeout(() => setShouldLoadScene(true), 120);
+      timer = window.setTimeout(() => setShouldLoadScene(true), 40);
     });
 
     return () => {
@@ -138,7 +137,16 @@ function useDeferredDesktopScene() {
 }
 
 function ScenePlaceholder() {
-  return <div className="scene-shell scene-fallback scene-fallback-motion" aria-hidden="true" />;
+  return (
+    <div className="scene-shell scene-fallback scene-fallback-motion" aria-hidden="true">
+      <span className="fallback-galaxy-field" />
+      <span className="fallback-galaxy-trace fallback-galaxy-trace-a" />
+      <span className="fallback-galaxy-trace fallback-galaxy-trace-b" />
+      <span className="fallback-galaxy-ring fallback-galaxy-ring-primary" />
+      <span className="fallback-galaxy-ring fallback-galaxy-ring-secondary" />
+      <span className="fallback-galaxy-ring fallback-galaxy-ring-tertiary" />
+    </div>
+  );
 }
 
 function useBackendSnapshot() {
@@ -865,7 +873,16 @@ function ViabilityModule({ module, locale }: { module: WorkModule; locale: Local
   );
 }
 
+function MacroComparativeModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  return (
+    <ModuleFrame module={module} locale={locale}>
+      <MacroComparativeModuleContent locale={locale} />
+    </ModuleFrame>
+  );
+}
+
 function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale }) {
+  if (module.id === "macro-texas-florida") return <MacroComparativeModule module={module} locale={locale} />;
   if (module.id === "planeacion-equipo") return <PlanningModule module={module} locale={locale} />;
   if (module.id === "thermo-seats-smart") return <SmartModule module={module} locale={locale} />;
   if (module.id === "sostenibilidad-viabilidad") return <ViabilityModule module={module} locale={locale} />;
@@ -1217,8 +1234,8 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
         title={locale === "es" ? "Archivo de entregas" : "Delivery archive"}
         subtitle={
           locale === "es"
-            ? "Entrega 01 concentra los trabajos cargados: equipo, planeacion, diagnostico, Canvas, DOFA, SMART y sostenibilidad."
-            : "Delivery 01 contains the loaded work: team, planning, diagnostic, Canvas, SWOT, SMART and sustainability."
+            ? "Entregas 01 y 02 ya estan organizadas como archivo vivo: acuerdo de equipo, diagnostico base, Canvas, DOFA, SMART, sostenibilidad y comparacion Texas vs Florida."
+            : "Deliveries 01 and 02 are already organized as a living archive: team agreement, baseline diagnostic, Canvas, SWOT, SMART, sustainability and the Texas vs Florida comparison."
         }
       />
 

@@ -266,6 +266,30 @@ export const documents: DocumentItem[] = [
     category: { es: "Captura Excel", en: "Excel capture" },
     actionLabel: { es: "Ver captura completa", en: "View full capture" },
   },
+  {
+    id: "macro-excel",
+    type: "spreadsheet",
+    title: { es: "Analisis macroeconomico Texas y Florida", en: "Texas and Florida macro analysis" },
+    description: {
+      es: "Excel base con las seis series comparativas para construir la Entrega 02 dentro del dossier.",
+      en: "Base spreadsheet with the six comparative series used to build Delivery 02 inside the dossier.",
+    },
+    href: "/assets/content/macro-texas-florida.xlsx",
+    category: { es: "Macro datos", en: "Macro data" },
+    actionLabel: { es: "Abrir Excel base", en: "Open base spreadsheet" },
+  },
+  {
+    id: "macro-brief",
+    type: "external",
+    title: { es: "Documento de analisis macro", en: "Macro analysis document" },
+    description: {
+      es: "Documento de apoyo con la narrativa comparativa Texas vs Florida y criterios de interpretacion.",
+      en: "Support document with the Texas vs Florida comparative narrative and interpretation criteria.",
+    },
+    href: "/assets/content/macro-texas-florida.docx",
+    category: { es: "Texto base", en: "Base text" },
+    actionLabel: { es: "Abrir documento base", en: "Open base document" },
+  },
 ];
 
 export const diagnosticMetrics = [
@@ -1082,15 +1106,29 @@ export const deliveries: Delivery[] = [
     id: "entrega-2",
     number: 2,
     code: "ENTREGA 02",
-    status: { es: "Proxima carpeta", en: "Next folder" },
-    date: "2026-04-30",
+    status: { es: "Entrega cargada", en: "Loaded delivery" },
+    date: "2026-04-26",
     title: { es: "Investigacion comercial", en: "Commercial research" },
     summary: {
-      es: "Espacio preparado para proximas fuentes: mercado, competencia, canales, pricing, entrevistas y evidencia comercial.",
-      en: "Prepared space for upcoming sources: market, competition, channels, pricing, interviews and commercial evidence.",
+      es: "Comparacion macroeconomica y sectorial para decidir como deben leerse Texas y Florida dentro de la expansion de UMO hacia Estados Unidos.",
+      en: "Macroeconomic and sector comparison to decide how Texas and Florida should be read inside UMO's expansion into the United States.",
     },
-    tags: ["market", "research", "pricing"],
-    modules: [],
+    tags: ["market", "research", "macro", "strategy"],
+    modules: [
+      {
+        id: "macro-texas-florida",
+        type: "visual",
+        eyebrow: { es: "Trabajo 01", en: "Work 01" },
+        title: { es: "Texas vs Florida", en: "Texas vs Florida" },
+        summary: {
+          es: "Analisis macroeconomico comparativo con seis indicadores para sustentar a Texas como mercado principal y a Florida como mercado complementario/premium.",
+          en: "Comparative macro analysis with six indicators to support Texas as the main market and Florida as the complementary / premium market.",
+        },
+        body: [],
+        highlights: [],
+        documents: [documents[10], documents[11]],
+      },
+    ],
   },
   {
     id: "entrega-3",
