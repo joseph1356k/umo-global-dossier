@@ -905,8 +905,7 @@ const ArchiveWorkTile = memo(function ArchiveWorkTile({ item, locale }: { item: 
       transition={{ duration: 0.28 }}
     >
       <div className="tile-body">
-        <div className="archive-case-row">
-          <span className="tile-index">{delivery.code}</span>
+        <div className="archive-case-row archive-case-row--solo">
           <span>{module.eyebrow[locale]}</span>
         </div>
         <span>{delivery.status[locale]}</span>
@@ -1006,8 +1005,7 @@ function DeliveryCompilationPanel({ locale }: { locale: Locale }) {
           return (
             <article key={delivery.id} className={`delivery-tile compilation-tile${delivery.modules.length === 0 ? " is-future" : ""}`}>
               <div className="tile-body">
-                <div className="archive-case-row">
-                  <span className="tile-index">{delivery.code}</span>
+                <div className="archive-case-row archive-case-row--solo">
                   <span>{delivery.modules.length > 0 ? delivery.status[locale] : locale === "es" ? "Carpeta futura" : "Future folder"}</span>
                 </div>
                 <h3>{delivery.title[locale]}</h3>
@@ -1396,8 +1394,7 @@ function DeliveryCardGrid({ delivery, locale }: { delivery: Delivery; locale: Lo
     <div className="delivery-grid delivery-card-grid">
       <article className="delivery-tile delivery-summary-card is-special">
         <div className="tile-body">
-          <div className="archive-case-row">
-            <span className="tile-index">{delivery.code}</span>
+          <div className="archive-case-row archive-case-row--solo">
             <span>{locale === "es" ? "Tarjeta general" : "General card"}</span>
           </div>
           <h3>{locale === "es" ? "Recopilacion general" : "General compilation"}</h3>
@@ -1423,8 +1420,7 @@ function DeliveryCardGrid({ delivery, locale }: { delivery: Delivery; locale: Lo
       {delivery.modules.map((module) => (
         <article key={module.id} className="delivery-tile archive-work-tile">
           <div className="tile-body">
-            <div className="archive-case-row">
-              <span className="tile-index">{delivery.code}</span>
+            <div className="archive-case-row archive-case-row--solo">
               <span>{module.eyebrow[locale]}</span>
             </div>
             <span>{locale === "es" ? "Trabajo individual" : "Individual work"}</span>
