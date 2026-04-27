@@ -456,7 +456,7 @@ function IndicatorCard({ indicator, locale }: { indicator: MacroIndicator; local
           <p>{indicator.keyData[locale]}</p>
         </article>
         <article className="analysis-block">
-          <span>{locale === "es" ? "Que significa" : "What it means"}</span>
+          <span>{locale === "es" ? "Qué significa" : "What it means"}</span>
           <p>{indicator.meaning[locale]}</p>
         </article>
         <article className="analysis-block">
@@ -464,7 +464,7 @@ function IndicatorCard({ indicator, locale }: { indicator: MacroIndicator; local
           <p>{indicator.impact[locale]}</p>
         </article>
         <article className="analysis-block rating-block">
-          <span>{locale === "es" ? "Calificacion" : "Rating"}</span>
+          <span>{locale === "es" ? "Calificación" : "Rating"}</span>
           <p><strong>{texasLabel[locale]} {formatScoreValue(indicator.texasScore)}/5:</strong> {indicator.texasReason[locale]}</p>
           <p><strong>{floridaLabel[locale]} {formatScoreValue(indicator.floridaScore)}/5:</strong> {indicator.floridaReason[locale]}</p>
         </article>
@@ -516,10 +516,10 @@ function SummaryMatrix({ locale }: { locale: Locale }) {
     <section className="macro-summary-section">
       <div className="macro-summary-head">
         <span>{locale === "es" ? "Lectura consolidada" : "Consolidated reading"}</span>
-        <h3>{locale === "es" ? "Matriz final de calificacion" : "Final scoring matrix"}</h3>
+        <h3>{locale === "es" ? "Matriz final de calificación" : "Final scoring matrix"}</h3>
         <p>
           {locale === "es"
-            ? "La tabla resume que estado se fortalece mas en cada indicador y como debe leerse estrategicamente la comparacion."
+            ? "La tabla resume qué estado sale mejor en cada indicador y cómo se debe explicar."
             : "The table summarizes which state is stronger in each indicator and how the comparison should be read strategically."}
         </p>
       </div>
@@ -548,14 +548,14 @@ function SummaryMatrix({ locale }: { locale: Locale }) {
               <th>{locale === "es" ? "Promedio final" : "Final average"}</th>
               <td>{formatScoreValue(summary.texasAverage)}</td>
               <td>{formatScoreValue(summary.floridaAverage)}</td>
-              <td>{summary.texasAverage > summary.floridaAverage ? texasLabel[locale] : floridaLabel[locale]}</td>
+                <td>{summary.texasAverage > summary.floridaAverage ? texasLabel[locale] : floridaLabel[locale]}</td>
               <td>
                 {summary.texasAverage > summary.floridaAverage
                   ? locale === "es"
-                    ? "Texas queda como mercado principal por escala y relacion con maquinaria."
+                    ? "Texas queda como mercado principal por escala y relación con maquinaria."
                     : "Texas stands as the main market because of scale and machinery fit."
                   : locale === "es"
-                    ? "Florida queda como prioridad, aunque el caso sugiere complementariedad."
+                    ? "Florida queda como prioridad, aunque el caso sigue mostrando complementariedad."
                     : "Florida stands as the priority, although the case suggests complementarity."}
               </td>
             </tr>
@@ -616,7 +616,7 @@ export default function MacroComparativeModule({ locale }: { locale: Locale }) {
       <section className="macro-methodology-card">
         <div className="macro-summary-head">
           <span>{macroMethodology.title[locale]}</span>
-          <h3>{locale === "es" ? "Como se lee la calificacion" : "How to read the score"}</h3>
+          <h3>{locale === "es" ? "Cómo se lee la calificación" : "How to read the score"}</h3>
           <p>{macroMethodology.text[locale]}</p>
         </div>
         <div className="method-scale">
