@@ -4,6 +4,8 @@ import {
   Box,
   Building2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Database,
   ExternalLink,
   FileText,
@@ -1291,15 +1293,30 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
 function DeliveriesSidebar({
   activeDelivery,
   locale,
+  collapsed,
+  onToggle,
 }: {
   activeDelivery: Delivery;
   locale: Locale;
+  collapsed: boolean;
+  onToggle: () => void;
 }) {
   return (
-    <aside className="delivery-sidebar">
+    <aside className={`delivery-sidebar${collapsed ? " is-collapsed" : ""}`}>
       <div className="sidebar-title">
-        <PanelLeft size={18} />
-        <span>{locale === "es" ? "Entregas" : "Deliveries"}</span>
+        <div className="sidebar-title-copy">
+          <PanelLeft size={18} />
+          <span>{locale === "es" ? "Entregas" : "Deliveries"}</span>
+        </div>
+        <button
+          type="button"
+          className="sidebar-collapse-button"
+          onClick={onToggle}
+          aria-label={collapsed ? (locale === "es" ? "Mostrar entregas" : "Show deliveries") : locale === "es" ? "Ocultar entregas" : "Hide deliveries"}
+          aria-expanded={!collapsed}
+        >
+          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+        </button>
       </div>
       <nav aria-label={locale === "es" ? "Navegacion de entregas" : "Delivery navigation"}>
         {deliveries.map((delivery) => (
@@ -1465,10 +1482,43 @@ function DeliveryWorkspaceShell({
   currentView: "overview" | "compilation" | "module";
   activeModule?: WorkModule | null;
 }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(currentView !== "overview");
+
+  useEffect(() => {
+    setSidebarCollapsed(currentView !== "overview");
+  }, [currentView]);
+
   return (
-    <main className="delivery-workspace">
-      <DeliveriesSidebar activeDelivery={delivery} locale={locale} />
+    <main className={`delivery-workspace${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}>
+      <DeliveriesSidebar
+        activeDelivery={delivery}
+        locale={locale}
+        collapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed((current) => !current)}
+      />
       <section className="delivery-main">
+        <div className="delivery-main-toolbar">
+          <button
+            type="button"
+            className="workspace-sidebar-toggle"
+            onClick={() => setSidebarCollapsed((current) => !current)}
+            aria-expanded={!sidebarCollapsed}
+          >
+            <PanelLeft size={16} />
+            {sidebarCollapsed
+              ? locale === "es"
+                ? "Mostrar entregas"
+                : "Show deliveries"
+              : locale === "es"
+                ? "Ocultar entregas"
+                : "Hide deliveries"}
+          </button>
+          <span className="workspace-toolbar-hint">
+            {locale === "es"
+              ? "Modo presentacion: mas espacio para el contenido."
+              : "Presentation mode: more space for content."}
+          </span>
+        </div>
         <DeliveryHeader title={title} subtitle={subtitle} eyebrow={eyebrow} tags={tags} />
         <DeliveryContentNav delivery={delivery} locale={locale} currentView={currentView} activeModule={activeModule} />
         {children}
