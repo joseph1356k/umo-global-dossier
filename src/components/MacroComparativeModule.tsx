@@ -455,6 +455,14 @@ function IndicatorCard({ indicator, locale }: { indicator: MacroIndicator; local
 
       <p className="indicator-summary">{indicator.summary[locale]}</p>
 
+      {indicator.explainBullets?.length ? (
+        <ul className="indicator-bullet-list">
+          {indicator.explainBullets.map((bullet) => (
+            <li key={`${indicator.id}-${bullet.es}`}>{bullet[locale]}</li>
+          ))}
+        </ul>
+      ) : null}
+
       {indicator.chart === "line" ? <LineComparisonChart indicator={indicator} locale={locale} /> : null}
       {indicator.chart === "bar" ? <BarComparisonChart indicator={indicator} locale={locale} /> : null}
       {indicator.chart === "fiscal" && indicator.fiscalRows ? <FiscalMiniTable rows={indicator.fiscalRows} locale={locale} /> : null}
@@ -529,7 +537,7 @@ function SummaryMatrix({ locale }: { locale: Locale }) {
         <h3>{locale === "es" ? "Matriz final de calificación" : "Final scoring matrix"}</h3>
         <p>
           {locale === "es"
-            ? "La tabla resume qué estado sale mejor en cada indicador y cómo se debe explicar."
+            ? "La tabla resume cómo se comportan estos dos estados en los indicadores clave y por qué ambos resaltan dentro del país."
             : "The table summarizes which state is stronger in each indicator and how the comparison should be read strategically."}
         </p>
       </div>

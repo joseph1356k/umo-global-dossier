@@ -2203,6 +2203,33 @@ main {
   font-size: 0.92rem;
 }
 
+.indicator-bullet-list {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.indicator-bullet-list li {
+  position: relative;
+  padding-left: 18px;
+  color: rgba(245, 242, 232, 0.8);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.indicator-bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--red);
+}
+
 .indicator-sources {
   display: grid;
   gap: 12px;
