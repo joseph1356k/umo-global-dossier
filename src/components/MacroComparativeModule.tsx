@@ -82,7 +82,7 @@ function getTooltipProps(index: number, total: number, left: string) {
 
 function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator; locale: Locale }) {
   const series = indicator.series ?? [];
-  const [activeIndex, setActiveIndex] = useState(Math.max(series.length - 1, 0));
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const chart = useMemo(() => {
     const width = 620;
@@ -123,11 +123,14 @@ function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator;
     return { width, height, left, plotWidth, points, gridValues };
   }, [indicator.showNational, series]);
 
-  const activePoint = chart.points[activeIndex] ?? chart.points[0];
+  const activePoint = typeof activeIndex === "number" ? chart.points[activeIndex] : undefined;
   const tooltipLeft = activePoint
     ? `${((activePoint.x - chart.left) / chart.plotWidth) * 100}%`
     : "50%";
-  const tooltipProps = getTooltipProps(activeIndex, chart.points.length, tooltipLeft);
+  const tooltipProps =
+    typeof activeIndex === "number"
+      ? getTooltipProps(activeIndex, chart.points.length, tooltipLeft)
+      : undefined;
 
   return (
     <div className="macro-chart-shell">
@@ -139,7 +142,7 @@ function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator;
         ) : null}
       </div>
       <div className="macro-chart-frame">
-        {activePoint ? (
+        {activePoint && tooltipProps ? (
           <div className={tooltipProps.className} style={tooltipProps.style}>
             <strong>{activePoint.year}</strong>
             <span>{texasLabel[locale]}: {formatValue(activePoint.texas, indicator.unit, locale, indicator.precision ?? 1)}</span>
@@ -208,7 +211,9 @@ function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator;
                 width={60}
                 height={220}
                 onMouseEnter={() => setActiveIndex(index)}
+                onMouseLeave={() => setActiveIndex(null)}
                 onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
                 tabIndex={0}
                 aria-label={`${indicator.title[locale]} ${point.year}`}
               />
@@ -222,7 +227,7 @@ function LineComparisonChart({ indicator, locale }: { indicator: MacroIndicator;
 
 function BarComparisonChart({ indicator, locale }: { indicator: MacroIndicator; locale: Locale }) {
   const series = indicator.series ?? [];
-  const [activeIndex, setActiveIndex] = useState(Math.max(series.length - 1, 0));
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const chart = useMemo(() => {
     const width = 620;
@@ -260,11 +265,14 @@ function BarComparisonChart({ indicator, locale }: { indicator: MacroIndicator; 
     return { width, height, left, plotWidth, points, gridValues, barWidth };
   }, [series]);
 
-  const activePoint = chart.points[activeIndex] ?? chart.points[0];
+  const activePoint = typeof activeIndex === "number" ? chart.points[activeIndex] : undefined;
   const tooltipLeft = activePoint
     ? `${((activePoint.groupX - chart.left) / chart.plotWidth) * 100}%`
     : "50%";
-  const tooltipProps = getTooltipProps(activeIndex, chart.points.length, tooltipLeft);
+  const tooltipProps =
+    typeof activeIndex === "number"
+      ? getTooltipProps(activeIndex, chart.points.length, tooltipLeft)
+      : undefined;
 
   return (
     <div className="macro-chart-shell">
@@ -273,7 +281,7 @@ function BarComparisonChart({ indicator, locale }: { indicator: MacroIndicator; 
         <span className="legend-item legend-florida">{floridaLabel[locale]}</span>
       </div>
       <div className="macro-chart-frame">
-        {activePoint ? (
+        {activePoint && tooltipProps ? (
           <div className={tooltipProps.className} style={tooltipProps.style}>
             <strong>{activePoint.year}</strong>
             <span>{texasLabel[locale]}: {formatValue(activePoint.texas, indicator.unit, locale, indicator.precision ?? 1)}</span>
@@ -318,7 +326,9 @@ function BarComparisonChart({ indicator, locale }: { indicator: MacroIndicator; 
                 width={76}
                 height={220}
                 onMouseEnter={() => setActiveIndex(index)}
+                onMouseLeave={() => setActiveIndex(null)}
                 onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
                 tabIndex={0}
                 aria-label={`${indicator.title[locale]} ${point.year}`}
               />

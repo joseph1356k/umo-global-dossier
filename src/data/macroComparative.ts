@@ -67,7 +67,7 @@ export const macroExecutiveCards = [
     state: { es: "Texas", en: "Texas" },
     text: {
       es: "Tiene más tamaño económico, más producción agrícola y una relación más directa con maquinaria, tractores y operación industrial.",
-      en: "Larger economic size, larger agricultural production and a tighter fit with machinery, industrial operations and commercial expansi?n.",
+      en: "Larger economic size, larger agricultural production and a tighter fit with machinery, industrial operations and commercial expansion.",
     },
     detail: {
       es: "PIB 2025 (e): USD 2.90T / Agricultura 2025 (e): USD 38.2B",
@@ -82,7 +82,7 @@ export const macroExecutiveCards = [
       en: "Strong relevance of professional turf, gardening, residential maintenance and landscaping as an opportunity for UMO's specialized products.",
     },
     detail: {
-      es: "Turfgrass 2025 (p): USD 44.1B / Ingreso per c?pita 2025 (e): USD 68.3k",
+      es: "Turfgrass 2025 (p): USD 44.1B / Ingreso per cápita 2025 (e): USD 68.3k",
       en: "2025 (p) Turfgrass: USD 44.1B / 2025 (e) Per capita income: USD 68.3k",
     },
   },
@@ -91,7 +91,7 @@ export const macroExecutiveCards = [
     state: { es: "Ruta dual", en: "Dual route" },
     text: {
       es: "Usar Texas como mercado principal y Florida como mercado complementario para líneas premium, residenciales y de áreas verdes.",
-      en: "Use Texas as the main expansi?n market and Florida as the complementary market for premium, residential and green-area segments.",
+      en: "Use Texas as the main expansion market and Florida as the complementary market for premium, residential and green-area segments.",
     },
     detail: {
       es: "Texas = volumen y maquinaria / Florida = césped, paisajismo y valor",
@@ -242,11 +242,11 @@ export const macroIndicators: MacroIndicator[] = [
     floridaScore: 4.94,
     texasReason: {
       es: "Texas recibe 5/5 porque junta ingreso alto con más tamaño de mercado.",
-      en: "Texas combines high income with more economic scale, a larger B2B base and more potential volume for expansi?n.",
+      en: "Texas combines high income with more economic scale, a larger B2B base and more potential volume for expansion.",
     },
     floridaReason: {
       es: "Florida queda en 4.94/5 porque está muy cerca de Texas en capacidad de compra.",
-      en: "Florida lands at 4.94/5 because its per c?pita income is almost equivalent to Texas and preserves strong purchasing power.",
+      en: "Florida lands at 4.94/5 because its per capita income is almost equivalent to Texas and preserves strong purchasing power.",
     },
     strategicReading: {
       es: "Texas lidera por volumen; Florida también sirve muy bien para vender una línea de valor.",
@@ -281,7 +281,7 @@ export const macroIndicators: MacroIndicator[] = [
       { year: "2025", texas: 4.1, florida: 3.8 },
     ],
     summary: {
-      es: "El desempleo aterriza la lectura del poder adquisitivo. No basta con tener ingreso alto; tambien importa cuanta estabilidad laboral sostiene el mercado. Florida mantiene tasas m?s bajas entre 2022 y 2025, lo que sugiere una base de consumo y servicio m?s continua. Texas no presenta una señal negativa, pero se mueve en un rango ligeramente m?s alto. Para UMO esto es importante porque sus productos dependen de operadores, contratistas, talleres, paisajistas y empresas que renuevan equipos cuando su actividad se mantiene estable.",
+      es: "El desempleo aterriza la lectura del poder adquisitivo. No basta con tener ingreso alto; también importa cuánta estabilidad laboral sostiene el mercado. Florida mantiene tasas más bajas entre 2022 y 2025, lo que sugiere una base de consumo y servicio más continua. Texas no presenta una señal negativa, pero se mueve en un rango ligeramente más alto. Para UMO esto es importante porque sus productos dependen de operadores, contratistas, talleres, paisajistas y empresas que renuevan equipos cuando su actividad se mantiene estable.",
       en: "Unemployment grounds the purchasing-power reading. High income alone is not enough; labor stability also matters. Florida keeps lower rates from 2022 through 2025, suggesting a more continuous service and consumption base. Texas does not show a negative signal, but it moves in a slightly higher range. For UMO this matters because its products depend on operators, contractors, workshops, landscapers and companies that renew equipment when activity stays stable.",
     },
     keyData: {
@@ -289,21 +289,21 @@ export const macroIndicators: MacroIndicator[] = [
       en: "In 2025 Florida closes at 3.8% and Texas at 4.1%; Florida takes the 5 and Texas is calculated relative to that value.",
     },
     meaning: {
-      es: "Un mercado con empleo m?s estable suele sostener mejor compras repetidas y contratos de mantenimiento.",
+      es: "Un mercado con empleo más estable suele sostener mejor compras repetidas y contratos de mantenimiento.",
       en: "A market with more stable employment sustains recurring purchases and maintenance contracts better.",
     },
     impact: {
-      es: "Le da m?s soporte a una demanda constante de talleres, contratistas, paisajistas y operadores.",
+      es: "Le da más soporte a una demanda constante de talleres, contratistas, paisajistas y operadores.",
       en: "It reinforces the viability of selling accessories and spare parts to landscaping, maintenance and machinery-operation businesses.",
     },
     texasScore: 4.63,
     floridaScore: 5,
     texasReason: {
-      es: "Texas queda en 4.63/5 porque su desempleo es un poco m?s alto que el de Florida.",
+      es: "Texas queda en 4.63/5 porque su desempleo es un poco más alto que el de Florida.",
       en: "Texas lands at 4.63/5 because its unemployment rate is slightly higher than Florida's in the closing comparison.",
     },
     floridaReason: {
-      es: "Florida recibe 5/5 porque muestra la mejor estabilidad laboral en esta comparaci?n.",
+      es: "Florida recibe 5/5 porque muestra la mejor estabilidad laboral en esta comparación.",
       en: "Florida receives 5/5 because it records the strongest relative labor stability in the comparison built for this indicator.",
     },
     strategicReading: {
@@ -311,7 +311,7 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Florida sustains better labor continuity; Texas remains functional for scale, but with a slight relative disadvantage.",
     },
     footnote: {
-      es: "Este es el ?nico indicador completado fuera del Excel original porque la hoja no ven?a con esa serie. Se usaron datos oficiales de BLS.",
+      es: "Este es el único indicador completado fuera del Excel original porque la hoja no venía con esa serie. Se usaron datos oficiales de BLS.",
       en: "This is the only indicator completed outside the original workbook because the sheet did not include an unemployment series. Official BLS data and the same 5-point comparison rule were used.",
     },
     sources: [
@@ -325,20 +325,20 @@ export const macroIndicators: MacroIndicator[] = [
   },
   {
     id: "agricultura",
-    title: { es: "Valor de la producci?n agr?cola", en: "Agricultural production value" },
+    title: { es: "Valor de la producción agrícola", en: "Agricultural production value" },
     kicker: { es: "Indicador 03", en: "Indicator 03" },
     chart: "bar",
     unit: "billions",
     precision: 1,
     series: [
-      { year: "2021", texas: 24.9, florida: 7.7, note: { es: "Recuperaci?n post-pandemia; alta demanda de equipos.", en: "Post-pandemic recovery; strong equipment demand." } },
-      { year: "2022", texas: 32.2, florida: 8.1, note: { es: "Pico de commodities; renovaci?n de flotas.", en: "Commodity peak; fleet renewal." } },
+      { year: "2021", texas: 24.9, florida: 7.7, note: { es: "Recuperación post-pandemia; alta demanda de equipos.", en: "Post-pandemic recovery; strong equipment demand." } },
+      { year: "2022", texas: 32.2, florida: 8.1, note: { es: "Pico de commodities; renovación de flotas.", en: "Commodity peak; fleet renewal." } },
       { year: "2023", texas: 36.5, florida: 8.4, note: { es: "Tasas altas; giro hacia mantenimiento aftermarket.", en: "Higher rates; shift toward aftermarket maintenance." } },
-      { year: "2024", texas: 35.8, florida: 8.6, note: { es: "Estabilizaci?n; foco en eficiencia y ergonom?a.", en: "Stabilization; focus on efficiency and ergonomics." } },
-      { year: "2025", texas: 38.2, florida: 8.9, note: { es: "Proyecci?n r?cord por tecnificaci?n y ayudas federales.", en: "Record projection driven by technification and federal support." } },
+      { year: "2024", texas: 35.8, florida: 8.6, note: { es: "Estabilización; foco en eficiencia y ergonomía.", en: "Stabilization; focus on efficiency and ergonomics." } },
+      { year: "2025", texas: 38.2, florida: 8.9, note: { es: "Proyección récord por tecnificación y ayudas federales.", en: "Record projection driven by technification and federal support." } },
     ],
     summary: {
-      es: "La producci?n agr?cola es la raz?n m?s clara para escoger Texas como mercado principal. Tiene mucha m?s escala y una relaci?n directa con tractores, podadoras y maquinaria. Florida puede servir en nichos puntuales, pero no da el mismo volumen. Si hay que explicar por qu? Texas va primero, esta tabla es de las m?s fuertes.",
+      es: "La producción agrícola es la razón más clara para escoger Texas como mercado principal. Tiene mucha más escala y una relación directa con tractores, podadoras y maquinaria. Florida puede servir en nichos puntuales, pero no da el mismo volumen. Si hay que explicar por qué Texas va primero, esta tabla es de las más fuertes.",
       en: "Agricultural production is the indicator that best explains why Texas should be the main market. The scale gap versus Florida is wide across the whole series and connects directly with tractors, machinery, mowers and equipment where UMO can sell ergonomics, comfort and replacement solutions. Florida remains useful for specific agricultural niches, but it does not offer the same structural volume. If the goal is to open a market with a large productive base, Texas has the strongest operational fit.",
     },
     keyData: {
@@ -346,29 +346,29 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Texas projects USD 38.2B in 2025 versus USD 8.9B in Florida.",
     },
     meaning: {
-      es: "Hay m?s actividad productiva ligada a maquinaria y m?s equipos en uso que pueden necesitar mejoras o repuestos.",
+      es: "Hay más actividad productiva ligada a maquinaria y más equipos en uso que pueden necesitar mejoras o repuestos.",
       en: "There is more productive activity tied to machinery and more equipment in use that may require upgrades or replacement.",
     },
     impact: {
-      es: "Refuerza a Texas como el primer territorio para abrir relaci?n con distribuidores, talleres y operadores.",
+      es: "Refuerza a Texas como el primer territorio para abrir relación con distribuidores, talleres y operadores.",
       en: "It reinforces Texas as the first territory to open relationships with distributors, workshops and machinery operators.",
     },
     texasScore: 5,
     floridaScore: 1.16,
     texasReason: {
-      es: "Texas recibe 5/5 porque su escala agr?cola y su relaci?n con maquinaria son mucho m?s fuertes.",
+      es: "Texas recibe 5/5 porque su escala agrícola y su relación con maquinaria son mucho más fuertes.",
       en: "Agricultural scale and its link to machinery make Texas the best productive starting point.",
     },
     floridaReason: {
-      es: "Florida queda en 1.16/5 porque su escala agr?cola es mucho menor que la de Texas.",
+      es: "Florida queda en 1.16/5 porque su escala agrícola es mucho menor que la de Texas.",
       en: "Florida lands at 1.16/5 because its agricultural scale is far below Texas in the 2025 comparison used for scoring.",
     },
     strategicReading: {
-      es: "Texas domina aqu? por escala y cercan?a al uso real de maquinaria.",
+      es: "Texas domina aquí por escala y cercanía al uso real de maquinaria.",
       en: "Texas dominates through scale and proximity to intensive machinery use.",
     },
     footnote: {
-      es: "Esta tabla ayuda a mostrar volumen real de trabajo con maquinaria, no solo teor?a.",
+      es: "Esta tabla ayuda a mostrar volumen real de trabajo con maquinaria, no solo teoría.",
       en: "The machinery trend column in the workbook is used as a qualitative reading of buying context: fleet renewal, maintenance and labor ergonomics.",
     },
     sources: [
@@ -384,7 +384,7 @@ export const macroIndicators: MacroIndicator[] = [
   },
   {
     id: "turfgrass",
-    title: { es: "Industria turfgrass y c?sped profesional", en: "Turfgrass and professional lawn industry" },
+    title: { es: "Industria turfgrass y césped profesional", en: "Turfgrass and professional lawn industry" },
     kicker: { es: "Indicador 04", en: "Indicator 04" },
     chart: "bar",
     unit: "billions",
@@ -397,7 +397,7 @@ export const macroIndicators: MacroIndicator[] = [
       { year: "2025", texas: 39.5, florida: 44.1 },
     ],
     summary: {
-      es: "La industria del turfgrass explica por qu? Florida tambi?n fue escogido. All? hay mucho movimiento en c?sped, paisajismo, mantenimiento y ?reas verdes. Eso conecta muy bien con podadoras y con el tipo de producto que vende UMO. Texas tambi?n es fuerte, pero Florida aqu? se ve mejor como mercado complementario y premium.",
+      es: "La industria del turfgrass explica por qué Florida también fue escogido. Allí hay mucho movimiento en césped, paisajismo, mantenimiento y áreas verdes. Eso conecta muy bien con podadoras y con el tipo de producto que vende UMO. Texas también es fuerte, pero Florida aquí se ve mejor como mercado complementario y premium.",
       en: "The turfgrass industry is the most direct bridge between UMO's strategy and the real use of mowers, seats, cushions and ergonomic spare parts. Both states are strong, but Florida stands out due to climate continuity, tourism, landscaping, residential maintenance and year-round green-area operation. Texas is also large and commercially attractive, but Florida provides a sharper reading for premium and constant-service segments. That is why it should be treated as a high-value complementary market rather than discarded.",
     },
     keyData: {
@@ -405,21 +405,21 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Florida projects USD 44.1B in 2025 and stays above Texas, which reaches USD 39.5B.",
     },
     meaning: {
-      es: "Hay una demanda constante de podadoras, c?sped y mantenimiento en hogares y servicios profesionales.",
+      es: "Hay una demanda constante de podadoras, césped y mantenimiento en hogares y servicios profesionales.",
       en: "There is stable demand for lawn maintenance, mowers and associated equipment in both residential and professional segments.",
     },
     impact: {
-      es: "Florida encaja muy bien para vender mejoras de confort y repuestos en podadoras de paisajismo, hoteler?a y servicios verdes.",
+      es: "Florida encaja muy bien para vender mejoras de confort y repuestos en podadoras de paisajismo, hotelería y servicios verdes.",
       en: "Florida fits very well for selling comfort upgrades and replacement parts for landscaping, hospitality and green-service mowers.",
     },
     texasScore: 4.47,
     floridaScore: 5,
     texasReason: {
-      es: "Texas queda en 4.47/5 porque sigue siendo grande, pero Florida marca el punto m?s alto en turfgrass.",
+      es: "Texas queda en 4.47/5 porque sigue siendo grande, pero Florida marca el punto más alto en turfgrass.",
       en: "Texas lands at 4.47/5 because it remains large, but Florida sets the maximum reference in turfgrass.",
     },
     floridaReason: {
-      es: "Florida domina por continuidad clim?tica, mantenimiento de ?reas verdes y consumo premium ligado al paisajismo y al turismo.",
+      es: "Florida domina por continuidad climática, mantenimiento de áreas verdes y consumo premium ligado al paisajismo y al turismo.",
       en: "Florida leads because of climate continuity, green-area maintenance and premium demand tied to landscaping and tourism.",
     },
     strategicReading: {
@@ -427,7 +427,7 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Florida is the strongest door into the green and premium segment; Texas remains a very strong complementary market.",
     },
     footnote: {
-      es: "Esta tabla sirve para explicar por qu? Florida no se descart? y por qu? su rol es m?s premium y especializado.",
+      es: "Esta tabla sirve para explicar por qué Florida no se descartó y por qué su rol es más premium y especializado.",
       en: "The workbook consolidates this series from Texas A&M AgriLife Research and the University of Florida IFAS. The strategic reading relies on continuity of use and green-market size.",
     },
     sources: [
@@ -447,7 +447,7 @@ export const macroIndicators: MacroIndicator[] = [
     chart: "fiscal",
     unit: "percent",
     summary: {
-      es: "El tema fiscal no define solo la decisi?n, pero s? ayuda a ver qu? tan f?cil ser?a operar. Florida gana en la tasa base de sales tax. Texas sigue siendo atractivo por su forma de tributar y por su umbral de nexus m?s amplio. La idea aqu? no es escoger solo por impuestos, sino entender c?mo ser?a vender y cumplir en cada estado.",
+      es: "El tema fiscal no define solo la decisión, pero sí ayuda a ver qué tan fácil sería operar. Florida gana en la tasa base de sales tax. Texas sigue siendo atractivo por su forma de tributar y por su umbral de nexus más amplio. La idea aquí no es escoger solo por impuestos, sino entender cómo sería vender y cumplir en cada estado.",
       en: "Tax context does not decide the market on its own, but it changes how entry, billing and compliance must be structured. Texas has no traditional corporate income tax, although franchise tax may apply depending on revenue and entity type. Florida applies a state corporate income tax and a general 6% sales tax. Texas applies a 6.25% state sales tax with possible local add-ons. For UMO the correct reading is operational: how to structure sales, when obligations are triggered and which state creates less regulatory friction in the first phase.",
     },
     keyData: {
@@ -459,13 +459,13 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Both states are competitive, but not under the same tax architecture.",
     },
     impact: {
-      es: "Le permite a UMO preparar distribuci?n, facturaci?n y cumplimiento de una forma m?s ordenada.",
+      es: "Le permite a UMO preparar distribución, facturación y cumplimiento de una forma más ordenada.",
       en: "It allows UMO to prepare distribution, billing and compliance with a more ordered and realistic entry model.",
     },
     texasScore: 4.8,
     floridaScore: 5,
     texasReason: {
-      es: "Texas queda en 4.8/5 porque su sales tax base es un poco m?s alta que la de Florida.",
+      es: "Texas queda en 4.8/5 porque su sales tax base es un poco más alta que la de Florida.",
       en: "Texas lands at 4.8/5 in the sales-tax comparison because 6.25% is slightly above Florida's 6%.",
     },
     floridaReason: {
@@ -477,7 +477,7 @@ export const macroIndicators: MacroIndicator[] = [
       en: "Florida wins the base-rate comparison; Texas keeps operational appeal through franchise tax treatment and a wider nexus threshold.",
     },
     footnote: {
-      es: "Este punto se usa como contexto de operaci?n. No reemplaza una asesor?a tributaria local.",
+      es: "Este punto se usa como contexto de operación. No reemplaza una asesoría tributaria local.",
       en: "This indicator is presented as an operating context, not as foreign trade. The tax recommendation does not replace local tax advice.",
     },
     sources: [
@@ -508,7 +508,7 @@ export const macroIndicators: MacroIndicator[] = [
         texas: ["No tradicional", "No tradicional", "No tradicional", "No tradicional", "No tradicional"],
         florida: ["3.53%", "5.50%", "5.50%", "5.50%", "5.50%"],
         note: {
-          es: "Texas no tiene impuesto corporativo tradicional, pero si puede aplicar franchise tax segun ingresos y tipo de entidad.",
+          es: "Texas no tiene impuesto corporativo tradicional, pero sí puede aplicar franchise tax según ingresos y tipo de entidad.",
           en: "Texas has no traditional corporate income tax, but franchise tax may apply depending on revenue and entity type.",
         },
       },
@@ -522,11 +522,11 @@ export const macroIndicators: MacroIndicator[] = [
         },
       },
       {
-        label: { es: "Umbral de nexus economico", en: "Economic nexus threshold" },
+        label: { es: "Umbral de nexus económico", en: "Economic nexus threshold" },
         texas: ["USD 500k", "USD 500k", "USD 500k", "USD 500k", "USD 500k"],
         florida: ["USD 100k", "USD 100k", "USD 100k", "USD 100k", "USD 100k"],
         note: {
-          es: "Texas da m?s espacio antes de activar obligaciones de sales tax; Florida exige cumplimiento m?s temprano.",
+          es: "Texas da más espacio antes de activar obligaciones de sales tax; Florida exige cumplimiento más temprano.",
           en: "Texas provides more room before triggering sales-tax obligations; Florida requires compliance earlier.",
         },
       },
@@ -536,25 +536,25 @@ export const macroIndicators: MacroIndicator[] = [
 
 export const macroConclusion = {
   title: {
-    es: "Conclusi?n estrat?gica: dos mercados, dos oportunidades",
+    es: "Conclusión estratégica: dos mercados, dos oportunidades",
     en: "Strategic conclusion: two markets, two opportunities",
   },
   text: {
-    es: "La conclusi?n es simple: escogimos Texas y Florida porque cumplen papeles distintos. Texas va primero por escala, agricultura, industria y maquinaria. Florida entra como segunda ruta por su fuerza en c?sped, jardiner?a y mantenimiento. No compiten entre s?; se complementan.",
-    en: "The analysis does not discard either state. Texas and Florida represent different opportunities for UMO. Texas emerges as the main market because of economic scale, agricultural production, industrial base and machinery fit. Florida positions itself as a high-value complementary market because of its strength in professional turf, gardening, residential maintenance and green ?reas. The best strategy is not to choose one and abandon the other, but to prioritize Texas for operational expansi?n and use Florida as a specialized market for green and premium segments.",
+    es: "La conclusión es simple: escogimos Texas y Florida porque cumplen papeles distintos. Texas va primero por escala, agricultura, industria y maquinaria. Florida entra como segunda ruta por su fuerza en césped, jardinería y mantenimiento. No compiten entre sí; se complementan.",
+    en: "The analysis does not discard either state. Texas and Florida represent different opportunities for UMO. Texas emerges as the main market because of economic scale, agricultural production, industrial base and machinery fit. Florida positions itself as a high-value complementary market because of its strength in professional turf, gardening, residential maintenance and green areas. The best strategy is not to choose one and abandon the other, but to prioritize Texas for operational expansion and use Florida as a specialized market for green and premium segments.",
   },
   states: [
     {
       state: { es: "Texas", en: "Texas" },
       text: {
-        es: "Escala, agricultura, maquinaria y expansi?n.",
-        en: "Scale, agriculture, machinery and expansi?n.",
+        es: "Escala, agricultura, maquinaria y expansión.",
+        en: "Scale, agriculture, machinery and expansion.",
       },
     },
     {
       state: { es: "Florida", en: "Florida" },
       text: {
-        es: "C?sped profesional, jardiner?a, mantenimiento residencial y mercado premium.",
+        es: "Césped profesional, jardinería, mantenimiento residencial y mercado premium.",
         en: "Professional turf, gardening, residential maintenance and premium market.",
       },
     },
