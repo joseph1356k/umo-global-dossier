@@ -18,7 +18,9 @@ import {
 import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
+import EnvironmentAnalysisPage, { EnvironmentSectionCard } from "./components/EnvironmentAnalysisPage";
 import MacroComparativeModuleContent from "./components/MacroComparativeModule";
+import { getEnvironmentEntry } from "./data/environmentAnalysis";
 import {
   agreementConsequences,
   agreementPillars,
@@ -86,6 +88,9 @@ const moduleArchiveTags: Record<string, string[]> = {
   "thermo-seats-smart": ["smart", "strategy", "product"],
   "sostenibilidad-viabilidad": ["sustainability", "viability", "market"],
   "macro-texas-florida": ["market", "research", "macro", "states"],
+  "entorno-cultural-social": ["environments", "culture", "social", "market"],
+  "entorno-politico-legal": ["environments", "legal", "policy", "trade"],
+  "entorno-tecnologico-geoambiental": ["environments", "technology", "climate", "data"],
   "mercado-eeuu": ["market", "research", "pricing"],
   "plan-accion": ["execution", "timeline", "planning"],
   "indicadores-ejecucion": ["execution", "data", "budget"],
@@ -214,6 +219,7 @@ function Header({
   const navItems = [
     { href: "/", label: locale === "es" ? "UMO" : "UMO" },
     { href: "/entregas", label: locale === "es" ? "Entregas" : "Deliveries" },
+    { href: "/entornos", label: locale === "es" ? "Entornos" : "Environments" },
   ];
 
   return (
@@ -883,8 +889,45 @@ function MacroComparativeModule({ module, locale }: { module: WorkModule; locale
   );
 }
 
+function EnvironmentWorkModule({ module, locale }: { module: WorkModule; locale: Locale }) {
+  const entry = getEnvironmentEntry(module.id);
+
+  if (!entry) return <GenericModule module={module} locale={locale} />;
+
+  return (
+    <motion.section
+      id={module.id}
+      className="work-module environment-work-module"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.45 }}
+    >
+      <div className="module-head">
+        <span>{module.eyebrow[locale]}</span>
+        <h2>{module.title[locale]}</h2>
+        <p>{module.summary[locale]}</p>
+      </div>
+      <div className="environment-module-intro">
+        <p>
+          {locale === "es"
+            ? "Este trabajo tambien vive dentro del panel general de entornos. Aqui queda aislado para exponerlo por separado dentro de la Entrega 03."
+            : "This work also lives inside the general environment panel. It is isolated here so it can be presented separately inside Delivery 03."}
+        </p>
+        <Link to={`/entornos#${entry.id}`}>
+          {locale === "es" ? "Verlo en el panel integrado" : "Open in the integrated panel"} <ArrowUpRight size={16} />
+        </Link>
+      </div>
+      <EnvironmentSectionCard entry={entry} locale={locale} embedded />
+    </motion.section>
+  );
+}
+
 function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale }) {
   if (module.id === "macro-texas-florida") return <MacroComparativeModule module={module} locale={locale} />;
+  if (["entorno-cultural-social", "entorno-politico-legal", "entorno-tecnologico-geoambiental"].includes(module.id)) {
+    return <EnvironmentWorkModule module={module} locale={locale} />;
+  }
   if (module.id === "planeacion-equipo") return <PlanningModule module={module} locale={locale} />;
   if (module.id === "thermo-seats-smart") return <SmartModule module={module} locale={locale} />;
   if (module.id === "sostenibilidad-viabilidad") return <ViabilityModule module={module} locale={locale} />;
@@ -1650,6 +1693,7 @@ function App() {
       <Routes>
         <Route path="/" element={<CompanyHome locale={locale} backend={backend} />} />
         <Route path="/entregas" element={<DeliveriesArchive locale={locale} />} />
+        <Route path="/entornos" element={<EnvironmentAnalysisPage locale={locale} />} />
         <Route path="/entregas/:id" element={<DeliveryOverview locale={locale} />} />
         <Route path="/entregas/:id/recopilacion" element={<DeliveryPresentation locale={locale} />} />
         <Route path="/entregas/:id/trabajos/:moduleId" element={<DeliveryWorkPage locale={locale} />} />

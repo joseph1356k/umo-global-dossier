@@ -290,6 +290,30 @@ export const documents: DocumentItem[] = [
     category: { es: "Texto base", en: "Base text" },
     actionLabel: { es: "Abrir documento base", en: "Open base document" },
   },
+  {
+    id: "environment-brief",
+    type: "external",
+    title: { es: "Documento base de entornos", en: "Environment source document" },
+    description: {
+      es: "Documento Word con el desarrollo del entorno cultural/social y del entorno politico/legal para la Entrega 03.",
+      en: "Word document with the cultural/social and political/legal environment analysis for Delivery 03.",
+    },
+    href: "/assets/content/analisis-entornos.docx",
+    category: { es: "Entornos", en: "Environments" },
+    actionLabel: { es: "Abrir documento base", en: "Open source document" },
+  },
+  {
+    id: "environment-techgeo-xlsx",
+    type: "spreadsheet",
+    title: { es: "Entorno tecnologico y geoambiental", en: "Technological and geoenvironmental environment" },
+    description: {
+      es: "Excel con dashboard, comparativos 2021-2025 y fuentes del entorno tecnologico y geoambiental.",
+      en: "Spreadsheet with dashboard, 2021-2025 comparisons and sources for the technological and geoenvironmental environment.",
+    },
+    href: "/assets/content/umo-tecgeo-entornos.xlsx",
+    category: { es: "Entornos", en: "Environments" },
+    actionLabel: { es: "Abrir Excel", en: "Open spreadsheet" },
+  },
 ];
 
 export const diagnosticMetrics = [
@@ -1134,15 +1158,94 @@ export const deliveries: Delivery[] = [
     id: "entrega-3",
     number: 3,
     code: "ENTREGA 03",
-    status: { es: "Proxima carpeta", en: "Next folder" },
+    status: { es: "Entrega cargada", en: "Loaded delivery" },
     date: "2026-04-30",
-    title: { es: "Plan de entrada y ejecucion", en: "Entry and execution plan" },
+    title: { es: "Analisis de entornos", en: "Environment analysis" },
     summary: {
-      es: "Carpeta preparada para proximos trabajos: acciones, indicadores, cronograma, presupuesto, graficas y nuevos documentos.",
-      en: "Folder prepared for upcoming work: actions, indicators, timeline, budget, charts and new documents.",
+      es: "Entrega dedicada a leer los entornos que sostienen la internacionalizacion de UMO: cultura de uso, reglas de operacion y condiciones tecnologicas y ambientales.",
+      en: "Delivery focused on the environments that support UMO's internationalization: usage culture, operating rules and technological and environmental conditions.",
     },
-    tags: ["execution", "timeline", "budget"],
-    modules: [],
+    tags: ["environments", "culture", "legal", "technology", "research"],
+    modules: [
+      {
+        id: "entorno-cultural-social",
+        type: "visual",
+        eyebrow: { es: "Trabajo 01", en: "Work 01" },
+        title: { es: "Entorno cultural y social", en: "Cultural and social environment" },
+        summary: {
+          es: "Muestra por que Texas y Florida tienen un contexto de uso real para jardin, podadoras, mantenimiento exterior y aftermarket directo al usuario.",
+          en: "Shows why Texas and Florida have a real usage context for lawns, mowers, outdoor maintenance and direct-to-user aftermarket sales.",
+        },
+        body: [
+          {
+            es: "Este trabajo demuestra que UMO no entra a un mercado inventado. La urbanizacion suburbana, el gasto sostenido en jardin y la cultura DIY hacen que el uso de maquinaria ligera y repuestos tenga una base cotidiana en Texas y Florida.",
+            en: "This work shows that UMO is not entering an invented market. Suburban urbanization, sustained yard-care spending and DIY culture make light machinery and replacement parts part of everyday life in Texas and Florida.",
+          },
+          {
+            es: "La lectura central es simple: hay hogares, contratistas y propietarios que si invierten en mantener sus equipos, y eso vuelve viable una oferta de sillines, cojines y mejoras de confort con valor aftermarket.",
+            en: "The central reading is simple: there are households, contractors and property owners willing to invest in maintaining their equipment, and that makes a seat, cushion and comfort-upgrade offer viable in the aftermarket.",
+          },
+        ],
+        highlights: [
+          { es: "Florida llega a 93.0% de urbanizacion proyectada y Texas a 86.8%.", en: "Florida reaches 93.0% projected urbanization and Texas 86.8%." },
+          { es: "El gasto proyectado en jardin sube a USD 755 en Florida y USD 712 en Texas.", en: "Projected yard-care spending rises to USD 755 in Florida and USD 712 in Texas." },
+          { es: "El DIY se mantiene alto: 79% en Texas y 74% en Florida.", en: "DIY stays high: 79% in Texas and 74% in Florida." },
+        ],
+        documents: [documents[12]],
+      },
+      {
+        id: "entorno-politico-legal",
+        type: "visual",
+        eyebrow: { es: "Trabajo 02", en: "Work 02" },
+        title: { es: "Entorno politico y legal", en: "Political and legal environment" },
+        summary: {
+          es: "Ordena los factores tributarios, legales y de ecosistema empresarial que hacen manejable la entrada comercial de UMO en ambos estados.",
+          en: "Organizes the tax, legal and business-ecosystem factors that make UMO's commercial entry manageable in both states.",
+        },
+        body: [
+          {
+            es: "Este trabajo explica por que Texas y Florida son operables para UMO. No se queda en teoria legal: aterriza impuestos, supervivencia empresarial y el valor del TLC para proteger rentabilidad y continuidad comercial.",
+            en: "This work explains why Texas and Florida are operable for UMO. It does not stay in legal theory: it grounds taxes, business survival and the value of the trade agreement to protect profitability and commercial continuity.",
+          },
+          {
+            es: "La lectura de fondo es que ambos estados dan un contexto mas amigable que otros territorios para abrir distribucion, aliados o una plataforma comercial sin una carga institucional exagerada.",
+            en: "The underlying reading is that both states provide a friendlier context than other territories for opening distribution, partnerships or a commercial platform without an excessive institutional burden.",
+          },
+        ],
+        highlights: [
+          { es: "Florida aparece en el puesto 4 y Texas en el 12 del ranking tributario analizado.", en: "Florida appears in rank 4 and Texas in rank 12 of the tax ranking used." },
+          { es: "Ambos estados mantienen 0% de impuesto estatal a la renta personal.", en: "Both states keep a 0% state personal income tax." },
+          { es: "La supervivencia de pequenas empresas supera el 78% y el TLC deja arancel 0% para Colombia.", en: "Small business survival stays above 78% and the FTA leaves Colombia at 0% tariff." },
+        ],
+        documents: [documents[12]],
+      },
+      {
+        id: "entorno-tecnologico-geoambiental",
+        type: "visual",
+        eyebrow: { es: "Trabajo 03", en: "Work 03" },
+        title: { es: "Entorno tecnologico y geoambiental", en: "Technological and geoenvironmental environment" },
+        summary: {
+          es: "Conecta e-commerce, clima y desgaste para demostrar por que Florida y Texas usan mas tiempo y con mas exigencia los equipos donde UMO puede vender.",
+          en: "Connects e-commerce, climate and wear to show why Florida and Texas use the equipment UMO can serve for longer and under tougher conditions.",
+        },
+        body: [
+          {
+            es: "Este trabajo aterriza frecuencia de uso y desgaste. No basta con que exista demanda: tambien importa que el equipo se use mas meses al ano, se desgaste mas rapido y pueda comprarse por canales digitales.",
+            en: "This work grounds usage frequency and wear. Demand alone is not enough: it also matters that equipment is used for more months each year, wears faster and can be bought through digital channels.",
+          },
+          {
+            es: "La conclusion operativa es que Florida y Texas dan a UMO una mezcla util de canal digital, temporada verde larga y condiciones climaticas que hacen mas valioso un repuesto de mejor calidad.",
+            en: "The operating conclusion is that Florida and Texas give UMO a useful mix of digital channel, long green season and climate conditions that make a higher-quality replacement more valuable.",
+          },
+        ],
+        highlights: [
+          { es: "Texas y Florida superan el promedio nacional en e-commerce ligado a paisajismo.", en: "Texas and Florida stay above the national average in landscaping-related e-commerce." },
+          { es: "Las temperaturas medias anuales se sostienen muy por encima del promedio de EE. UU.", en: "Average annual temperatures stay well above the U.S. average." },
+          { es: "El desgaste ambiental es mayor que el promedio nacional y fortalece el argumento de durabilidad.", en: "Environmental wear is higher than the national average and strengthens the durability argument." },
+        ],
+        documents: [documents[13]],
+      },
+    ],
   },
 ];
 
