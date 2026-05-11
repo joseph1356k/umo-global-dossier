@@ -314,6 +314,30 @@ export const documents: DocumentItem[] = [
     category: { es: "Entornos", en: "Environments" },
     actionLabel: { es: "Abrir Excel", en: "Open spreadsheet" },
   },
+  {
+    id: "environment-trade-xlsx",
+    type: "spreadsheet",
+    title: { es: "Entorno de comercio internacional", en: "International trade environment" },
+    description: {
+      es: "Excel con instituciones de apoyo, balanza comercial, puertos, tiempos y lectura logistica para Florida y Texas.",
+      en: "Spreadsheet with support institutions, trade balance, ports, transit times and logistics reading for Florida and Texas.",
+    },
+    href: "/assets/content/umo-comercio-internacional.xlsx",
+    category: { es: "Entornos", en: "Environments" },
+    actionLabel: { es: "Abrir Excel", en: "Open spreadsheet" },
+  },
+  {
+    id: "environment-fdi-xlsx",
+    type: "spreadsheet",
+    title: { es: "Entorno de inversion extranjera directa", en: "Foreign direct investment environment" },
+    description: {
+      es: "Excel con flujos de inversion, sectores receptores e incentivos estatales para Florida y Texas.",
+      en: "Spreadsheet with investment flows, receiving sectors and state incentives for Florida and Texas.",
+    },
+    href: "/assets/content/umo-inversion-extranjera-directa.xlsx",
+    category: { es: "Entornos", en: "Environments" },
+    actionLabel: { es: "Abrir Excel", en: "Open spreadsheet" },
+  },
 ];
 
 export const diagnosticMetrics = [
@@ -1162,10 +1186,10 @@ export const deliveries: Delivery[] = [
     date: "2026-04-30",
     title: { es: "Analisis de entornos", en: "Environment analysis" },
     summary: {
-      es: "Entrega dedicada a leer los entornos que sostienen la internacionalizacion de UMO: cultura de uso, reglas de operacion y condiciones tecnologicas y ambientales.",
-      en: "Delivery focused on the environments that support UMO's internationalization: usage culture, operating rules and technological and environmental conditions.",
+      es: "Entrega dedicada a leer los cinco entornos que sostienen la internacionalizacion de UMO: cultura, reglas, tecnologia, comercio exterior e inversion para Florida y Texas.",
+      en: "Delivery focused on the five environments that support UMO's internationalization: culture, rules, technology, foreign trade and investment for Florida and Texas.",
     },
-    tags: ["environments", "culture", "legal", "technology", "research"],
+    tags: ["environments", "culture", "legal", "technology", "trade", "investment"],
     modules: [
       {
         id: "entorno-cultural-social",
@@ -1244,6 +1268,58 @@ export const deliveries: Delivery[] = [
           { es: "El desgaste ambiental es mayor que el promedio nacional y fortalece el argumento de durabilidad.", en: "Environmental wear is higher than the national average and strengthens the durability argument." },
         ],
         documents: [documents[13]],
+      },
+      {
+        id: "entorno-comercio-internacional",
+        type: "visual",
+        eyebrow: { es: "Trabajo 04", en: "Work 04" },
+        title: { es: "Entorno de comercio internacional", en: "International trade environment" },
+        summary: {
+          es: "Explica por que Florida sirve como puerta de entrada y Texas como mercado de escala cuando UMO exporta desde Colombia.",
+          en: "Explains why Florida works as an entry gateway and Texas as a scale market when UMO exports from Colombia.",
+        },
+        body: [
+          {
+            es: "Este trabajo muestra la ruta real para mover el producto: instituciones de apoyo, relacion comercial con Colombia y capacidad logistica para entrar, distribuir y crecer sin improvisar.",
+            en: "This work shows the real path to move the product: support institutions, commercial relationship with Colombia and logistics capacity to enter, distribute and grow without improvising.",
+          },
+          {
+            es: "La lectura central es que Florida acelera la entrada inicial por cercania y relacion comercial visible con Colombia, mientras Texas toma fuerza cuando la meta pasa a volumen B2B, distribuidores y cobertura interna.",
+            en: "The central reading is that Florida accelerates the initial entry through proximity and a visible trade relationship with Colombia, while Texas becomes stronger when the goal shifts to B2B volume, distributors and internal coverage.",
+          },
+        ],
+        highlights: [
+          { es: "Texas gana en instituciones de apoyo y capacidad logistica total.", en: "Texas wins in support institutions and total logistics capacity." },
+          { es: "Florida gana en relacion comercial visible con Colombia y rapidez de entrada.", en: "Florida wins in visible trade relationship with Colombia and faster entry." },
+          { es: "La recomendacion no es elegir uno y descartar el otro: Florida entra, Texas escala.", en: "The recommendation is not to choose one and discard the other: Florida enters, Texas scales." },
+        ],
+        documents: [documents[14]],
+      },
+      {
+        id: "entorno-inversion-extranjera-directa",
+        type: "visual",
+        eyebrow: { es: "Trabajo 05", en: "Work 05" },
+        title: { es: "Entorno de inversion extranjera directa", en: "Foreign direct investment environment" },
+        summary: {
+          es: "Aterriza confianza de inversion, sectores receptores e incentivos para una expansion futura de UMO en Florida y Texas.",
+          en: "Grounds investment confidence, receiving sectors and incentives for a future UMO expansion in Florida and Texas.",
+        },
+        body: [
+          {
+            es: "Este trabajo no se queda en capital abstracto. Sirve para ver si, despues de entrar al mercado, UMO podria escalar con una base comercial mas robusta, aliados o una operacion local mas estructurada.",
+            en: "This work does not stay at the level of abstract capital. It helps show whether, after entering the market, UMO could scale with a stronger commercial base, partners or a more structured local operation.",
+          },
+          {
+            es: "Florida aparece como puente natural para capital colombiano y entrada comercial. Texas, en cambio, sobresale por sectores mas alineados con industria, logistica y programas de incentivo para crecer con mas escala.",
+            en: "Florida appears as a natural bridge for Colombian capital and commercial entry. Texas, by contrast, stands out for sectors more aligned with industry, logistics and incentive programs for larger-scale growth.",
+          },
+        ],
+        highlights: [
+          { es: "Florida marca 5/5 en relevancia historica de inversion colombiana.", en: "Florida scores 5/5 in the historical relevance of Colombian investment." },
+          { es: "Texas lidera sectores receptores e incentivos para expansion industrial.", en: "Texas leads in receiving sectors and incentives for industrial expansion." },
+          { es: "La lectura final queda repartida: Florida abre relaciones, Texas sostiene la escala futura.", en: "The final reading is split: Florida opens relationships, Texas supports future scale." },
+        ],
+        documents: [documents[15]],
       },
     ],
   },

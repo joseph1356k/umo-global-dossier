@@ -18,7 +18,10 @@ import {
 import { Suspense, lazy, memo, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { ReactNode } from "react";
 import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
-import EnvironmentAnalysisPage, { EnvironmentSectionCard } from "./components/EnvironmentAnalysisPage";
+import EnvironmentAnalysisPage, {
+  EnvironmentIntegratedContent,
+  EnvironmentSectionCard,
+} from "./components/EnvironmentAnalysisPage";
 import MacroComparativeModuleContent from "./components/MacroComparativeModule";
 import { getEnvironmentEntry } from "./data/environmentAnalysis";
 import {
@@ -91,6 +94,8 @@ const moduleArchiveTags: Record<string, string[]> = {
   "entorno-cultural-social": ["environments", "culture", "social", "market"],
   "entorno-politico-legal": ["environments", "legal", "policy", "trade"],
   "entorno-tecnologico-geoambiental": ["environments", "technology", "climate", "data"],
+  "entorno-comercio-internacional": ["environments", "trade", "logistics", "ports"],
+  "entorno-inversion-extranjera-directa": ["environments", "investment", "fdi", "expansion"],
   "mercado-eeuu": ["market", "research", "pricing"],
   "plan-accion": ["execution", "timeline", "planning"],
   "indicadores-ejecucion": ["execution", "data", "budget"],
@@ -925,7 +930,15 @@ function EnvironmentWorkModule({ module, locale }: { module: WorkModule; locale:
 
 function WorkModuleView({ module, locale }: { module: WorkModule; locale: Locale }) {
   if (module.id === "macro-texas-florida") return <MacroComparativeModule module={module} locale={locale} />;
-  if (["entorno-cultural-social", "entorno-politico-legal", "entorno-tecnologico-geoambiental"].includes(module.id)) {
+  if (
+    [
+      "entorno-cultural-social",
+      "entorno-politico-legal",
+      "entorno-tecnologico-geoambiental",
+      "entorno-comercio-internacional",
+      "entorno-inversion-extranjera-directa",
+    ].includes(module.id)
+  ) {
     return <EnvironmentWorkModule module={module} locale={locale} />;
   }
   if (module.id === "planeacion-equipo") return <PlanningModule module={module} locale={locale} />;
@@ -1592,6 +1605,28 @@ function DeliveryOverview({ locale }: { locale: Locale }) {
 function DeliveryPresentation({ locale }: { locale: Locale }) {
   const params = useParams();
   const activeDelivery = useMemo(() => getDeliveryById(params.id), [params.id]);
+
+  if (activeDelivery.id === "entrega-3") {
+    return (
+      <DeliveryWorkspaceShell
+        delivery={activeDelivery}
+        locale={locale}
+        eyebrow={`${activeDelivery.code} / ${locale === "es" ? "Vista integrada" : "Integrated view"}`}
+        title={locale === "es" ? "Vista general de entornos" : "Integrated environment overview"}
+        subtitle={
+          locale === "es"
+            ? "Esta vista integra los cinco entornos, sus archivos base, la lectura ejecutiva y el detalle de cada indicador dentro de la misma entrega."
+            : "This view integrates the five environments, their base files, the executive reading and each indicator's detail inside the same delivery."
+        }
+        tags={[...activeDelivery.tags, "integrated", "executive"]}
+        currentView="compilation"
+      >
+        <div className="environment-delivery-shell">
+          <EnvironmentIntegratedContent locale={locale} />
+        </div>
+      </DeliveryWorkspaceShell>
+    );
+  }
 
   return (
     <DeliveryWorkspaceShell

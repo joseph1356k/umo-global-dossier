@@ -3304,13 +3304,26 @@ main {
 .environment-overview-grid,
 .environment-section-stack,
 .environment-detail-grid,
-.environment-signal-grid {
+.environment-signal-grid,
+.environment-score-grid,
+.environment-download-grid,
+.environment-conclusion-grid {
   display: grid;
   gap: 16px;
 }
 
 .environment-overview-grid {
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 20px;
+}
+
+.environment-score-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.environment-download-grid,
+.environment-conclusion-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 20px;
 }
 
@@ -3338,6 +3351,119 @@ main {
 
 .environment-overview-card.is-available {
   border-color: var(--line-red);
+}
+
+.environment-score-card,
+.environment-download-card,
+.environment-conclusion-card,
+.environment-state-card {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(240, 78, 54, 0.08), transparent 42%),
+    rgba(8, 8, 8, 0.82);
+}
+
+.environment-score-card,
+.environment-download-card,
+.environment-state-card {
+  padding: 18px;
+}
+
+.environment-score-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.environment-score-head span,
+.environment-download-card > span,
+.environment-state-card > span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--red);
+}
+
+.environment-score-head strong {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--line-red);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--paper);
+  background: rgba(240, 78, 54, 0.08);
+}
+
+.environment-score-card h3,
+.environment-download-card h3,
+.environment-state-card h3 {
+  margin: 12px 0;
+  font-family: var(--font-display);
+  line-height: 0.98;
+}
+
+.environment-score-card h3 {
+  font-size: 1.9rem;
+}
+
+.environment-download-card h3,
+.environment-state-card h3 {
+  font-size: 2.2rem;
+}
+
+.environment-score-card p,
+.environment-download-card p,
+.environment-state-card li {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.8);
+  line-height: 1.56;
+}
+
+.environment-score-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.environment-score-pair > div {
+  min-height: 84px;
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.environment-score-pair small {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--red);
+}
+
+.environment-score-pair strong {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 0.96;
+}
+
+.environment-score-pair.is-pending {
+  grid-template-columns: 1fr;
+}
+
+.environment-score-pair.is-pending p {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: rgba(245, 242, 232, 0.72);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .environment-overview-head,
@@ -3525,6 +3651,28 @@ main {
   background: rgba(240, 78, 54, 0.1);
 }
 
+.environment-download-rack,
+.environment-conclusion-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(240, 78, 54, 0.08), transparent 42%),
+    rgba(8, 8, 8, 0.82);
+}
+
+.environment-state-card ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.environment-delivery-shell {
+  display: grid;
+  gap: 18px;
+}
+
 .environment-section-layout,
 .environment-detail-grid {
   grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
@@ -3644,7 +3792,8 @@ main {
 }
 
 @media (max-width: 1280px) {
-  .environment-overview-grid {
+  .environment-overview-grid,
+  .environment-score-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -3662,7 +3811,9 @@ main {
   .environment-hero-card,
   .environment-section-layout,
   .environment-detail-grid,
-  .environment-signal-values {
+  .environment-signal-values,
+  .environment-download-grid,
+  .environment-conclusion-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3682,7 +3833,8 @@ main {
 }
 
 @media (max-width: 720px) {
-  .environment-overview-grid {
+  .environment-overview-grid,
+  .environment-score-grid {
     grid-template-columns: 1fr;
   }
 

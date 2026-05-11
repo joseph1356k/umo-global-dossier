@@ -14,6 +14,8 @@ import {
 import type { ComponentType } from "react";
 import type { Locale } from "../i18n/copy";
 import { environmentEntries, environmentIntro, type EnvironmentEntry } from "../data/environmentAnalysis";
+import { getEnvironmentDeepDive } from "../data/environmentDeepDive";
+import EnvironmentDeepDiveById from "./EnvironmentDeepDiveModule";
 
 const iconMap: Record<string, ComponentType<{ size?: number; className?: string }>> = {
   "entorno-cultural-social": Globe2,
@@ -22,6 +24,10 @@ const iconMap: Record<string, ComponentType<{ size?: number; className?: string 
   "entorno-comercio-internacional": Truck,
   "entorno-inversion-extranjera-directa": Landmark,
 };
+
+function formatAverage(value: number) {
+  return value.toFixed(2).replace(/\.?0+$/, "");
+}
 
 function StatusBadge({ entry, locale }: { entry: EnvironmentEntry; locale: Locale }) {
   const isAvailable = entry.status === "available";
@@ -197,6 +203,8 @@ export function EnvironmentSectionCard({
           ))}
         </div>
       ) : null}
+
+      <EnvironmentDeepDiveById id={entry.id} locale={locale} embedded />
     </>
   );
 
@@ -207,12 +215,55 @@ export function EnvironmentSectionCard({
   return <section id={entry.id} className={`environment-section-card${isAvailable ? " is-available" : ""}`}>{content}</section>;
 }
 
-export default function EnvironmentAnalysisPage({ locale }: { locale: Locale }) {
+export function EnvironmentIntegratedContent({ locale }: { locale: Locale }) {
   const availableCount = environmentEntries.filter((entry) => entry.status === "available").length;
   const pendingCount = environmentEntries.length - availableCount;
+  const summaryRows = environmentEntries.map((entry) => {
+    const deepDive = getEnvironmentDeepDive(entry.id);
+
+    if (!deepDive) {
+      return {
+        entry,
+        texasAverage: null,
+        floridaAverage: null,
+        winner: locale === "es" ? "Pendiente" : "Pending",
+        strategicReading: entry.strategicRole[locale],
+      };
+    }
+
+    const texasAverage =
+      deepDive.indicators.reduce((total, indicator) => total + indicator.texas.score, 0) /
+      Math.max(deepDive.indicators.length, 1);
+    const floridaAverage =
+      deepDive.indicators.reduce((total, indicator) => total + indicator.florida.score, 0) /
+      Math.max(deepDive.indicators.length, 1);
+
+    return {
+      entry,
+      texasAverage,
+      floridaAverage,
+      winner:
+        texasAverage === floridaAverage
+          ? locale === "es"
+            ? "Lectura compartida"
+            : "Shared reading"
+          : texasAverage > floridaAverage
+            ? "Texas"
+            : "Florida",
+      strategicReading: deepDive.conclusion[locale],
+    };
+  });
+
+  const uniqueFiles = Array.from(
+    new Map(
+      environmentEntries
+        .filter((entry) => entry.file)
+        .map((entry) => [entry.file!.href, { entry, file: entry.file! }]),
+    ).values(),
+  );
 
   return (
-    <main className="environment-page">
+    <>
       <section className="environment-hero-card">
         <div className="section-intro environment-intro">
           <span>{environmentIntro.eyebrow[locale]}</span>
@@ -253,6 +304,71 @@ export default function EnvironmentAnalysisPage({ locale }: { locale: Locale }) 
         </div>
       </section>
 
+      <section className="environment-score-grid">
+        {summaryRows.map((row) => (
+          <article key={`summary-${row.entry.id}`} className="environment-score-card">
+            <div className="environment-score-head">
+              <span>{row.entry.shortTitle[locale]}</span>
+              <strong>{row.winner}</strong>
+            </div>
+            <h3>{row.entry.title[locale]}</h3>
+            {row.texasAverage !== null && row.floridaAverage !== null ? (
+              <div className="environment-score-pair">
+                <div>
+                  <small>Texas</small>
+                  <strong>{formatAverage(row.texasAverage)}</strong>
+                </div>
+                <div>
+                  <small>Florida</small>
+                  <strong>{formatAverage(row.floridaAverage)}</strong>
+                </div>
+              </div>
+            ) : (
+              <div className="environment-score-pair is-pending">
+                <p>{locale === "es" ? "Pendiente por cargar" : "Pending upload"}</p>
+              </div>
+            )}
+            <p>{row.strategicReading}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="environment-download-rack">
+        <div className="environment-overview-copy">
+          <span>{locale === "es" ? "Archivos base" : "Base files"}</span>
+          <h2>{locale === "es" ? "Soportes descargables de la Entrega 3" : "Downloadable support files for Delivery 3"}</h2>
+          <p>
+            {locale === "es"
+              ? "Cada entorno disponible conserva su archivo base para revisar tablas originales, fuentes y metodologia sin perder la lectura visual dentro de la web."
+              : "Each available environment keeps its base file so original tables, sources and methodology can be reviewed without losing the visual reading inside the site."}
+          </p>
+        </div>
+        <div className="environment-download-grid">
+          {uniqueFiles.map(({ entry, file }) => (
+            <article key={`file-${file.href}`} className="environment-download-card">
+              <span>{entry.shortTitle[locale]}</span>
+              <h3>{file.label[locale]}</h3>
+              <p>{file.description[locale]}</p>
+              <div className="environment-file-metadata">
+                {file.metadata.map((item) => (
+                  <i key={`${file.href}-${item}`}>{item}</i>
+                ))}
+              </div>
+              <div className="environment-file-actions">
+                <a href={file.href} target="_blank" rel="noreferrer">
+                  <ArrowUpRight size={16} />
+                  {file.openLabel[locale]}
+                </a>
+                <a href={file.href} download>
+                  <Download size={16} />
+                  {file.downloadLabel[locale]}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <nav className="environment-jump-nav" aria-label={locale === "es" ? "Navegacion de entornos" : "Environment navigation"}>
         {environmentEntries.map((entry) => (
           <a key={entry.id} href={`#${entry.id}`}>
@@ -266,6 +382,46 @@ export default function EnvironmentAnalysisPage({ locale }: { locale: Locale }) 
           <EnvironmentSectionCard key={entry.id} entry={entry} locale={locale} />
         ))}
       </section>
+
+      <section className="environment-conclusion-card">
+        <div className="environment-overview-copy">
+          <span>{locale === "es" ? "Conclusion de la entrega" : "Delivery conclusion"}</span>
+          <h2>{locale === "es" ? "Conclusion del analisis de entornos" : "Environment analysis conclusion"}</h2>
+          <p>
+            {locale === "es"
+              ? "La lectura conjunta deja dos roles claros. Texas se fortalece como mercado principal por escala operativa, sectores industriales, incentivos y capacidad logistica. Florida se fortalece como puerta de entrada por relacion comercial con Colombia, afinidad cultural, mercado residencial y ruta maritima mas rapida."
+              : "The combined reading leaves two clear roles. Texas becomes stronger as the main market because of operating scale, industrial sectors, incentives and logistics capacity. Florida becomes stronger as the entry gateway because of its trade relationship with Colombia, cultural fit, residential market and faster sea route."}
+          </p>
+        </div>
+        <div className="environment-conclusion-grid">
+          <article className="environment-state-card">
+            <span>Texas</span>
+            <h3>{locale === "es" ? "Mercado principal" : "Main market"}</h3>
+            <ul>
+              <li>{locale === "es" ? "Mayor escala para maquinaria, agro, distribuidores y B2B." : "Greater scale for machinery, agriculture, distributors and B2B."}</li>
+              <li>{locale === "es" ? "Mejor soporte para crecer despues de la entrada inicial." : "Better support to grow after the initial entry."}</li>
+              <li>{locale === "es" ? "Sobresale en logistica, sectores receptores e incentivos." : "Stands out in logistics, receiving sectors and incentives."}</li>
+            </ul>
+          </article>
+          <article className="environment-state-card">
+            <span>Florida</span>
+            <h3>{locale === "es" ? "Puerta de entrada / mercado complementario" : "Entry gateway / complementary market"}</h3>
+            <ul>
+              <li>{locale === "es" ? "Relacion comercial mas visible con Colombia." : "More visible trade relationship with Colombia."}</li>
+              <li>{locale === "es" ? "Mejor lectura residencial, verde y de mantenimiento continuo." : "Stronger residential, green and continuous-maintenance reading."}</li>
+              <li>{locale === "es" ? "Entrada mas rapida por cercania maritima y afinidad latina." : "Faster entry through maritime proximity and Latin affinity."}</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default function EnvironmentAnalysisPage({ locale }: { locale: Locale }) {
+  return (
+    <main className="environment-page">
+      <EnvironmentIntegratedContent locale={locale} />
     </main>
   );
 }

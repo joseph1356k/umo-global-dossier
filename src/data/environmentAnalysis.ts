@@ -450,11 +450,84 @@ export const environmentEntries: EnvironmentEntry[] = [
         en: "Logistics route Colombia -> Florida / Texas.",
       },
     ],
-    status: "pending",
+    status: "available",
+    file: {
+      label: {
+        es: "UMO_Comercio_Internacional_2021_2025.xlsx",
+        en: "UMO_Comercio_Internacional_2021_2025.xlsx",
+      },
+      description: {
+        es: "Excel con dashboard, instituciones de apoyo, balanza comercial, ruta logistica y metodologia de comparacion para Florida y Texas.",
+        en: "Spreadsheet with dashboard, support institutions, trade balance, logistics route and comparison methodology for Florida and Texas.",
+      },
+      href: "/assets/content/umo-comercio-internacional.xlsx",
+      openLabel: {
+        es: "Abrir Excel",
+        en: "Open spreadsheet",
+      },
+      downloadLabel: {
+        es: "Descargar Excel",
+        en: "Download spreadsheet",
+      },
+      metadata: ["2021-2025", "6 hojas", "3 indicadores", "Puertos y comercio"],
+    },
     notes: [
       {
-        es: "Preparado para cargar tablas, rutas y soportes de comercio exterior sin cambiar la arquitectura.",
-        en: "Prepared to load tables, routes and trade-support material without changing the architecture.",
+        es: "Este entorno ya deja visible la ruta completa: apoyo institucional, lectura comercial con Colombia y capacidad logistica para mover el producto.",
+        en: "This environment now leaves the full route visible: institutional support, commercial reading with Colombia and logistics capacity to move the product.",
+      },
+    ],
+    signals: [
+      {
+        title: {
+          es: "Instituciones de apoyo",
+          en: "Support institutions",
+        },
+        florida: "4.8 / 5",
+        texas: "5.0 / 5",
+        national: "Red binacional activa",
+        referenceLabel: {
+          es: "Lectura USA",
+          en: "U.S. reading",
+        },
+        reading: {
+          es: "Texas gana por mayor musculo exportador e institucional. Florida tambien es fuerte porque conecta mejor con la entrada por el sureste y la relacion con Colombia.",
+          en: "Texas wins through stronger export and institutional muscle. Florida is also strong because it connects better with entry through the southeast and the relationship with Colombia.",
+        },
+      },
+      {
+        title: {
+          es: "Balanza comercial y relacion con Colombia",
+          en: "Trade balance and Colombia link",
+        },
+        florida: "5.0 / 5",
+        texas: "4.7 / 5",
+        national: "Comercio bilateral activo",
+        referenceLabel: {
+          es: "Lectura USA",
+          en: "U.S. reading",
+        },
+        reading: {
+          es: "Florida queda mejor posicionada como puerta de entrada porque Colombia aparece dentro de sus relaciones comerciales visibles. Texas conserva fuerza por escala, pero no por cercania comercial directa con Colombia.",
+          en: "Florida is better positioned as an entry gateway because Colombia appears within its visible trade relationships. Texas remains strong by scale, but not by direct commercial closeness to Colombia.",
+        },
+      },
+      {
+        title: {
+          es: "Ruta logistica y capacidad portuaria",
+          en: "Logistics route and port capacity",
+        },
+        florida: "4.9 / 5",
+        texas: "5.0 / 5",
+        national: "Florida = entrada / Texas = escala",
+        referenceLabel: {
+          es: "Lectura USA",
+          en: "U.S. reading",
+        },
+        reading: {
+          es: "Florida ofrece entrada mas rapida desde Colombia; Texas gana cuando la meta es escalar distribucion B2B con puertos mas grandes y mejor red interna.",
+          en: "Florida offers a faster entry from Colombia; Texas wins when the goal is to scale B2B distribution with larger ports and a stronger internal network.",
+        },
       },
     ],
   },
@@ -498,11 +571,84 @@ export const environmentEntries: EnvironmentEntry[] = [
         en: "Investment incentives in the selected states.",
       },
     ],
-    status: "pending",
+    status: "available",
+    file: {
+      label: {
+        es: "UMO_Inversion_Extranjera_Directa_2020_2024.xlsx",
+        en: "UMO_Inversion_Extranjera_Directa_2020_2024.xlsx",
+      },
+      description: {
+        es: "Excel con flujos de inversion Colombia-EE. UU., sectores receptores, incentivos estatales y conclusion estrategica para Florida y Texas.",
+        en: "Spreadsheet with Colombia-U.S. investment flows, receiving sectors, state incentives and a strategic conclusion for Florida and Texas.",
+      },
+      href: "/assets/content/umo-inversion-extranjera-directa.xlsx",
+      openLabel: {
+        es: "Abrir Excel",
+        en: "Open spreadsheet",
+      },
+      downloadLabel: {
+        es: "Descargar Excel",
+        en: "Download spreadsheet",
+      },
+      metadata: ["2020-2024", "6 hojas", "3 indicadores", "FDI e incentivos"],
+    },
     notes: [
       {
-        es: "Espacio listo para sumar archivo y lectura de incentivos cuando el insumo este disponible.",
-        en: "Space ready to add the file and incentive reading when the input is available.",
+        es: "La lectura de IED no se queda en capital abstracto. Se traduce en confianza de inversion, sectores compatibles e incentivos utiles si UMO decide escalar despues de la entrada comercial.",
+        en: "The FDI reading does not stay at the level of abstract capital. It translates into investment confidence, compatible sectors and useful incentives if UMO decides to scale after the commercial entry.",
+      },
+    ],
+    signals: [
+      {
+        title: {
+          es: "Flujos de inversion y relevancia estatal",
+          en: "Investment flows and state relevance",
+        },
+        florida: "5.0 / 5",
+        texas: "4.3 / 5",
+        national: "Relacion Colombia-USA en crecimiento",
+        referenceLabel: {
+          es: "Lectura USA",
+          en: "U.S. reading",
+        },
+        reading: {
+          es: "Florida aparece como puerta comercial natural para empresas colombianas. Texas tambien atrae, pero en este punto Florida tiene una referencia mas directa.",
+          en: "Florida appears as a natural commercial gateway for Colombian firms. Texas also attracts investment, but at this point Florida has the more direct reference.",
+        },
+      },
+      {
+        title: {
+          es: "Sectores receptores de inversion",
+          en: "Investment-receiving sectors",
+        },
+        florida: "4.4 / 5",
+        texas: "5.0 / 5",
+        national: "Texas mas alineado con industria",
+        referenceLabel: {
+          es: "Lectura USA",
+          en: "U.S. reading",
+        },
+        reading: {
+          es: "Texas queda mejor alineado con industria, logistica y B2B. Florida sirve mas como plataforma comercial y de relacion con Latinoamerica.",
+          en: "Texas is better aligned with industry, logistics and B2B. Florida works more as a commercial platform and a bridge to Latin America.",
+        },
+      },
+      {
+        title: {
+          es: "Incentivos a la inversion",
+          en: "Investment incentives",
+        },
+        florida: "4.6 / 5",
+        texas: "5.0 / 5",
+        national: "Texas ofrece portafolio mas amplio",
+        referenceLabel: {
+          es: "Lectura USA",
+          en: "U.S. reading",
+        },
+        reading: {
+          es: "Texas ofrece un paquete mas amplio y claro para una fase futura de expansion. Florida tambien es fuerte, sobre todo para entrenamiento y soporte a la entrada.",
+          en: "Texas offers a broader and clearer package for a future expansion phase. Florida is also strong, especially for training and entry support.",
+        },
       },
     ],
   },
