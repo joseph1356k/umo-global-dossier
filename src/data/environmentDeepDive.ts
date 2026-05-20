@@ -367,7 +367,7 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
           en: "Texas and Florida share a 0% state personal income tax, which improves the end customer's disposable income.",
         },
         texas: { label: { es: "Texas", en: "Texas" }, display: "0%", chartValue: 5, score: 5 },
-        florida: { label: { es: "Florida", en: "Florida" }, display: "0%", chartValue: 5, score: 5 },
+        florida: { label: { es: "Florida", en: "Florida" }, display: "0%", chartValue: 4.8, score: 4.8 },
         reference: {
           label: { es: "Lectura pais", en: "Country reading" },
           display: "Mas ingreso neto disponible",
@@ -389,8 +389,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
             en: "This favors the sale of upgrades and premium seats with lower price sensitivity.",
           },
           {
-            es: "Aqui no hay un ganador claro: ambos estados quedan fuertes frente al pais.",
-            en: "There is no clear winner here: both states remain strong against the broader country context.",
+            es: "La condicion legal es igual en los dos, pero Texas capitaliza mejor esa ventaja por escala comercial y amplitud de mercado.",
+            en: "The legal condition is the same in both, but Texas captures that advantage better because of commercial scale and market breadth.",
           },
         ],
         analysis: {
@@ -407,8 +407,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
             en: "UMO can defend a premium position without relying only on low-price competition.",
           },
           score: {
-            es: "Texas y Florida reciben 5/5 porque ambos estados comparten esta ventaja plena frente a otros mercados del pais.",
-            en: "Texas and Florida receive 5/5 because both states share this full advantage over other markets across the country.",
+            es: "Texas toma 5/5 porque, con la misma condicion de 0%, tiene mas escala para convertir esa ventaja en ventas y red comercial. Florida queda en 4.8/5 porque comparte la base legal, pero con menor alcance operativo para UMO.",
+            en: "Texas takes 5/5 because, with the same 0% condition, it has more scale to turn that advantage into sales and channel reach. Florida stays at 4.8/5 because it shares the legal base, but with less operating reach for UMO.",
           },
         },
         sources: [
@@ -421,52 +421,53 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
         eyebrow: { es: "Indicador 03", en: "Indicator 03" },
         title: { es: "Supervivencia de pequenas empresas", en: "Small business survival" },
         summary: {
-          es: "La estabilidad de talleres, minoristas y pequenos negocios importa porque ellos pueden ser la red real de aliados para vender y sostener postventa.",
-          en: "The stability of workshops, retailers and small businesses matters because they can become the real partner network for sales and after-sales support.",
+          es: "La apertura neta de establecimientos ayuda a ver que tan vivo esta el ecosistema de talleres, minoristas y pequenos negocios que UMO necesita para vender y sostener postventa.",
+          en: "Net establishment growth helps show how active the ecosystem of workshops, retailers and small businesses is for UMO's sales and after-sales support.",
         },
-        texas: { label: { es: "Texas", en: "Texas" }, display: ">78%", chartValue: 4.8, score: 4.8 },
-        florida: { label: { es: "Florida", en: "Florida" }, display: ">78%", chartValue: 4.8, score: 4.8 },
+        texas: { label: { es: "Texas", en: "Texas" }, display: "27.67%", chartValue: 27.67, score: 5 },
+        florida: { label: { es: "Florida", en: "Florida" }, display: "22.39%", chartValue: 22.39, score: 4.05 },
         reference: {
           label: { es: "Lectura pais", en: "Country reading" },
-          display: "Ecosistema comercial resiliente",
+          display: "19.34%",
+          chartValue: 19.34,
         },
-        chartMax: 5,
-        latestLabel: { es: "Base 2025", en: "2025 baseline" },
+        chartMax: 30,
+        latestLabel: { es: "Dato 2025", en: "2025 data" },
         tableRows: [
-          { label: { es: "Florida", en: "Florida" }, texas: "-", florida: ">78%", reference: "Red local confiable" },
-          { label: { es: "Texas", en: "Texas" }, texas: ">78%", florida: "-", reference: "Socios comerciales estables" },
-          { label: { es: "Lectura UMO", en: "UMO reading" }, texas: "Continuidad operacional", florida: "Menor riesgo de quiebre", reference: "Soporte de postventa" },
+          { label: { es: "Florida", en: "Florida" }, texas: "-", florida: "22.39%", reference: "Por encima de EE. UU." },
+          { label: { es: "Texas", en: "Texas" }, texas: "27.67%", florida: "-", reference: "Mayor dinamismo neto" },
+          { label: { es: "EE. UU.", en: "U.S." }, texas: "-", florida: "-", reference: "19.34%" },
         ],
         bullets: [
           {
-            es: "UMO no depende solo de vender: necesita que los socios sobrevivan y roten producto.",
-            en: "UMO does not only need to sell: it needs partners that survive and keep rotating product.",
+            es: "UMO no depende solo de vender: necesita distribuidores, talleres y dealers que se mantengan activos.",
+            en: "UMO does not only need to sell: it needs distributors, workshops and dealers that stay active.",
           },
           {
-            es: "Una red estable reduce riesgo de postventa y facilita escalar por distribuidores locales.",
-            en: "A stable network reduces after-sales risk and makes it easier to scale through local distributors.",
+            es: "Una apertura neta mayor sugiere mas capacidad para abrir canal y sostener postventa local.",
+            en: "Higher net openings suggest more capacity to open channel and sustain local after-sales support.",
           },
           {
-            es: "Ambos estados vuelven mas creible una expansion sostenida que otros territorios mas fragiles.",
-            en: "Both states make sustained expansion more credible than more fragile territories.",
+            es: "Ambos superan al pais, pero Texas queda arriba por mayor dinamismo empresarial.",
+            en: "Both beat the country benchmark, but Texas ends higher because of stronger business dynamism.",
           },
         ],
         analysis: {
           keyData: {
-            es: "Texas y Florida superan el 78% en supervivencia de pequenas empresas.",
-            en: "Texas and Florida exceed 78% in small-business survival.",
+            es: "Texas marca 27.67% y Florida 22.39% en apertura neta de establecimientos, ambos por encima del 19.34% de EE. UU.",
+            en: "Texas reaches 27.67% and Florida 22.39% in net establishment growth, both above the 19.34% U.S. benchmark.",
           },
           meaning: {
-            es: "La base de talleres, minoristas y aliados comerciales puede sostener relaciones de mediano plazo.",
-            en: "The base of workshops, retailers and commercial partners can sustain medium-term relationships.",
+            es: "Hay un ecosistema real para conseguir aliados comerciales, distribuidores y soporte local sin depender de una sola relacion.",
+            en: "There is a real ecosystem for commercial partners, distributors and local support without depending on a single relationship.",
           },
           impact: {
-            es: "UMO gana continuidad en distribucion, postventa y acceso al cliente final.",
-            en: "UMO gains continuity in distribution, after-sales support and access to the final customer.",
+            es: "UMO gana mas opciones para abrir canal, sostener postventa y escalar con socios locales.",
+            en: "UMO gains more options to open channel, sustain after-sales support and scale through local partners.",
           },
           score: {
-            es: "Texas y Florida quedan en 4.8/5 porque ambos ofrecen una base empresarial resiliente y util para construir canal.",
-            en: "Texas and Florida stay at 4.8/5 because both offer a resilient business base that is useful for building channel.",
+            es: "Texas toma 5/5 porque lidera la apertura neta de establecimientos. Florida queda en 4.05/5 porque tambien supera al pais, pero su dinamismo es menor al de Texas en esta comparacion.",
+            en: "Texas takes 5/5 because it leads net establishment growth. Florida stays at 4.05/5 because it also beats the country, but its dynamism is lower than Texas in this comparison.",
           },
         },
         sources: [
@@ -483,7 +484,7 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
           en: "The FTA does not define the state, but it does define entry profitability because it leaves UMO's exports at 0% tariff.",
         },
         texas: { label: { es: "Texas", en: "Texas" }, display: "0% arancel", chartValue: 5, score: 5 },
-        florida: { label: { es: "Florida", en: "Florida" }, display: "0% arancel", chartValue: 5, score: 5 },
+        florida: { label: { es: "Florida", en: "Florida" }, display: "0% arancel", chartValue: 4.8, score: 4.8 },
         reference: {
           label: { es: "Lectura pais", en: "Country reading" },
           display: "Ventaja estructural para Colombia",
@@ -505,8 +506,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
             en: "It allows UMO to compete on quality and design, not only on defensive pricing.",
           },
           {
-            es: "Esta ventaja aplica a ambos estados y fortalece la decision de entrar por nodos fuertes del pais.",
-            en: "This advantage applies to both states and strengthens the decision to enter through strong nodes in the country.",
+            es: "La ventaja legal aplica a ambos, pero Texas aprovecha mejor ese margen cuando el plan es escalar volumen y red comercial.",
+            en: "The legal advantage applies to both, but Texas captures that margin better when the plan is to scale volume and channel reach.",
           },
         ],
         analysis: {
@@ -523,8 +524,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
             en: "UMO can use Texas or Florida with a healthier profitability base and better ability to invest in channel and brand.",
           },
           score: {
-            es: "Texas y Florida reciben 5/5 porque la ventaja arancelaria favorece de forma plena la operacion en ambos casos.",
-            en: "Texas and Florida receive 5/5 because the tariff advantage fully favors operations in both cases.",
+            es: "Texas toma 5/5 porque el mismo arancel 0% se vuelve mas potente en un mercado de mayor escala interna. Florida queda en 4.8/5 porque tambien aprovecha el TLC, pero con un rol mas claro de entrada y conexion logistica.",
+            en: "Texas takes 5/5 because the same 0% tariff becomes more powerful in a market with larger internal scale. Florida stays at 4.8/5 because it also benefits from the FTA, but with a clearer gateway and logistics role.",
           },
         },
         sources: [
@@ -575,8 +576,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
           es: "La compra digital crece en ambos estados y se mantiene por encima de la referencia nacional, lo que le abre a UMO una ruta de entrada mas ligera por catalogo, pauta y marketplace.",
           en: "Digital buying grows in both states and stays above the national benchmark, giving UMO a lighter entry route through catalog, advertising and marketplaces.",
         },
-        texas: { label: { es: "Texas", en: "Texas" }, display: "17.8%", chartValue: 17.8, score: 4.7 },
-        florida: { label: { es: "Florida", en: "Florida" }, display: "17.5%", chartValue: 17.5, score: 4.5 },
+        texas: { label: { es: "Texas", en: "Texas" }, display: "17.8%", chartValue: 17.8, score: 5 },
+        florida: { label: { es: "Florida", en: "Florida" }, display: "17.5%", chartValue: 17.5, score: 4.92 },
         reference: {
           label: { es: "Pais", en: "Country" },
           display: "16.4%",
@@ -619,8 +620,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
             en: "UMO can enter through a lighter route: marketplaces, advertising, digital catalog and distributor prospecting.",
           },
           score: {
-            es: "Texas queda en 4.7/5 por su mejor potencial digital y Florida en 4.5/5 porque tambien es fuerte, aunque ligeramente por debajo.",
-            en: "Texas stands at 4.7/5 for its stronger digital potential and Florida at 4.5/5 because it is also strong, though slightly behind.",
+            es: "Texas toma 5/5 porque llega al valor mas alto de la serie en 2025. Florida queda en 4.92/5 al calcularse relativo a ese 5, ya que tambien supera al pais y se mantiene muy cerca del lider.",
+            en: "Texas takes 5/5 because it reaches the highest value in the 2025 series. Florida stays at 4.92/5 when normalized against that 5, since it also beats the country and remains very close to the leader.",
           },
         },
         series: [
@@ -723,8 +724,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
           es: "Florida y Texas muestran un desgaste ambiental superior al promedio nacional, lo que fortalece el argumento de durabilidad y reposicion premium para UMO.",
           en: "Florida and Texas show environmental wear above the national benchmark, which strengthens UMO's durability and premium-replacement argument.",
         },
-        texas: { label: { es: "Texas", en: "Texas" }, display: "4.7 / 5", chartValue: 4.7, score: 4.7 },
-        florida: { label: { es: "Florida", en: "Florida" }, display: "4.5 / 5", chartValue: 4.5, score: 4.8 },
+        texas: { label: { es: "Texas", en: "Texas" }, display: "4.7 / 5", chartValue: 4.7, score: 5 },
+        florida: { label: { es: "Florida", en: "Florida" }, display: "4.5 / 5", chartValue: 4.5, score: 4.79 },
         reference: {
           label: { es: "Pais", en: "Country" },
           display: "3.6 / 5",
@@ -767,8 +768,8 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
             en: "UMO can sell real durability: UV resistance, waterproofing, reinforced stitching and resilient foam.",
           },
           score: {
-            es: "Florida queda en 4.8/5 por su lectura acumulada de humedad y uso verde continuo; Texas queda en 4.7/5 por calor y radiacion muy altos con una demanda igual de exigente.",
-            en: "Florida stands at 4.8/5 because of its accumulated humidity and continuous green-use reading; Texas stays at 4.7/5 because of very high heat and radiation with equally demanding usage.",
+            es: "Texas toma 5/5 porque registra el mayor indice de desgaste en 2025. Florida queda en 4.79/5 al calcularse relativo a ese 5, y sigue siendo muy fuerte por humedad, lluvia y exposicion solar.",
+            en: "Texas takes 5/5 because it records the highest wear index in 2025. Florida stays at 4.79/5 when normalized against that 5, and remains very strong because of humidity, rainfall and solar exposure.",
           },
         },
         series: [
