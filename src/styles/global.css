@@ -2154,6 +2154,86 @@ main {
   line-height: 1.4;
 }
 
+.environment-bar-chart-frame {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.environment-bar-chart {
+  display: grid;
+  gap: 18px;
+}
+
+.environment-bar-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) max-content;
+  gap: 16px;
+  align-items: center;
+}
+
+.environment-bar-row > span,
+.environment-bar-row > strong {
+  font-family: var(--font-mono);
+  font-size: 0.94rem;
+}
+
+.environment-bar-row > strong {
+  color: var(--paper);
+  min-width: 92px;
+  text-align: right;
+}
+
+.environment-bar-track {
+  position: relative;
+  min-height: 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.environment-bar-track i {
+  display: block;
+  height: 100%;
+  min-height: 14px;
+  border-radius: 999px;
+}
+
+.environment-bar-track i.is-texas {
+  background: linear-gradient(90deg, rgba(var(--brand-orange-rgb), 0.78), rgba(var(--brand-orange-rgb), 0.96));
+  box-shadow: 0 0 16px rgba(var(--brand-orange-rgb), 0.34);
+}
+
+.environment-bar-track i.is-florida {
+  background: linear-gradient(90deg, rgba(212, 214, 217, 0.78), rgba(242, 242, 242, 0.94));
+  box-shadow: 0 0 16px rgba(212, 214, 217, 0.2);
+}
+
+.environment-reference-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.environment-reference-band small,
+.environment-reference-band strong {
+  font-family: var(--font-mono);
+}
+
+.environment-reference-band small {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.environment-reference-band strong {
+  color: var(--paper);
+  font-size: 0.92rem;
+}
+
 .macro-table-shell {
   display: grid;
   gap: 10px;
