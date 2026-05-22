@@ -23,6 +23,7 @@ import EnvironmentAnalysisPage, {
   EnvironmentSectionCard,
 } from "./components/EnvironmentAnalysisPage";
 import MacroComparativeModuleContent from "./components/MacroComparativeModule";
+import PresentationPage from "./components/PresentationPage";
 import { getEnvironmentEntry } from "./data/environmentAnalysis";
 import {
   agreementConsequences,
@@ -225,6 +226,7 @@ function Header({
     { href: "/", label: locale === "es" ? "UMO" : "UMO" },
     { href: "/entregas", label: locale === "es" ? "Entregas" : "Deliveries" },
     { href: "/entornos", label: locale === "es" ? "Entornos" : "Environments" },
+    { href: "/presentacion", label: locale === "es" ? "Presentación" : "Presentation" },
   ];
 
   return (
@@ -1729,6 +1731,7 @@ function App() {
         <Route path="/" element={<CompanyHome locale={locale} backend={backend} />} />
         <Route path="/entregas" element={<DeliveriesArchive locale={locale} />} />
         <Route path="/entornos" element={<EnvironmentAnalysisPage locale={locale} />} />
+        <Route path="/presentacion" element={<PresentationPage locale={locale} />} />
         <Route path="/entregas/:id" element={<DeliveryOverview locale={locale} />} />
         <Route path="/entregas/:id/recopilacion" element={<DeliveryPresentation locale={locale} />} />
         <Route path="/entregas/:id/trabajos/:moduleId" element={<DeliveryWorkPage locale={locale} />} />
