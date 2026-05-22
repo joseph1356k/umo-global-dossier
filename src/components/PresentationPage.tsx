@@ -71,6 +71,7 @@ const chapters: Chapter[] = [
   { id: "contexto", label: "Contexto UMO" },
   { id: "sintesis", label: "Fases previas" },
   { id: "comparativo", label: "Florida vs Texas" },
+  { id: "benchmarks", label: "Benchmarks" },
   { id: "florida", label: "Florida" },
   { id: "texas", label: "Texas" },
   { id: "decision", label: "Decisión" },
@@ -222,7 +223,7 @@ const texasOpportunityCards: NarrativeCard[] = [
   },
   {
     title: "Expansión lógica",
-    text: "Texas no se descarta: se reserva para una segunda etapa cuando UMO ya haya probado producto, logística, precio, soporte y canales en Estados Unidos.",
+    text: "Texas no se descarta: se reserva para una segunda etapa cuando UMO ya haya probado producto, logística, precio, soporte y canales en el mercado inicial.",
     meta: "Fase de escala",
     icon: LineChart,
   },
@@ -249,7 +250,7 @@ const entryStrategyCards: NarrativeCard[] = [
   },
   {
     title: "Canales digitales desde el primer día",
-    text: "Amazon, marketplace, landing page para Estados Unidos, landing enfocada en Florida y e-commerce propio permiten medir demanda, preguntas frecuentes y sensibilidad de precio.",
+    text: "Amazon, marketplace, landing general, landing enfocada en Florida y e-commerce propio permiten medir demanda, preguntas frecuentes y sensibilidad de precio.",
     meta: "B2C medible",
     icon: ShoppingCart,
   },
@@ -293,7 +294,7 @@ const roadmap = [
     phase: "0",
     title: "Preparación comercial",
     timing: "0-2 meses",
-    text: "Definir compatibilidades, fichas técnicas, muestras, empaque, landing USA, material en inglés y política de soporte.",
+    text: "Definir compatibilidades, fichas técnicas, muestras, empaque, landing de mercado, material en inglés y política de soporte.",
   },
   {
     phase: "1",
@@ -315,8 +316,102 @@ const roadmap = [
   },
 ];
 
+const nationalBenchmarkGroups = [
+  {
+    title: "E-commerce aplicado a landscaping",
+    unit: "% de adopción digital",
+    scaleMax: 20,
+    note: "Ambos estados quedan por encima del promedio nacional, lo que valida Amazon, landing page y venta directa.",
+    bars: [
+      { label: "Texas", value: 17.8, display: "17.8%", tone: "texas" },
+      { label: "Florida", value: 17.5, display: "17.5%", tone: "florida" },
+      { label: "Promedio nacional", value: 16.4, display: "16.4%", tone: "usa" },
+    ],
+  },
+  {
+    title: "Clima favorable para uso continuo",
+    unit: "temperatura media 2025",
+    scaleMax: 80,
+    note: "Florida y Texas sostienen una temporada de uso mucho más larga que el promedio nacional.",
+    bars: [
+      { label: "Florida", value: 72.3, display: "72.3 F", tone: "florida" },
+      { label: "Texas", value: 67.7, display: "67.7 F", tone: "texas" },
+      { label: "Promedio nacional", value: 54.6, display: "54.6 F", tone: "usa" },
+    ],
+  },
+  {
+    title: "Desgaste que justifica producto premium",
+    unit: "índice / 5",
+    scaleMax: 5,
+    note: "Más calor, humedad, polvo y exposición exterior elevan la necesidad de materiales resistentes.",
+    bars: [
+      { label: "Texas", value: 4.7, display: "4.7 / 5", tone: "texas" },
+      { label: "Florida", value: 4.5, display: "4.5 / 5", tone: "florida" },
+      { label: "Promedio nacional", value: 3.6, display: "3.6 / 5", tone: "usa" },
+    ],
+  },
+  {
+    title: "Dinamismo pyme",
+    unit: "apertura neta de establecimientos",
+    scaleMax: 30,
+    note: "La base empresarial local supera el promedio nacional y facilita distribuidores, aliados y clientes B2B.",
+    bars: [
+      { label: "Texas", value: 27.67, display: "27.67%", tone: "texas" },
+      { label: "Florida", value: 22.39, display: "22.39%", tone: "florida" },
+      { label: "Promedio nacional", value: 19.34, display: "19.34%", tone: "usa" },
+    ],
+  },
+];
+
+const fiscalComparisonRows = [
+  {
+    state: "Florida",
+    rank: 5,
+    personalTax: "0%",
+    businessTax: "Corporate income tax 5.5%",
+    salesTax: "Sales tax base 6.00%",
+    formation: "Sunbiz permite filing online de LLC",
+    reading: "Muy fuerte para iniciar con menor fricción, menor carga personal y logística cercana a Colombia.",
+    tone: "florida",
+  },
+  {
+    state: "Texas",
+    rank: 7,
+    personalTax: "0%",
+    businessTax: "Sin corporate income tax tradicional; franchise tax según condiciones",
+    salesTax: "Sales tax base 6.25%",
+    formation: "SOSDirect permite filing online y servicios same-day / next-day",
+    reading: "Muy atractivo para escalar B2B, distribuidores, volumen agrícola y expansión posterior.",
+    tone: "texas",
+  },
+  {
+    state: "California",
+    rank: 48,
+    personalTax: "Alta carga personal",
+    businessTax: "Corporate tax 8.84% y mínimo anual de USD 800",
+    salesTax: "Sales tax estatal 7.25%",
+    formation: "Expedited online disponible, pero con costos altos",
+    reading: "Mercado grande, pero menos conveniente para un piloto exportador de bajo riesgo.",
+    tone: "other",
+  },
+  {
+    state: "New York",
+    rank: 50,
+    personalTax: "Top rate alta",
+    businessTax: "Corporate tax graduado 6.5%-7.25%",
+    salesTax: "Sales tax estatal más cargas locales",
+    formation: "Mayor complejidad regulatoria y de costos",
+    reading: "Ejemplo de mercado potente, pero más pesado para validar rápido una línea nueva.",
+    tone: "other",
+  },
+];
+
 function formatScore(value: number) {
   return value.toFixed(2).replace(/\.?0+$/, "");
+}
+
+function getBarWidth(value: number, max: number) {
+  return `${Math.min(100, Math.max(6, (value / max) * 100))}%`;
 }
 
 function getLatestSeriesPoint(indicatorId: string) {
@@ -375,6 +470,44 @@ function IconCard({ card }: { card: NarrativeCard }) {
   );
 }
 
+function BenchmarkChart({
+  title,
+  unit,
+  scaleMax,
+  note,
+  bars,
+}: {
+  title: string;
+  unit: string;
+  scaleMax: number;
+  note: string;
+  bars: { label: string; value: number; display: string; tone: string }[];
+}) {
+  return (
+    <article className="presentation-chart-card">
+      <div className="presentation-chart-head">
+        <span>{unit}</span>
+        <BarChart3 size={19} />
+      </div>
+      <h3>{title}</h3>
+      <div className="presentation-bar-stack">
+        {bars.map((bar) => (
+          <div className={`presentation-bar-row is-${bar.tone}`} key={`${title}-${bar.label}`}>
+            <div>
+              <strong>{bar.label}</strong>
+              <em>{bar.display}</em>
+            </div>
+            <span>
+              <i style={{ width: getBarWidth(bar.value, scaleMax) }} />
+            </span>
+          </div>
+        ))}
+      </div>
+      <p>{note}</p>
+    </article>
+  );
+}
+
 function SourceImageCard({
   title,
   text,
@@ -427,12 +560,11 @@ function PresentationHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.62 }}
       >
-        <span>Presentación estratégica / UMO hacia Estados Unidos</span>
-        <h1>UMO hacia Estados Unidos: Florida como puerta de entrada estratégica</h1>
+        <span>Presentación estratégica / Selección estatal prioritaria</span>
+        <h1>Florida y Texas: los estados más atractivos para la expansión de UMO</h1>
         <p>
-          Comparación entre Florida y Texas para definir el mercado estatal más viable para iniciar la
-          internacionalización de UMO. Estados Unidos ya es el país objetivo; la decisión estratégica es
-          escoger el estado de arranque.
+          Comparación ejecutiva entre Florida y Texas frente a otros estados para definir dónde iniciar con
+          menor fricción, mayor visibilidad comercial y mejor oportunidad de aprendizaje.
         </p>
         <div className="presentation-hero-actions">
           <a href="#decision">
@@ -566,7 +698,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
           </article>
           <article>
             <Tractor size={22} />
-            <span>Aplicación USA</span>
+            <span>Aplicación del producto</span>
             <h3>Maquinaria de césped y campo</h3>
             <p>
               El usuario objetivo pasa largas jornadas sentado en podadoras, tractores pequeños o vehículos de
@@ -588,7 +720,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
         <SectionKicker
           eyebrow="02 / Síntesis de entregas anteriores"
           title="De un diagnóstico general a una decisión territorial concreta"
-          text="Las fases anteriores permitieron pasar de entender la empresa y su preparación internacional a comparar internamente los estados más atractivos dentro de Estados Unidos. El objetivo ya no es escoger país: es definir el punto de entrada más viable."
+          text="Las fases anteriores permitieron pasar de entender la empresa y su preparación internacional a comparar cuáles estados ofrecen mejores condiciones reales para iniciar. El punto ya no es explicar el país; es demostrar por qué Florida y Texas sobresalen frente al resto."
         />
         <div className="presentation-phase-grid">
           {deliveries.map((delivery) => (
@@ -612,7 +744,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             <p>
               El macrocomparativo demuestra que Texas tiene fuerza estructural en agricultura y volumen.
               El análisis de entornos complementa esa lectura mostrando que Florida ofrece una entrada más
-              rápida, visible y comercialmente flexible para validar UMO en Estados Unidos.
+              rápida, visible y comercialmente flexible para validar UMO frente a otros estados posibles.
             </p>
           </article>
           <div className="presentation-mini-metrics">
@@ -682,9 +814,107 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      <section id="benchmarks" className="presentation-section presentation-benchmark-section">
+        <SectionKicker
+          eyebrow="04 / Benchmark nacional y fiscal"
+          title="Florida y Texas destacan frente al promedio nacional y frente a estados más costosos"
+          text="El argumento ejecutivo no es que sean los únicos mercados posibles. Es que combinan demanda real para maquinaria exterior, temporada de uso, compra digital, dinamismo empresarial y un marco fiscal más amigable que alternativas grandes como California o New York."
+        />
+        <div className="presentation-benchmark-grid">
+          {nationalBenchmarkGroups.map((group) => (
+            <BenchmarkChart key={group.title} {...group} />
+          ))}
+        </div>
+        <div className="presentation-market-fit">
+          <article>
+            <span>Encaje comercial UMO / Florida</span>
+            <h3>Turfgrass, landscaping y mantenimiento de césped</h3>
+            <div className="presentation-fit-bars">
+              <div>
+                <strong>Florida</strong>
+                <span>
+                  <i style={{ width: getBarWidth(turfgrass2025?.florida ?? 0, 50) }} />
+                </span>
+                <em>USD {turfgrass2025?.florida.toFixed(1)}B</em>
+              </div>
+              <div>
+                <strong>Texas</strong>
+                <span>
+                  <i style={{ width: getBarWidth(turfgrass2025?.texas ?? 0, 50) }} />
+                </span>
+                <em>USD {turfgrass2025?.texas.toFixed(1)}B</em>
+              </div>
+            </div>
+            <p>
+              Este gráfico refuerza por qué Florida es la puerta de entrada: el producto puede probarse en
+              césped profesional, campos de golf, condominios, urbanizaciones y empresas de mantenimiento.
+            </p>
+          </article>
+          <article>
+            <span>Encaje comercial UMO / Texas</span>
+            <h3>Agricultura, ranchos y maquinaria pesada</h3>
+            <div className="presentation-fit-bars">
+              <div>
+                <strong>Texas</strong>
+                <span>
+                  <i style={{ width: getBarWidth(agriculture2025?.texas ?? 0, 40) }} />
+                </span>
+                <em>USD {agriculture2025?.texas.toFixed(1)}B</em>
+              </div>
+              <div>
+                <strong>Florida</strong>
+                <span>
+                  <i style={{ width: getBarWidth(agriculture2025?.florida ?? 0, 40) }} />
+                </span>
+                <em>USD {agriculture2025?.florida.toFixed(1)}B</em>
+              </div>
+            </div>
+            <p>
+              Texas se fortalece como segunda etapa: cuando UMO tenga validación en Florida, puede
+              llevar evidencia comercial a distribuidores agrícolas, ranchos y canales B2B técnicos.
+            </p>
+          </article>
+        </div>
+        <div className="presentation-tax-layout">
+          <article className="presentation-tax-intro">
+            <CircleDollarSign size={22} />
+            <span>Impuestos y facilidad legal de entrada</span>
+            <h3>Florida y Texas reducen fricción frente a estados más pesados</h3>
+            <p>
+              Para una primera fase exportadora, UMO no necesita abrir sede propia. Aun así, comparar el entorno
+              fiscal y la facilidad de registro ayuda a demostrar por qué Florida y Texas son más prácticos para
+              validar mercado que zonas con mayor carga tributaria o costos de cumplimiento.
+            </p>
+          </article>
+          <div className="presentation-tax-cards">
+            {fiscalComparisonRows.map((row) => (
+              <article className={`presentation-tax-card is-${row.tone}`} key={row.state}>
+                <div>
+                  <span>Tax Foundation 2026</span>
+                  <strong>#{row.rank}</strong>
+                </div>
+                <h3>{row.state}</h3>
+                <ul>
+                  <li>{row.personalTax} impuesto estatal personal.</li>
+                  <li>{row.businessTax}.</li>
+                  <li>{row.salesTax}.</li>
+                  <li>{row.formation}.</li>
+                </ul>
+                <p>{row.reading}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+        <p className="presentation-source-note">
+          Fuentes consultadas: Tax Foundation 2026 State Tax Competitiveness Index, Florida Department of
+          Revenue, Florida Sunbiz, Texas Comptroller, Texas Secretary of State, California Franchise Tax Board y
+          California Secretary of State. Esta lectura es estratégica y no reemplaza asesoría legal o tributaria local.
+        </p>
+      </section>
+
       <section id="florida" className="presentation-section presentation-deep-section">
         <SectionKicker
-          eyebrow="04 / Profundización Florida"
+          eyebrow="05 / Profundización Florida"
           title="Florida es atractiva por el mercado de césped, jardinería profesional y mantenimiento continuo"
           text="La entrada por Florida permite probar UMO en un mercado donde la comodidad del operador se conecta con residencias, empresas de landscaping, campos de golf, condominios, urbanizaciones y maquinaria de jardín de uso frecuente."
         />
@@ -714,9 +944,9 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section id="texas" className="presentation-section presentation-deep-section">
         <SectionKicker
-          eyebrow="05 / Profundización Texas"
+          eyebrow="06 / Profundización Texas"
           title="Texas conserva alto atractivo para una segunda etapa de expansión"
-          text="Texas no pierde atractivo. Su tamaño, cultura agrícola, base ganadera, ranchos y ecosistema de distribuidores lo convierten en un destino sólido cuando UMO ya haya validado producto, precio, logística y canales en Estados Unidos."
+          text="Texas no pierde atractivo. Su tamaño, cultura agrícola, base ganadera, ranchos y ecosistema de distribuidores lo convierten en un destino sólido cuando UMO ya haya validado producto, precio, logística y canales en Florida."
         />
         <div className="presentation-icon-grid">
           {texasOpportunityCards.map((card) => (
@@ -744,7 +974,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section id="decision" className="presentation-section presentation-decision-section">
         <div className="presentation-decision-copy">
-          <span>06 / Selección final</span>
+          <span>07 / Selección final</span>
           <h2>Florida se recomienda como mercado inicial prioritario.</h2>
           <p>
             Florida permite validar la propuesta de UMO en un entorno donde convergen el uso frecuente de
@@ -770,7 +1000,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             <p>
               Texas debe entenderse como una segunda etapa de expansión, no como un mercado descartado. Su tamaño,
               cultura agrícola y base ganadera lo convierten en un destino atractivo una vez UMO haya validado
-              producto, logística, precios y canales en Estados Unidos.
+              producto, logística, precios y canales en Florida.
             </p>
           </article>
         </div>
@@ -778,9 +1008,9 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section id="estrategia" className="presentation-section">
         <SectionKicker
-          eyebrow="07 / Estrategia de internacionalización"
+          eyebrow="08 / Estrategia de internacionalización"
           title="Exportación directa + alianzas locales: entrada controlada, medible y escalable"
-          text="A partir de la consigna estratégica del archivo Markdown y los análisis del dossier, la ruta recomendada es exportar directamente desde Colombia hacia Estados Unidos y combinar la operación con distribuidores, marketplaces y contactos B2B en Florida; posteriormente, replicar aprendizajes hacia Texas."
+          text="A partir de la consigna estratégica del archivo Markdown y los análisis del dossier, la ruta recomendada es exportar directamente desde Colombia y combinar la operación con distribuidores, marketplaces y contactos B2B en Florida; posteriormente, replicar aprendizajes hacia Texas."
         />
         <div className="presentation-icon-grid">
           {entryStrategyCards.map((card) => (
@@ -802,7 +1032,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
               {[
                 "Amazon",
                 "E-commerce propio",
-                "Landing USA",
+                "Landing de mercado",
                 "Landing Florida",
                 "Marketplaces",
                 "Distribuidores locales",
@@ -821,7 +1051,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section id="marketing" className="presentation-section">
         <SectionKicker
-          eyebrow="08 / Plan de marketing digital"
+          eyebrow="09 / Plan de marketing digital"
           title="La demanda debe capturarse con contenido técnico, prueba social y canales medibles"
           text="La estrategia digital no debe limitarse a publicar el producto. Debe convertir la ventaja de UMO en argumentos claros: menos fatiga, mayor durabilidad, compatibilidad, soporte climático y mejor relación valor-precio frente a repuestos OEM."
         />
@@ -842,7 +1072,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section id="roadmap" className="presentation-section">
         <SectionKicker
-          eyebrow="09 / Ruta de implementación"
+          eyebrow="10 / Ruta de implementación"
           title="Primero validar, después escalar"
           text="La recomendación ejecutiva es secuencial: Florida se usa para aprender con bajo riesgo relativo; Texas se activa cuando ya exista evidencia comercial suficiente para negociar con canales más técnicos y de mayor volumen."
         />
@@ -869,7 +1099,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             <Globe2 size={20} />
             <span>Conclusión general</span>
             <p>
-              La internacionalización de UMO hacia Estados Unidos debe iniciar donde sea más fácil aprender,
+              La internacionalización de UMO debe iniciar donde sea más fácil aprender,
               demostrar valor y corregir rápido. Por eso Florida es la primera entrada y Texas queda como el
               siguiente mercado de escala.
             </p>
@@ -879,7 +1109,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section className="presentation-section presentation-video-section">
         <div>
-          <span>10 / Video ejecutivo en inglés</span>
+          <span>11 / Video ejecutivo en inglés</span>
           <h2>Espacio preparado para la exposición de máximo 5 minutos</h2>
           <p>
             El archivo Markdown exige incluir una presentación en inglés. Como aún no hay un video cargado en el
@@ -891,7 +1121,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
           <h3>Suggested English flow</h3>
           <ol>
             <li>UMO company context and product opportunity.</li>
-            <li>Why the United States is the target country.</li>
+            <li>Why Florida and Texas stand out among the most attractive state options.</li>
             <li>Florida vs Texas comparison and strategic roles.</li>
             <li>Recommended entry strategy: Florida first, Texas second.</li>
             <li>Digital marketing, channels and implementation roadmap.</li>
@@ -901,7 +1131,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
       <section className="presentation-section presentation-support-section">
         <SectionKicker
-          eyebrow="11 / Sustento del expediente"
+          eyebrow="12 / Sustento del expediente"
           title="Referencias y materiales usados para construir la presentación"
           text="La nueva sección se apoya en los documentos internos del proyecto, las entregas cargadas, el análisis macroeconómico, los entornos, el DOFA, el Canvas, el diagnóstico P-I y la consigna estratégica del archivo Markdown."
         />

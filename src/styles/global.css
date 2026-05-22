@@ -3983,6 +3983,10 @@ main {
 .presentation-finding-main span,
 .presentation-state-panel span,
 .presentation-evidence-band span,
+.presentation-chart-head span,
+.presentation-market-fit span,
+.presentation-tax-intro span,
+.presentation-tax-card span,
 .presentation-decision-copy span,
 .presentation-strategy-layout span,
 .presentation-canvas-grid span,
@@ -4116,6 +4120,10 @@ main {
 .presentation-mini-metrics article,
 .presentation-state-panel,
 .presentation-evidence-band article,
+.presentation-chart-card,
+.presentation-market-fit article,
+.presentation-tax-intro,
+.presentation-tax-card,
 .presentation-decision-grid article,
 .presentation-strategy-layout article,
 .presentation-canvas-grid article,
@@ -4152,6 +4160,12 @@ main {
 .presentation-finding-main p,
 .presentation-state-panel p,
 .presentation-evidence-band p,
+.presentation-chart-card p,
+.presentation-market-fit p,
+.presentation-tax-intro p,
+.presentation-tax-card p,
+.presentation-tax-card li,
+.presentation-source-note,
 .presentation-decision-copy p,
 .presentation-decision-grid p,
 .presentation-decision-grid li,
@@ -4300,6 +4314,10 @@ main {
 .presentation-source-card h3,
 .presentation-finding-main h3,
 .presentation-state-panel h3,
+.presentation-chart-card h3,
+.presentation-market-fit h3,
+.presentation-tax-intro h3,
+.presentation-tax-card h3,
 .presentation-decision-grid h3,
 .presentation-roadmap h3,
 .presentation-video-section h3 {
@@ -4493,6 +4511,213 @@ main {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.presentation-benchmark-section {
+  background:
+    radial-gradient(circle at 14% 10%, rgba(181, 255, 101, 0.08), transparent 26%),
+    linear-gradient(180deg, rgba(240, 78, 54, 0.08), transparent 48%),
+    rgba(8, 8, 8, 0.84);
+}
+
+.presentation-benchmark-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.presentation-chart-card {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-height: 360px;
+  padding: 20px;
+}
+
+.presentation-chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.presentation-bar-stack,
+.presentation-fit-bars {
+  display: grid;
+  gap: 12px;
+}
+
+.presentation-bar-row,
+.presentation-fit-bars div {
+  display: grid;
+  gap: 8px;
+}
+
+.presentation-bar-row > div,
+.presentation-fit-bars div {
+  min-width: 0;
+}
+
+.presentation-bar-row > div:first-child,
+.presentation-fit-bars div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.presentation-fit-bars div {
+  gap: 8px 12px;
+}
+
+.presentation-fit-bars span {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.presentation-fit-bars em {
+  justify-self: end;
+}
+
+.presentation-bar-row strong,
+.presentation-fit-bars strong {
+  min-width: 0;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+.presentation-bar-row em,
+.presentation-fit-bars em {
+  color: rgba(245, 242, 232, 0.74);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
+.presentation-bar-row > span,
+.presentation-fit-bars span {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(245, 242, 232, 0.1);
+}
+
+.presentation-bar-row i,
+.presentation-fit-bars i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(240, 78, 54, 0.55), var(--red));
+}
+
+.presentation-bar-row.is-texas i,
+.presentation-tax-card.is-texas strong {
+  background: linear-gradient(90deg, rgba(245, 242, 232, 0.22), rgba(245, 242, 232, 0.84));
+}
+
+.presentation-bar-row.is-usa i {
+  background: linear-gradient(90deg, rgba(122, 125, 129, 0.18), rgba(122, 125, 129, 0.76));
+}
+
+.presentation-bar-row.is-florida i,
+.presentation-tax-card.is-florida strong {
+  background: linear-gradient(90deg, rgba(181, 255, 101, 0.28), rgba(240, 78, 54, 0.92));
+}
+
+.presentation-market-fit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.presentation-market-fit article {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.presentation-fit-bars {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.presentation-tax-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-tax-intro {
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  padding: 22px;
+  border-color: var(--line-red);
+  background:
+    radial-gradient(circle at 80% 16%, rgba(240, 78, 54, 0.18), transparent 28%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.presentation-tax-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-tax-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 360px;
+  padding: 18px;
+}
+
+.presentation-tax-card.is-florida,
+.presentation-tax-card.is-texas {
+  border-color: var(--line-red);
+}
+
+.presentation-tax-card > div {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.presentation-tax-card strong {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--black);
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.presentation-tax-card.is-other strong {
+  color: rgba(245, 242, 232, 0.72);
+  background: rgba(122, 125, 129, 0.22);
+}
+
+.presentation-tax-card ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.presentation-source-note {
+  max-width: 980px;
+  margin: 0;
+  padding-top: 4px;
+  color: rgba(245, 242, 232, 0.62);
+  font-size: 0.86rem;
+}
+
 .presentation-decision-section {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: start;
@@ -4656,7 +4881,9 @@ main {
   .presentation-signal-strip,
   .presentation-icon-grid,
   .presentation-canvas-grid,
-  .presentation-roadmap {
+  .presentation-roadmap,
+  .presentation-benchmark-grid,
+  .presentation-tax-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -4665,6 +4892,8 @@ main {
   .presentation-phase-grid,
   .presentation-source-grid,
   .presentation-evidence-band,
+  .presentation-market-fit,
+  .presentation-tax-layout,
   .presentation-reference-layout {
     grid-template-columns: 1fr;
   }
@@ -4730,6 +4959,8 @@ main {
   .presentation-findings-grid,
   .presentation-state-split,
   .presentation-strategy-layout,
+  .presentation-benchmark-grid,
+  .presentation-tax-cards,
   .presentation-kpi-panel {
     grid-template-columns: 1fr;
   }
@@ -4774,6 +5005,7 @@ main {
   .presentation-icon-grid,
   .presentation-roadmap,
   .presentation-canvas-grid,
+  .presentation-market-fit,
   .presentation-mini-metrics {
     grid-template-columns: 1fr;
   }
