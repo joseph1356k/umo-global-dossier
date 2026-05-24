@@ -5069,6 +5069,1601 @@ main {
   }
 }
 
+/* Executive presentation deck v2 */
+.presentation-page.presentation-deck-page {
+  width: 100%;
+  margin: 0;
+  padding: 74px 0 0;
+  display: block;
+  overflow-x: clip;
+}
+
+.presentation-deck-shell {
+  width: min(1320px, calc(100% - 40px));
+  margin: 0 auto;
+  scroll-snap-type: y proximity;
+}
+
+.presentation-slide {
+  min-height: calc(100svh - 74px);
+  display: grid;
+  align-items: center;
+  padding: clamp(26px, 3.2vw, 52px) 0;
+  scroll-margin-top: 74px;
+  scroll-snap-align: start;
+}
+
+.presentation-slide-shell {
+  position: relative;
+  min-height: min(780px, calc(100svh - 132px));
+  display: grid;
+  grid-template-columns: minmax(260px, 0.58fr) minmax(0, 1.42fr);
+  gap: clamp(18px, 2.4vw, 34px);
+  align-items: stretch;
+  padding: clamp(24px, 3.2vw, 50px);
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 10px;
+  background:
+    linear-gradient(120deg, rgba(240, 78, 54, 0.1), transparent 32%),
+    radial-gradient(circle at 90% 14%, rgba(181, 255, 101, 0.08), transparent 24%),
+    rgba(14, 13, 12, 0.9);
+  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
+}
+
+.presentation-slide-shell::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.18;
+  background:
+    linear-gradient(rgba(240, 78, 54, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 78, 54, 0.12) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(90deg, #000, transparent 72%);
+}
+
+.presentation-slide-copy,
+.presentation-slide-body {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.presentation-slide-copy {
+  display: grid;
+  align-content: center;
+  gap: 16px;
+}
+
+.presentation-slide-index,
+.presentation-hero-copy-v2 span,
+.presentation-panel span,
+.presentation-metric-ribbon span,
+.presentation-timeline span,
+.presentation-evidence-stack span,
+.presentation-benchmark-head span,
+.presentation-tax-card-v2 span,
+.presentation-state-hero span,
+.presentation-decision-primary span,
+.presentation-decision-secondary span,
+.presentation-roadmap-rail span,
+.presentation-final-grid span,
+.presentation-source-note-v2,
+.presentation-company-lead span,
+.presentation-canvas-strip span,
+.presentation-risk-grid span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--red);
+  letter-spacing: 0;
+}
+
+.presentation-slide-copy h2,
+.presentation-hero-copy-v2 h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  line-height: 0.88;
+  letter-spacing: 0;
+}
+
+.presentation-slide-copy h2 {
+  max-width: 600px;
+  font-size: clamp(2.25rem, 3.9vw, 4.9rem);
+  line-height: 0.95;
+}
+
+.presentation-slide-copy p,
+.presentation-hero-copy-v2 p,
+.presentation-panel p,
+.presentation-metric-ribbon p,
+.presentation-timeline p,
+.presentation-evidence-stack p,
+.presentation-benchmark-card p,
+.presentation-tax-card-v2 p,
+.presentation-tax-card-v2 li,
+.presentation-state-hero p,
+.presentation-score-row p,
+.presentation-decision-primary p,
+.presentation-decision-secondary p,
+.presentation-strategy-flow p,
+.presentation-canvas-strip p,
+.presentation-risk-grid p,
+.presentation-roadmap-rail p,
+.presentation-final-grid p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.76);
+  line-height: 1.52;
+}
+
+.presentation-slide-copy p {
+  max-width: 560px;
+  font-size: 1rem;
+}
+
+.presentation-slide-body {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+}
+
+.presentation-side-rail {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  z-index: 8;
+  width: 128px;
+  display: grid;
+  gap: 4px;
+  transform: translateY(-50%);
+}
+
+.presentation-rail-track {
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  overflow: hidden;
+  background: rgba(245, 242, 232, 0.14);
+}
+
+.presentation-rail-track span {
+  display: block;
+  width: 100%;
+  background: var(--red);
+  transition: height 220ms ease;
+}
+
+.presentation-rail-item {
+  position: relative;
+  min-height: 30px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  color: rgba(245, 242, 232, 0.58);
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+
+.presentation-rail-item span {
+  width: 11px;
+  height: 11px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(245, 242, 232, 0.26);
+  border-radius: 50%;
+  color: transparent;
+  background: rgba(8, 8, 8, 0.82);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.presentation-rail-item strong {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.presentation-rail-item:hover,
+.presentation-rail-item.is-active {
+  color: var(--paper);
+}
+
+.presentation-rail-item.is-active span {
+  transform: scale(1.16);
+  border-color: var(--red);
+  background: var(--red);
+}
+
+.presentation-deck-status {
+  position: fixed;
+  right: 22px;
+  top: 86px;
+  z-index: 9;
+  width: min(320px, calc(100% - 44px));
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background: rgba(8, 8, 8, 0.72);
+  backdrop-filter: blur(16px);
+}
+
+.presentation-deck-status span,
+.presentation-deck-status strong {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.presentation-deck-status span {
+  color: var(--red);
+}
+
+.presentation-deck-status strong {
+  overflow: hidden;
+  color: rgba(245, 242, 232, 0.82);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.presentation-deck-status i {
+  width: 100%;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(245, 242, 232, 0.12);
+}
+
+.presentation-deck-status b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--red);
+  transition: width 220ms ease;
+}
+
+.presentation-deck-controls {
+  position: fixed;
+  right: 356px;
+  top: 88px;
+  z-index: 9;
+  display: inline-grid;
+  grid-template-columns: repeat(2, 44px);
+  gap: 8px;
+}
+
+.presentation-deck-controls button,
+.presentation-hero-actions-v2 button {
+  border: 1px solid rgba(245, 242, 232, 0.16);
+  border-radius: 8px;
+  color: rgba(245, 242, 232, 0.86);
+  background: rgba(8, 8, 8, 0.72);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    opacity 180ms ease;
+}
+
+.presentation-deck-controls button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+
+.presentation-deck-controls button:hover,
+.presentation-hero-actions-v2 button:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-red);
+  background: rgba(240, 78, 54, 0.14);
+}
+
+.presentation-deck-controls button:disabled {
+  opacity: 0.34;
+  cursor: not-allowed;
+}
+
+.presentation-hero-stage {
+  position: relative;
+  min-height: calc(100svh - 96px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 62px);
+  border: 1px solid rgba(245, 242, 232, 0.14);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 72% 28%, rgba(240, 78, 54, 0.22), transparent 26%),
+    radial-gradient(circle at 82% 72%, rgba(181, 255, 101, 0.09), transparent 22%),
+    linear-gradient(135deg, rgba(8, 8, 8, 0.96), rgba(31, 29, 28, 0.88) 58%, rgba(91, 39, 31, 0.58));
+  overflow: hidden;
+}
+
+.presentation-hero-stage::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.24;
+  background:
+    linear-gradient(rgba(240, 78, 54, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 78, 54, 0.14) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(90deg, #000, transparent 74%);
+}
+
+.presentation-hero-copy-v2 {
+  position: relative;
+  z-index: 2;
+  max-width: 1060px;
+  display: grid;
+  align-content: center;
+  gap: 18px;
+}
+
+.presentation-hero-copy-v2 h1 {
+  max-width: 1080px;
+  font-size: clamp(3.6rem, 6.6vw, 7.4rem);
+}
+
+.presentation-hero-copy-v2 p {
+  max-width: 760px;
+  font-size: 1.22rem;
+}
+
+.presentation-hero-actions-v2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.presentation-hero-actions-v2 button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.presentation-hero-actions-v2 button:first-child {
+  border-color: var(--red);
+  color: var(--black-2);
+  background: var(--red);
+}
+
+.presentation-route-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.presentation-route-line-v2 {
+  position: absolute;
+  left: 19%;
+  top: 44%;
+  width: 64%;
+  height: 2px;
+  transform: rotate(-8deg);
+  transform-origin: left center;
+  background: linear-gradient(90deg, transparent, rgba(240, 78, 54, 0.35), rgba(245, 242, 232, 0.5), rgba(181, 255, 101, 0.44));
+}
+
+.presentation-route-node {
+  position: absolute;
+  min-width: 154px;
+  display: grid;
+  gap: 4px;
+  padding: 13px 15px;
+  border: 1px solid rgba(245, 242, 232, 0.15);
+  border-radius: 8px;
+  background: rgba(8, 8, 8, 0.68);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+}
+
+.presentation-route-node small {
+  color: var(--red);
+  font-family: var(--font-mono);
+  font-style: normal;
+}
+
+.presentation-route-node strong {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-style: normal;
+  line-height: 0.96;
+}
+
+.presentation-route-node.is-colombia {
+  left: 10%;
+  bottom: 20%;
+  opacity: 0.58;
+}
+
+.presentation-route-node.is-florida {
+  right: 13%;
+  top: 24%;
+  border-color: var(--line-red);
+  background: rgba(91, 39, 31, 0.8);
+}
+
+.presentation-route-node.is-texas {
+  right: 27%;
+  bottom: 23%;
+}
+
+.presentation-metric-ribbon {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-metric-ribbon article,
+.presentation-panel,
+.presentation-company-lead,
+.presentation-evidence-stack article,
+.presentation-benchmark-card,
+.presentation-tax-card-v2,
+.presentation-scorecard article,
+.presentation-state-hero,
+.presentation-decision-primary,
+.presentation-decision-secondary,
+.presentation-strategy-flow article,
+.presentation-canvas-strip article,
+.presentation-risk-grid article,
+.presentation-roadmap-rail article,
+.presentation-final-grid article {
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(240, 78, 54, 0.07), transparent 58%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-metric-ribbon article {
+  min-height: 150px;
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+}
+
+.presentation-metric-ribbon strong,
+.presentation-evidence-stack strong {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 3.2vw, 3.3rem);
+  line-height: 0.92;
+}
+
+.presentation-company-story,
+.presentation-process-layout,
+.presentation-channel-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-company-lead {
+  min-height: 100%;
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  padding: 24px;
+  border-color: var(--line-red);
+  background:
+    radial-gradient(circle at 80% 18%, rgba(240, 78, 54, 0.18), transparent 26%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-company-lead h3,
+.presentation-panel h3,
+.presentation-timeline h3,
+.presentation-benchmark-head h3,
+.presentation-tax-card-v2 h3,
+.presentation-state-hero h3,
+.presentation-scorecard h3,
+.presentation-decision-primary h3,
+.presentation-decision-secondary h3,
+.presentation-strategy-flow h3,
+.presentation-risk-grid h3,
+.presentation-roadmap-rail h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.3vw, 2.65rem);
+  line-height: 0.96;
+}
+
+.presentation-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.presentation-panel-grid.is-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.presentation-panel {
+  min-height: 224px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 20px;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.presentation-panel:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-red);
+  background: rgba(240, 78, 54, 0.075);
+}
+
+.presentation-panel.is-florida {
+  border-color: rgba(181, 255, 101, 0.24);
+}
+
+.presentation-panel.is-texas {
+  border-color: rgba(245, 242, 232, 0.18);
+}
+
+.presentation-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.presentation-timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.presentation-timeline article {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: 0 0 18px 26px;
+  border-bottom: 1px solid rgba(245, 242, 232, 0.12);
+}
+
+.presentation-timeline article::before {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--red);
+  border-radius: 50%;
+  background: var(--black-2);
+  content: "";
+}
+
+.presentation-timeline article:last-child {
+  border-bottom: 0;
+}
+
+.presentation-evidence-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.presentation-evidence-stack article {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+
+.presentation-benchmark-grid-v2,
+.presentation-tax-grid-v2,
+.presentation-risk-grid,
+.presentation-final-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.presentation-benchmark-card {
+  min-height: 336px;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 20px;
+}
+
+.presentation-benchmark-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+}
+
+.presentation-benchmark-head h3 {
+  grid-column: 1 / -1;
+  font-size: clamp(1.55rem, 1.7vw, 2.18rem);
+  line-height: 1;
+}
+
+.presentation-benchmark-bars {
+  display: grid;
+  gap: 12px;
+}
+
+.presentation-benchmark-row {
+  display: grid;
+  gap: 7px;
+}
+
+.presentation-benchmark-row div,
+.presentation-score-row div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.presentation-benchmark-row strong,
+.presentation-benchmark-row em,
+.presentation-score-row strong,
+.presentation-score-row em,
+.presentation-roadmap-rail strong {
+  color: rgba(245, 242, 232, 0.82);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
+.presentation-benchmark-row > span,
+.presentation-score-row > span {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(245, 242, 232, 0.1);
+}
+
+.presentation-benchmark-row i,
+.presentation-score-row i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.presentation-benchmark-row.is-florida i,
+.presentation-score-row.is-florida i {
+  background: linear-gradient(90deg, rgba(181, 255, 101, 0.32), rgba(240, 78, 54, 0.9));
+}
+
+.presentation-benchmark-row.is-texas i,
+.presentation-score-row.is-texas i {
+  background: linear-gradient(90deg, rgba(245, 242, 232, 0.2), rgba(245, 242, 232, 0.82));
+}
+
+.presentation-benchmark-row.is-usa i,
+.presentation-benchmark-row.is-california i,
+.presentation-benchmark-row.is-newyork i {
+  background: linear-gradient(90deg, rgba(122, 125, 129, 0.18), rgba(122, 125, 129, 0.78));
+}
+
+.presentation-benchmark-argument {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0 0;
+  border-top: 1px solid rgba(245, 242, 232, 0.12);
+}
+
+.presentation-benchmark-argument p {
+  max-width: 980px;
+  margin: 0;
+  color: rgba(245, 242, 232, 0.78);
+  line-height: 1.52;
+}
+
+.presentation-tax-card-v2 {
+  min-height: 362px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 20px;
+}
+
+.presentation-tax-card-v2 > div {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.presentation-tax-card-v2 strong {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--black-2);
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  line-height: 1;
+}
+
+.presentation-tax-card-v2.is-florida,
+.presentation-tax-card-v2.is-texas {
+  border-color: var(--line-red);
+}
+
+.presentation-tax-card-v2.is-florida strong {
+  background: linear-gradient(135deg, rgba(181, 255, 101, 0.8), var(--red));
+}
+
+.presentation-tax-card-v2.is-texas strong {
+  background: rgba(245, 242, 232, 0.84);
+}
+
+.presentation-tax-card-v2.is-other strong {
+  color: rgba(245, 242, 232, 0.78);
+  background: rgba(122, 125, 129, 0.26);
+}
+
+.presentation-tax-card-v2 ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 7px;
+}
+
+.presentation-source-note-v2 {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.64);
+}
+
+.presentation-source-note-v2 a {
+  color: rgba(245, 242, 232, 0.78);
+  text-decoration: underline;
+  text-decoration-color: rgba(240, 78, 54, 0.5);
+  text-underline-offset: 3px;
+}
+
+.presentation-scorecard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.presentation-scorecard article {
+  min-height: 300px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 18px;
+}
+
+.presentation-score-row {
+  display: grid;
+  gap: 7px;
+}
+
+.presentation-score-row p {
+  font-size: 0.9rem;
+}
+
+.presentation-state-story {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: 16px;
+}
+
+.presentation-state-hero {
+  min-height: 360px;
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  padding: 24px;
+}
+
+.presentation-state-story.is-florida .presentation-state-hero {
+  border-color: var(--line-red);
+  background:
+    radial-gradient(circle at 80% 16%, rgba(181, 255, 101, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(240, 78, 54, 0.11), transparent 56%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-state-story.is-texas .presentation-state-hero {
+  border-color: rgba(245, 242, 232, 0.2);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(245, 242, 232, 0.13), transparent 28%),
+    linear-gradient(180deg, rgba(240, 78, 54, 0.06), transparent 56%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-decision-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-decision-primary,
+.presentation-decision-secondary {
+  min-height: 440px;
+  display: grid;
+  align-content: end;
+  gap: 16px;
+  padding: 28px;
+}
+
+.presentation-decision-primary {
+  border-color: var(--line-red);
+  background:
+    radial-gradient(circle at 82% 18%, rgba(240, 78, 54, 0.22), transparent 28%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.presentation-decision-primary h3,
+.presentation-decision-secondary h3 {
+  font-size: clamp(2.6rem, 4.6vw, 5.8rem);
+}
+
+.presentation-strategy-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.presentation-strategy-flow article {
+  position: relative;
+  min-height: 230px;
+  display: grid;
+  align-content: end;
+  gap: 12px;
+  padding: 22px;
+}
+
+.presentation-flow-arrow {
+  position: absolute;
+  right: -22px;
+  top: 50%;
+  z-index: 2;
+  color: var(--red);
+  transform: translateY(-50%);
+}
+
+.presentation-canvas-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-canvas-strip article {
+  min-height: 172px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 18px;
+}
+
+.presentation-channel-map {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 10px;
+  padding: 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.presentation-channel-map span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid rgba(245, 242, 232, 0.16);
+  border-radius: 999px;
+  color: rgba(245, 242, 232, 0.8);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.presentation-risk-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.presentation-risk-grid article {
+  min-height: 230px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 20px;
+}
+
+.presentation-roadmap-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.presentation-roadmap-rail article {
+  position: relative;
+  min-height: 280px;
+  display: grid;
+  align-content: end;
+  gap: 12px;
+  padding: 22px;
+}
+
+.presentation-roadmap-rail article::before {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-red);
+  border-radius: 50%;
+  color: var(--red);
+  font-family: var(--font-mono);
+  content: attr(data-phase);
+}
+
+.presentation-final-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.presentation-final-grid article {
+  min-height: 160px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 18px;
+}
+
+.presentation-process-summary,
+.presentation-evidence-hero,
+.presentation-diagnostic-bars,
+.presentation-map-card,
+.presentation-map-insights article,
+.presentation-trend-card {
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(240, 78, 54, 0.07), transparent 58%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-process-layout {
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+}
+
+.presentation-process-summary {
+  min-height: 100%;
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  padding: 22px;
+  border-color: var(--line-red);
+}
+
+.presentation-process-summary strong,
+.presentation-evidence-hero strong,
+.presentation-map-insights strong {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3vw, 3.5rem);
+  line-height: 0.94;
+}
+
+.presentation-diagnostic-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.05fr) minmax(250px, 0.78fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.presentation-evidence-hero,
+.presentation-diagnostic-bars {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 22px;
+}
+
+.presentation-evidence-hero {
+  align-content: end;
+  border-color: var(--line-red);
+}
+
+.presentation-diagnostic-bars > span,
+.presentation-map-head span,
+.presentation-trend-head span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--red);
+}
+
+.presentation-mini-bar-list {
+  display: grid;
+  gap: 12px;
+}
+
+.presentation-mini-bar-list div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(110px, 0.8fr) 42px;
+  align-items: center;
+  gap: 10px;
+}
+
+.presentation-mini-bar-list strong,
+.presentation-mini-bar-list em {
+  color: rgba(245, 242, 232, 0.82);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
+.presentation-mini-bar-list span {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(245, 242, 232, 0.1);
+}
+
+.presentation-mini-bar-list i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(245, 242, 232, 0.72);
+}
+
+.presentation-mini-bar-list .is-strong i {
+  background: linear-gradient(90deg, rgba(181, 255, 101, 0.45), var(--red));
+}
+
+.presentation-mini-bar-list .is-mid i {
+  background: linear-gradient(90deg, rgba(245, 242, 232, 0.24), rgba(245, 242, 232, 0.82));
+}
+
+.presentation-mini-bar-list .is-risk i {
+  background: rgba(122, 125, 129, 0.58);
+}
+
+.presentation-evidence-stack.is-compact {
+  align-content: stretch;
+}
+
+.presentation-evidence-stack.is-compact article {
+  min-height: 0;
+}
+
+.presentation-visual-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.presentation-trend-card {
+  min-height: 350px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 18px;
+}
+
+.presentation-trend-card.is-expanded {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.presentation-trend-head,
+.presentation-map-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px 12px;
+}
+
+.presentation-trend-head h3,
+.presentation-map-head h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 1.8vw, 2.25rem);
+  line-height: 0.98;
+}
+
+.presentation-trend-head button,
+.presentation-benchmark-head button,
+.presentation-map-head button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(245, 242, 232, 0.16);
+  border-radius: 7px;
+  color: rgba(245, 242, 232, 0.84);
+  background: rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
+
+.presentation-trend-card svg {
+  width: 100%;
+  min-height: 170px;
+  overflow: visible;
+}
+
+.presentation-trend-grid-line {
+  stroke: rgba(245, 242, 232, 0.12);
+  stroke-width: 1;
+}
+
+.presentation-trend-line {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.presentation-trend-line.is-florida {
+  stroke: var(--red);
+}
+
+.presentation-trend-line.is-texas {
+  stroke: rgba(245, 242, 232, 0.82);
+}
+
+.presentation-trend-line.is-national {
+  stroke: rgba(122, 125, 129, 0.78);
+  stroke-dasharray: 10 10;
+}
+
+.presentation-trend-dot {
+  stroke: rgba(0, 0, 0, 0.8);
+  stroke-width: 4;
+}
+
+.presentation-trend-dot.is-florida {
+  fill: var(--red);
+}
+
+.presentation-trend-dot.is-texas {
+  fill: rgba(245, 242, 232, 0.84);
+}
+
+.presentation-trend-card text {
+  fill: rgba(245, 242, 232, 0.55);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+.presentation-trend-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.presentation-trend-legend span {
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 9px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+}
+
+.presentation-trend-legend .is-florida {
+  color: var(--red);
+}
+
+.presentation-trend-legend .is-texas {
+  color: rgba(245, 242, 232, 0.82);
+}
+
+.presentation-trend-legend .is-national {
+  color: rgba(157, 160, 164, 0.9);
+}
+
+.presentation-map-slide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.presentation-map-card {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+}
+
+.presentation-map-card.is-expanded {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.presentation-florida-map {
+  position: relative;
+  min-height: 410px;
+  overflow: hidden;
+  border: 1px solid rgba(245, 242, 232, 0.12);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 55% 48%, rgba(181, 255, 101, 0.08), transparent 30%),
+    linear-gradient(rgba(240, 78, 54, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 78, 54, 0.08) 1px, transparent 1px),
+    rgba(0, 0, 0, 0.2);
+  background-size: auto, 42px 42px, 42px 42px, auto;
+}
+
+.presentation-map-card.is-expanded .presentation-florida-map {
+  min-height: min(68vh, 720px);
+}
+
+.presentation-florida-map svg {
+  position: absolute;
+  inset: 8% 5%;
+  width: 90%;
+  height: 84%;
+  opacity: 0.74;
+}
+
+.presentation-florida-shape,
+.presentation-florida-panhandle {
+  fill: rgba(240, 78, 54, 0.12);
+  stroke: rgba(245, 242, 232, 0.34);
+  stroke-width: 2;
+}
+
+.presentation-map-pin {
+  position: absolute;
+  width: min(210px, 32%);
+  display: grid;
+  gap: 4px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.presentation-map-pin i {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(8, 8, 8, 0.85);
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 4px rgba(240, 78, 54, 0.18);
+}
+
+.presentation-map-pin strong {
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.15;
+}
+
+.presentation-map-pin span,
+.presentation-map-pin p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.7);
+  font-size: 0.72rem;
+  line-height: 1.28;
+}
+
+.presentation-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.presentation-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 999px;
+  color: rgba(245, 242, 232, 0.8);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+}
+
+.presentation-map-note {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.62);
+  font-size: 0.82rem;
+}
+
+.presentation-map-insights {
+  display: grid;
+  gap: 12px;
+}
+
+.presentation-map-insights article {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 18px;
+}
+
+.presentation-visual-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.presentation-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(8, 8, 8, 0.82);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.presentation-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100vw - 56px));
+  max-height: calc(100svh - 56px);
+  overflow: auto;
+  padding: clamp(20px, 3vw, 36px);
+  border: 1px solid var(--line-red);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 80% 16%, rgba(240, 78, 54, 0.18), transparent 26%),
+    rgba(14, 13, 12, 0.98);
+  box-shadow: 0 40px 140px rgba(0, 0, 0, 0.58);
+}
+
+.presentation-modal-close {
+  position: sticky;
+  top: 0;
+  left: 100%;
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-left: auto;
+  border: 1px solid rgba(245, 242, 232, 0.16);
+  border-radius: 8px;
+  color: rgba(245, 242, 232, 0.88);
+  background: rgba(0, 0, 0, 0.42);
+  cursor: pointer;
+}
+
+.presentation-modal-panel .presentation-benchmark-card.is-expanded {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.presentation-modal-panel .presentation-benchmark-head h3,
+.presentation-modal-panel .presentation-trend-head h3,
+.presentation-modal-panel .presentation-map-head h3 {
+  font-size: clamp(2.4rem, 4.5vw, 5rem);
+}
+
+.presentation-modal-panel .presentation-benchmark-row strong,
+.presentation-modal-panel .presentation-benchmark-row em {
+  font-size: 0.88rem;
+}
+
+.presentation-modal-panel .presentation-benchmark-row > span {
+  height: 16px;
+}
+
+@media (max-width: 1440px) {
+  .presentation-side-rail {
+    display: none;
+  }
+
+  .presentation-deck-shell {
+    width: min(1320px, calc(100% - 28px));
+  }
+
+  .presentation-scorecard {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+}
+
+@media (max-width: 1180px) {
+  .presentation-deck-controls {
+    display: none;
+  }
+
+  .presentation-slide-shell,
+  .presentation-company-story,
+  .presentation-process-layout,
+  .presentation-diagnostic-layout,
+  .presentation-state-story,
+  .presentation-decision-layout,
+  .presentation-channel-layout,
+  .presentation-map-slide-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-slide-shell {
+    min-height: auto;
+  }
+
+  .presentation-slide-copy {
+    align-content: start;
+  }
+
+  .presentation-benchmark-grid-v2,
+  .presentation-tax-grid-v2,
+  .presentation-risk-grid,
+  .presentation-roadmap-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .presentation-scorecard,
+  .presentation-canvas-strip,
+  .presentation-visual-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .presentation-page.presentation-deck-page {
+    padding-top: 68px;
+  }
+
+  .presentation-deck-shell {
+    width: min(100% - 24px, 760px);
+    scroll-snap-type: none;
+  }
+
+  .presentation-slide {
+    min-height: auto;
+    padding: 14px 0;
+    scroll-snap-align: none;
+  }
+
+  .presentation-slide-shell,
+  .presentation-hero-stage {
+    min-height: auto;
+    padding: 22px;
+  }
+
+  .presentation-slide-copy h2 {
+    font-size: clamp(2rem, 9.5vw, 3.35rem);
+  }
+
+  .presentation-hero-copy-v2 h1 {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .presentation-deck-controls {
+    display: none;
+  }
+
+  .presentation-deck-status {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    width: min(360px, calc(100% - 24px));
+  }
+
+  .presentation-route-canvas {
+    display: none;
+  }
+
+  .presentation-metric-ribbon,
+  .presentation-panel-grid,
+  .presentation-panel-grid.is-three,
+  .presentation-benchmark-grid-v2,
+  .presentation-tax-grid-v2,
+  .presentation-scorecard,
+  .presentation-canvas-strip,
+  .presentation-visual-gallery,
+  .presentation-diagnostic-layout,
+  .presentation-map-slide-layout,
+  .presentation-risk-grid,
+  .presentation-roadmap-rail,
+  .presentation-final-grid,
+  .presentation-strategy-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-company-lead,
+  .presentation-state-hero,
+  .presentation-decision-primary,
+  .presentation-decision-secondary,
+  .presentation-tax-card-v2,
+  .presentation-scorecard article,
+  .presentation-roadmap-rail article {
+    min-height: auto;
+  }
+
+  .presentation-flow-arrow {
+    display: none;
+  }
+
+  .presentation-benchmark-argument {
+    align-items: flex-start;
+  }
+
+  .presentation-florida-map {
+    min-height: 520px;
+  }
+
+  .presentation-map-pin {
+    width: 42%;
+  }
+
+  .presentation-visual-modal {
+    padding: 12px;
+  }
+
+  .presentation-modal-panel {
+    width: calc(100vw - 24px);
+    max-height: calc(100svh - 24px);
+    padding: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .presentation-slide-shell,
+  .presentation-hero-stage {
+    padding: 18px;
+    border-radius: 8px;
+  }
+
+  .presentation-hero-actions-v2 {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .presentation-hero-actions-v2 button {
+    width: 100%;
+  }
+
+  .presentation-panel,
+  .presentation-metric-ribbon article,
+  .presentation-evidence-stack article,
+  .presentation-benchmark-card,
+  .presentation-tax-card-v2,
+  .presentation-risk-grid article,
+  .presentation-roadmap-rail article,
+  .presentation-final-grid article {
+    padding: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -1,11 +1,14 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowUpRight,
   BadgeCheck,
   BarChart3,
   BriefcaseBusiness,
   Building2,
+  CalendarRange,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
   CircleDollarSign,
   Factory,
   FileText,
@@ -15,6 +18,7 @@ import {
   Landmark,
   LineChart,
   MapPinned,
+  Maximize2,
   MonitorSmartphone,
   PackageCheck,
   Route,
@@ -26,393 +30,585 @@ import {
   Truck,
   UsersRound,
   Video,
+  X,
 } from "lucide-react";
-import { type ComponentType, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { type ComponentType, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   canvasBlocks,
   canvasHighlights,
   companyProfile,
   deliveries,
   diagnosticMetrics,
-  documents,
-  smartCriteria,
   swotDetailedBlocks,
-  viabilityPillars,
 } from "../data/content";
-import { environmentEntries } from "../data/environmentAnalysis";
-import { getEnvironmentDeepDive } from "../data/environmentDeepDive";
 import { macroIndicators, macroReferenceList } from "../data/macroComparative";
 import type { Locale } from "../i18n/copy";
 
-type IconComponent = ComponentType<{ size?: number; className?: string }>;
+type IconComponent = ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
 
-type Chapter = {
+type DeckSlide = {
   id: string;
+  number: string;
   label: string;
+  shortLabel: string;
+  eyebrow: string;
+  title: string;
+  summary?: string;
+  variant?: "hero" | "decision" | "final" | "support";
 };
 
-type NarrativeCard = {
+type InsightCard = {
   title: string;
   text: string;
   meta?: string;
   icon: IconComponent;
 };
 
-type ComparisonRow = {
-  criteria: string;
-  florida: string;
-  texas: string;
-  reading: string;
-  priority: "Florida" | "Texas" | "Ambos";
+type BenchmarkGroup = {
+  id: string;
+  title: string;
+  unit: string;
+  scaleMax: number;
+  note: string;
+  bars: Array<{
+    label: string;
+    value: number;
+    display: string;
+    tone: "florida" | "texas" | "usa" | "california" | "newyork";
+  }>;
 };
 
-const chapters: Chapter[] = [
-  { id: "contexto", label: "Contexto UMO" },
-  { id: "sintesis", label: "Fases previas" },
-  { id: "comparativo", label: "Florida vs Texas" },
-  { id: "benchmarks", label: "Benchmarks" },
-  { id: "florida", label: "Florida" },
-  { id: "texas", label: "Texas" },
-  { id: "decision", label: "Decisión" },
-  { id: "estrategia", label: "Estrategia" },
-  { id: "marketing", label: "Marketing" },
-  { id: "roadmap", label: "Ruta" },
+type TrendChartConfig = {
+  id: string;
+  indicatorId: string;
+  title: string;
+  unit: string;
+  note: string;
+  focus: string;
+};
+
+type ScorecardRow = {
+  criterion: string;
+  florida: number;
+  texas: number;
+  floridaText: string;
+  texasText: string;
+};
+
+type ExpandedVisual =
+  | { type: "benchmark"; id: string }
+  | { type: "trend"; id: string }
+  | { type: "map"; id: "florida" };
+
+const deckSlides: DeckSlide[] = [
+  {
+    id: "portada",
+    number: "01",
+    label: "Tesis ejecutiva",
+    shortLabel: "Tesis",
+    eyebrow: "Presentación ejecutiva",
+    title: "Florida primero. Texas escala.",
+    summary:
+      "La decisión ya no es escoger país. La decisión estratégica es elegir el estado que permite validar más rápido y preparar la expansión con más fuerza.",
+    variant: "hero",
+  },
+  {
+    id: "umo",
+    number: "02",
+    label: "Contexto UMO",
+    shortLabel: "UMO",
+    eyebrow: "Capacidad empresarial",
+    title: "UMO fabrica comodidad para operación intensiva.",
+    summary:
+      "La oportunidad no se limita a cojines o sillines tradicionales: UMO puede traducir su experiencia industrial en soluciones de soporte, ergonomía y durabilidad para maquinaria de uso diario.",
+  },
+  {
+    id: "proceso",
+    number: "03",
+    label: "Proceso de análisis",
+    shortLabel: "Proceso",
+    eyebrow: "De las fases previas a la decisión",
+    title: "Del diagnóstico a la decisión.",
+    summary:
+      "Las entregas previas se resumen en una línea de avance: capacidad interna, modelo de entrada, entornos, comparativo macro y ruta comercial.",
+  },
+  {
+    id: "diagnostico",
+    number: "04",
+    label: "Hallazgos previos",
+    shortLabel: "Hallazgos",
+    eyebrow: "Lo que ya probó el dossier",
+    title: "La base está lista; el riesgo está en cómo entrar.",
+    summary:
+      "El diagnóstico, el Canvas y el DOFA dejan una conclusión práctica: UMO tiene capacidad, pero necesita validar canal, soporte y compatibilidad antes de escalar.",
+  },
+  {
+    id: "indicadores",
+    number: "05",
+    label: "Indicadores principales",
+    shortLabel: "Indicadores",
+    eyebrow: "Gráficos de decisión",
+    title: "Los indicadores explican el rol de cada estado.",
+    summary:
+      "Florida se fortalece en turfgrass, estabilidad y uso continuo; Texas conserva fuerza en escala agrícola y volumen B2B.",
+  },
+  {
+    id: "benchmarks",
+    number: "06",
+    label: "Benchmark estatal",
+    shortLabel: "Benchmarks",
+    eyebrow: "Florida y Texas frente al resto",
+    title: "Nuestros estados superan el promedio.",
+    summary:
+      "Los datos usados en la web muestran que Florida y Texas no fueron elegidos por intuición: superan el promedio en variables que importan para UMO.",
+  },
+  {
+    id: "fiscal",
+    number: "07",
+    label: "Impuestos y entrada legal",
+    shortLabel: "Fiscal",
+    eyebrow: "Facilidad fiscal y formalización",
+    title: "Menos fricción que California o New York.",
+    summary:
+      "La ventaja fiscal no decide sola la entrada, pero ayuda a defender por qué estos estados son mejores puntos de arranque que mercados más costosos o complejos.",
+  },
+  {
+    id: "comparativo",
+    number: "08",
+    label: "Florida vs Texas",
+    shortLabel: "Roles",
+    eyebrow: "Comparativo ejecutivo",
+    title: "Dos estados, dos roles.",
+    summary:
+      "Florida concentra la validación comercial inicial. Texas conserva el rol de escala productiva y expansión B2B para la segunda etapa.",
+  },
+  {
+    id: "florida",
+    number: "09",
+    label: "Oportunidad Florida",
+    shortLabel: "Florida",
+    eyebrow: "Entrada prioritaria",
+    title: "Florida es el foco.",
+    summary:
+      "Turfgrass, landscaping, campos de golf, urbanizaciones, condominios y mantenimiento de zonas verdes crean un mercado visible para soluciones de comodidad.",
+  },
+  {
+    id: "mapa-florida",
+    number: "10",
+    label: "Mapa de oportunidad",
+    shortLabel: "Mapa FL",
+    eyebrow: "Compradores potenciales",
+    title: "Dónde se concentraría la entrada.",
+    summary:
+      "El mapa muestra clusters posibles para UMO: universidades con mantenimiento de campus, campos de golf, parques, resorts, condominios y zonas residenciales.",
+  },
+  {
+    id: "texas",
+    number: "11",
+    label: "Oportunidad Texas",
+    shortLabel: "Texas",
+    eyebrow: "Segunda etapa estratégica",
+    title: "Texas escala el B2B.",
+    summary:
+      "Texas no se descarta. Su escala rural y productiva exige más preparación comercial, pero puede multiplicar el alcance B2B después del piloto.",
+  },
+  {
+    id: "decision",
+    number: "12",
+    label: "Decisión recomendada",
+    shortLabel: "Decisión",
+    eyebrow: "Secuencia recomendada",
+    title: "Validar en Florida. Escalar en Texas.",
+    summary:
+      "La recomendación final es secuencial: Florida para aprender rápido con canales digitales y alianzas locales; Texas para llevar el producto a distribuidores agrícolas y maquinaria pesada.",
+    variant: "decision",
+  },
+  {
+    id: "entrada",
+    number: "13",
+    label: "Modo de entrada",
+    shortLabel: "Entrada",
+    eyebrow: "Estrategia de internacionalización",
+    title: "Exportación directa + alianzas.",
+    summary:
+      "El modelo reduce riesgo inicial, conserva control productivo y permite validar demanda antes de pensar en una sede propia o una estructura fija en el mercado.",
+  },
+  {
+    id: "producto",
+    number: "14",
+    label: "Producto y propuesta",
+    shortLabel: "Producto",
+    eyebrow: "Adaptación y valor",
+    title: "Menos fatiga. Más durabilidad.",
+    summary:
+      "UMO debe presentarse como una solución de comodidad para operadores que pasan horas en podadoras, tractores pequeños, vehículos utilitarios y maquinaria agrícola.",
+  },
+  {
+    id: "marketing",
+    number: "15",
+    label: "Marketing y canales",
+    shortLabel: "Go-to-market",
+    eyebrow: "Captura de demanda",
+    title: "El canal digital mide; el canal local convierte.",
+    summary:
+      "Amazon, ecommerce, landing enfocada en Florida y contacto B2B deben trabajar con distribuidores, empresas de landscaping, campos de golf y tiendas de maquinaria.",
+  },
+  {
+    id: "riesgos",
+    number: "16",
+    label: "Riesgos y control",
+    shortLabel: "Riesgos",
+    eyebrow: "Gestión ejecutiva",
+    title: "Cada riesgo debe tener una prueba.",
+    summary:
+      "La entrada debe medir compatibilidad, devoluciones, costo logístico, resistencia climática, leads B2B, reseñas y margen por canal antes de escalar.",
+  },
+  {
+    id: "ruta",
+    number: "17",
+    label: "Ruta de acción",
+    shortLabel: "Ruta",
+    eyebrow: "Cierre ejecutivo",
+    title: "Aprender, probar y escalar.",
+    summary:
+      "Florida es el laboratorio comercial. Texas es la plataforma de volumen cuando el producto, el precio, el canal y la operación ya estén validados.",
+    variant: "final",
+  },
 ];
 
-const comparisonRows: ComparisonRow[] = [
+const benchmarkGroups: BenchmarkGroup[] = [
   {
-    criteria: "Tamaño del mercado",
-    florida: "Mercado grande, concentrado en servicios, turismo, residencia y mantenimiento exterior.",
-    texas: "Mayor escala económica y productiva; fuerte para volumen, agro e industria.",
-    reading: "Texas da escala; Florida permite un arranque más enfocado y visible.",
-    priority: "Ambos",
+    id: "ecommerce-landscaping",
+    title: "E-commerce en landscaping",
+    unit: "% adopción digital",
+    scaleMax: 20,
+    note: "Valida Amazon, landing page, marketplace y venta directa como canales de prueba.",
+    bars: [
+      { label: "Texas", value: 17.8, display: "17.8%", tone: "texas" },
+      { label: "Florida", value: 17.5, display: "17.5%", tone: "florida" },
+      { label: "EE. UU.", value: 16.4, display: "16.4%", tone: "usa" },
+    ],
   },
   {
-    criteria: "Actividad agrícola",
-    florida: "Agricultura relevante, pero menos dominante para maquinaria pesada.",
-    texas: "Base agrícola y ganadera de gran escala, con uso intensivo de tractores y equipos.",
-    reading: "Texas es más fuerte para una fase B2B agrícola posterior.",
-    priority: "Texas",
+    id: "temporada-clima",
+    title: "Temporada favorable",
+    unit: "temperatura media",
+    scaleMax: 80,
+    note: "Más uso exterior durante el año aumenta la recurrencia de mantenimiento y desgaste.",
+    bars: [
+      { label: "Florida", value: 72.3, display: "72.3 F", tone: "florida" },
+      { label: "Texas", value: 67.7, display: "67.7 F", tone: "texas" },
+      { label: "EE. UU.", value: 54.6, display: "54.6 F", tone: "usa" },
+    ],
   },
   {
-    criteria: "Landscaping",
-    florida: "Ecosistema muy visible de paisajismo, mantenimiento de jardines, condominios y zonas verdes.",
-    texas: "Demanda fuerte en propiedades grandes, suburbios y servicios de mantenimiento.",
-    reading: "Florida ofrece un mercado más claro para probar comodidad en maquinaria pequeña y mediana.",
-    priority: "Florida",
+    id: "desgaste-ambiental",
+    title: "Desgaste ambiental",
+    unit: "índice 1-5",
+    scaleMax: 5,
+    note: "Calor, humedad, polvo y exposición exterior hacen más relevante la promesa de durabilidad.",
+    bars: [
+      { label: "Texas", value: 4.7, display: "4.7/5", tone: "texas" },
+      { label: "Florida", value: 4.5, display: "4.5/5", tone: "florida" },
+      { label: "EE. UU.", value: 3.6, display: "3.6/5", tone: "usa" },
+    ],
   },
   {
-    criteria: "Turfgrass",
-    florida: "Lidera la lectura de césped profesional y operación verde continua.",
-    texas: "También tiene una industria turfgrass grande, pero con menor especialización relativa.",
-    reading: "Florida conecta mejor con césped, jardinería, campos de golf y mantenimiento residencial.",
-    priority: "Florida",
+    id: "dinamismo-pyme",
+    title: "Dinamismo pyme",
+    unit: "% negocios jovenes",
+    scaleMax: 30,
+    note: "Mayor dinamismo facilita pilotos B2B, distribuidores pequenos y alianzas comerciales.",
+    bars: [
+      { label: "Texas", value: 27.67, display: "27.67%", tone: "texas" },
+      { label: "Florida", value: 22.39, display: "22.39%", tone: "florida" },
+      { label: "EE. UU.", value: 19.34, display: "19.34%", tone: "usa" },
+    ],
   },
   {
-    criteria: "Campos de golf y turismo",
-    florida: "Alta concentración de servicios verdes asociados a turismo, comunidades residenciales y golf.",
-    texas: "Mercado relevante, pero más disperso y menos ligado al posicionamiento inicial.",
-    reading: "Florida facilita pilotos con clientes de alta visibilidad.",
-    priority: "Florida",
-  },
-  {
-    criteria: "Poder adquisitivo",
-    florida: "Ingreso per cápita alto y cercano a Texas; buen encaje para productos de valor.",
-    texas: "Ingreso ligeramente superior y mayor tamaño económico total.",
-    reading: "Ambos pueden absorber una propuesta premium si se comunica durabilidad y ergonomía.",
-    priority: "Ambos",
-  },
-  {
-    criteria: "Cultura de compra online",
-    florida: "Buena adopción digital para productos de jardinería y mantenimiento.",
-    texas: "También fuerte, con mayor preferencia DIY en los datos del entorno cultural.",
-    reading: "Amazon, e-commerce propio y contenido técnico funcionan para ambos estados.",
-    priority: "Ambos",
-  },
-  {
-    criteria: "Clima y desgaste",
-    florida: "Calor, humedad y exposición exterior exigen materiales resistentes y transpirables.",
-    texas: "Calor, polvo, sol y uso rural intensivo exigen resistencia mecánica.",
-    reading: "Ambos validan la promesa de durabilidad; Florida exige resolver humedad desde el inicio.",
-    priority: "Ambos",
-  },
-  {
-    criteria: "Cercanía logística",
-    florida: "Ruta marítima más rápida desde Colombia y mejor lectura como puerta de entrada.",
-    texas: "Más tiempo de ruta, pero mejor para cobertura y distribución interna posterior.",
-    reading: "Florida reduce fricción inicial; Texas cobra más sentido al escalar.",
-    priority: "Florida",
-  },
-  {
-    criteria: "Presencia de distribuidores",
-    florida: "Distribuidores de maquinaria de jardín, tiendas de outdoor power equipment y redes de landscaping.",
-    texas: "Dealers agrícolas, concesionarios de maquinaria, talleres rurales y repuestos pesados.",
-    reading: "Florida facilita entrada multicanal; Texas exige venta más técnica.",
-    priority: "Ambos",
-  },
-  {
-    criteria: "Potencial B2B",
-    florida: "Empresas de landscaping, campos de golf, administradores de condominios y tiendas especializadas.",
-    texas: "Ranchos, agro, ganadería, distribuidores agrícolas y talleres de maquinaria.",
-    reading: "Florida prueba B2B ligero; Texas escala B2B productivo.",
-    priority: "Ambos",
-  },
-  {
-    criteria: "Potencial B2C",
-    florida: "Dueños de casas con jardines grandes, usuarios DIY y compradores en marketplaces.",
-    texas: "Usuarios rurales y propietarios de terrenos con compra funcional de repuestos.",
-    reading: "Florida es más fuerte para combinar Amazon, landing page y prueba de demanda.",
-    priority: "Florida",
-  },
-  {
-    criteria: "Riesgos",
-    florida: "Humedad, desgaste, competencia en accesorios y necesidad de diferenciación visual.",
-    texas: "Mayor ciclo de venta técnico, dispersión territorial y adaptación a maquinaria pesada.",
-    reading: "Florida tiene riesgos más manejables para un piloto; Texas pide más preparación comercial.",
-    priority: "Florida",
-  },
-  {
-    criteria: "Recomendación estratégica",
-    florida: "Entrada inicial prioritaria para validar producto, canal, precio y narrativa comercial.",
-    texas: "Segunda etapa fuerte para escalar hacia agricultura, ranchos y maquinaria pesada.",
-    reading: "La secuencia recomendada es Florida primero, Texas después.",
-    priority: "Florida",
+    id: "golf-florida",
+    title: "Campos de golf",
+    unit: "instalaciones 2026",
+    scaleMax: 1300,
+    note: "Florida lidera el país en oferta golfística; es un argumento directo para mantenimiento de césped, flotas y comodidad del operador.",
+    bars: [
+      { label: "Florida", value: 1290, display: "1,290", tone: "florida" },
+      { label: "California", value: 963, display: "963", tone: "california" },
+      { label: "New York", value: 830, display: "830", tone: "newyork" },
+      { label: "Texas", value: 825, display: "825", tone: "texas" },
+    ],
   },
 ];
 
-const floridaOpportunityCards: NarrativeCard[] = [
+const trendCharts: TrendChartConfig[] = [
   {
-    title: "Oportunidad principal",
-    text: "Landscaping, turfgrass, mantenimiento de césped, campos de golf, urbanizaciones y comunidades residenciales donde la maquinaria de jardín se usa durante gran parte del año.",
-    meta: "Mercado verde, residencial y profesional",
+    id: "turfgrass",
+    indicatorId: "turfgrass",
+    title: "Turfgrass 2021-2025",
+    unit: "USD B",
+    focus: "Florida lidera",
+    note: "Muestra por qué Florida es el foco: césped profesional, golf, landscaping y mantenimiento continuo.",
+  },
+  {
+    id: "agricultura",
+    indicatorId: "agricultura",
+    title: "Agricultura 2021-2025",
+    unit: "USD B",
+    focus: "Texas escala",
+    note: "Texas explica la segunda etapa por volumen agrícola, ranchos y maquinaria pesada.",
+  },
+  {
+    id: "desempleo",
+    indicatorId: "desempleo",
+    title: "Estabilidad laboral",
+    unit: "%",
+    focus: "Florida más estable",
+    note: "Una menor tasa de desempleo favorece consumo recurrente, servicios y mantenimiento.",
+  },
+  {
+    id: "ingreso",
+    indicatorId: "ingreso",
+    title: "Poder adquisitivo",
+    unit: "USD",
+    focus: "Ambos fuertes",
+    note: "Ambos estados pueden absorber una propuesta de mayor valor si se comunica durabilidad y ergonomía.",
+  },
+];
+
+const scorecardRows: ScorecardRow[] = [
+  {
+    criterion: "Validación rápida B2C/B2B",
+    florida: 5,
+    texas: 3.6,
+    floridaText: "Amazon, landing, landscaping, golf y distribuidores de jardín.",
+    texasText: "Más fuerte cuando ya exista prueba de producto y soporte.",
+  },
+  {
+    criterion: "Landscaping y turfgrass",
+    florida: 5,
+    texas: 4.2,
+    floridaText: "Identidad clara en césped, zonas verdes, comunidades y turismo.",
+    texasText: "También atractivo, pero menos concentrado para la entrada inicial.",
+  },
+  {
+    criterion: "Agricultura y maquinaria pesada",
+    florida: 2.7,
+    texas: 5,
+    floridaText: "Util para nichos, pero no lidera escala rural.",
+    texasText: "Ranchos, tractores, ganadería, talleres y dealers agrícolas.",
+  },
+  {
+    criterion: "Friccion logistica inicial",
+    florida: 4.8,
+    texas: 3.7,
+    floridaText: "Mejor lectura como puerta de entrada desde Colombia.",
+    texasText: "Cobertura fuerte, pero más conveniente tras validar operaciones.",
+  },
+  {
+    criterion: "Potencial de escala posterior",
+    florida: 4.2,
+    texas: 5,
+    floridaText: "Escala en canales verdes y segmentos premium.",
+    texasText: "Escala en volumen, distribuidores y B2B técnico.",
+  },
+];
+
+const floridaCards: InsightCard[] = [
+  {
+    title: "Mercado visible",
+    text: "Empresas de landscaping, urbanizaciones, condominios, campos de golf y propietarios con jardínes grandes usan maquinaria de césped con alta frecuencia.",
+    meta: "Turfgrass + mantenimiento",
     icon: Sprout,
   },
   {
-    title: "Cliente ideal",
-    text: "Empresas de landscaping, administradores de condominios, campos de golf, tiendas de maquinaria de jardín, distribuidores de outdoor power equipment y propietarios de casas con jardines grandes.",
-    meta: "B2B + B2C visibles",
-    icon: UsersRound,
+    title: "Canal dual",
+    text: "Florida permite combinar B2C medible en Amazon y ecommerce con B2B local en distribuidores, empresas de mantenimiento y golf.",
+    meta: "B2C + B2B",
+    icon: ShoppingCart,
   },
   {
-    title: "Por qué Florida primero",
-    text: "Permite probar la propuesta de UMO en un mercado donde convergen uso frecuente de podadoras, alta demanda de comodidad, canales digitales, cercanía logística y afinidad comercial con Colombia.",
-    meta: "Validación más rápida",
-    icon: BadgeCheck,
-  },
-  {
-    title: "Adaptación del producto",
-    text: "Materiales resistentes al calor, humedad, radiación y lluvia; soporte lumbar para jornadas largas; comunicación clara sobre instalación, compatibilidad y vida útil.",
-    meta: "Confort para clima húmedo",
+    title: "Prueba de producto",
+    text: "El calor y la humedad obligan a probar materiales, ventilacion, instalación y vida util desde la primera fase.",
+    meta: "Validación real",
     icon: ShieldCheck,
   },
 ];
 
-const texasOpportunityCards: NarrativeCard[] = [
+const texasCards: InsightCard[] = [
   {
     title: "Escala productiva",
-    text: "Texas concentra agricultura, ganadería, ranchos, grandes extensiones de tierra y una cultura de operación con maquinaria pesada y equipos de trabajo intensivo.",
-    meta: "Agro, ranchos y volumen",
+    text: "La agricultura, ganadería, ranchos y grandes extensiones sostienen una demanda natural por tractores, maquinaria pesada y repuestos.",
+    meta: "Agro + ranchos",
     icon: Tractor,
   },
   {
-    title: "Canal más técnico",
-    text: "El camino natural pasa por distribuidores agrícolas, concesionarios, talleres especializados, repuestos para tractores y relaciones B2B de mayor ciclo comercial.",
-    meta: "Dealers y repuestos",
+    title: "Venta más técnica",
+    text: "La entrada exige dealers agrícolas, talleres rurales, pruebas de compatibilidad y argumentos de resistencia más robustos.",
+    meta: "B2B especializado",
     icon: BriefcaseBusiness,
   },
   {
-    title: "Expansión lógica",
-    text: "Texas no se descarta: se reserva para una segunda etapa cuando UMO ya haya probado producto, logística, precio, soporte y canales en el mercado inicial.",
+    title: "Expansión con evidencia",
+    text: "Con reseñas, datos de devolución, margen y soporte validados en Florida, Texas se negocia con mas credibilidad.",
     meta: "Fase de escala",
     icon: LineChart,
   },
-  {
-    title: "Adaptación posterior",
-    text: "El aprendizaje de Florida puede transformarse en una línea más robusta para calor seco, polvo, vibración, maquinaria pesada y compradores rurales con exigencias técnicas.",
-    meta: "Mayor especificación",
-    icon: Factory,
-  },
 ];
 
-const entryStrategyCards: NarrativeCard[] = [
+const entryCards: InsightCard[] = [
   {
-    title: "Exportación directa desde Colombia",
-    text: "UMO conserva producción, control de calidad y flexibilidad financiera en Colombia, evitando comprometer capital en una sede propia antes de validar demanda real.",
-    meta: "Menor riesgo inicial",
+    title: "Exportar desde Colombia",
+    text: "UMO mantiene control de produccion, calidad, costos y aprendizaje sin abrir una sede fija antes de validar demanda.",
+    meta: "Menor riesgo",
     icon: PackageCheck,
   },
   {
-    title: "Alianzas locales en Florida",
-    text: "La entrada se acelera con distribuidores, tiendas de maquinaria de jardín, empresas de landscaping y contactos B2B que ya conocen el cliente final.",
-    meta: "Tracción comercial local",
+    title: "Alianzas en Florida",
+    text: "Distribuidores de outdoor power equipment, empresas de landscaping, tiendas de maquinaria y campos de golf aceleran confianza local.",
+    meta: "Entrada local",
     icon: Handshake,
   },
   {
-    title: "Canales digitales desde el primer día",
-    text: "Amazon, marketplace, landing general, landing enfocada en Florida y e-commerce propio permiten medir demanda, preguntas frecuentes y sensibilidad de precio.",
-    meta: "B2C medible",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Texas como segunda red",
-    text: "Una vez validado el producto en Florida, UMO puede negociar distribuidores agrícolas y alianzas en Texas con evidencia de ventas, reseñas, márgenes y soporte.",
+    title: "Texas despues",
+    text: "El segundo movimiento aprovecha dealers agrícolas, repuestos, talleres rurales y clientes de mayor volumen.",
     meta: "Escala B2B",
     icon: Route,
   },
 ];
 
-const marketingCards: NarrativeCard[] = [
+const productCards: InsightCard[] = [
   {
-    title: "Posicionamiento",
-    text: "Thermo Seats by UMO debe presentarse como una solución de comodidad, ergonomía y durabilidad para personas que operan maquinaria de césped, jardín y mantenimiento durante jornadas largas.",
-    meta: "No vender solo un asiento",
+    title: "Materiales",
+    text: "Resistencia a calor, humedad, radiación, lluvia, polvo y vibración según el estado y el tipo de maquinaria.",
+    meta: "Durabilidad exterior",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Compatibilidad",
+    text: "Fichas técnicas, medidas, guías de instalación y fotografías por modelo reducen devoluciones y preguntas repetidas.",
+    meta: "Menos fricción",
+    icon: FileText,
+  },
+  {
+    title: "Promesa comercial",
+    text: "No vender un accesorio generico: vender comodidad, soporte lumbar, vida util y mejor relacion valor-precio.",
+    meta: "Thermo Seats by UMO",
     icon: Target,
   },
+];
+
+const channelCards: InsightCard[] = [
   {
-    title: "Segmentación",
-    text: "Buyer personas: dueño de casa con jardín grande, operador de landscaping, comprador B2B de campo de golf, tienda de maquinaria de jardín y distribuidor de repuestos especializados.",
-    meta: "Cinco compradores priorizados",
-    icon: UsersRound,
-  },
-  {
-    title: "Comercialización digital",
-    text: "SEO para términos de mower seat replacement, campañas SEM, fichas de Amazon, email B2B, LinkedIn comercial y contenido técnico sobre instalación, compatibilidad y resistencia climática.",
-    meta: "Demanda capturable",
+    title: "B2C medible",
+    text: "Amazon, marketplace, ecommerce y landing de Florida permiten medir busquedas, conversion, reseñas y sensibilidad de precio.",
+    meta: "Demanda digital",
     icon: MonitorSmartphone,
   },
   {
-    title: "Precio",
-    text: "Mantener una estrategia competitiva de valor, con rango de referencia entre USD 180 y USD 220 por unidad para validar percepción premium sin competir solo por bajo costo.",
-    meta: "Valor vs OEM",
-    icon: CircleDollarSign,
+    title: "B2B local",
+    text: "Empresas de landscaping, distribuidores, campos de golf y tiendas especializadas convierten la validacion en volumen recurrente.",
+    meta: "Ventas consultivas",
+    icon: UsersRound,
+  },
+  {
+    title: "Contenido técnico",
+    text: "Comparativos, guías de instalación, videos cortos y pruebas de desgaste deben responder dudas antes del contacto comercial.",
+    meta: "Confianza",
+    icon: Video,
+  },
+];
+
+const riskControls = [
+  {
+    risk: "Compatibilidad limitada",
+    control: "Matriz por modelos de podadora, tractor pequeno y vehiculo utilitario antes de publicar.",
+  },
+  {
+    risk: "Devoluciones por instalación",
+    control: "Guia visual, video corto, empaque claro y soporte de primer contacto.",
+  },
+  {
+    risk: "Desgaste por clima",
+    control: "Pruebas de calor, humedad, rayos UV y limpieza en condiciones de Florida.",
+  },
+  {
+    risk: "Ciclo B2B largo en Texas",
+    control: "Entrar con evidencia de Florida: ventas, reseñas, margen, reclamos y fichas técnicas.",
   },
 ];
 
 const roadmap = [
   {
     phase: "0",
-    title: "Preparación comercial",
     timing: "0-2 meses",
-    text: "Definir compatibilidades, fichas técnicas, muestras, empaque, landing de mercado, material en inglés y política de soporte.",
+    title: "Preparación",
+    text: "Compatibilidades, muestras, fichas técnicas, empaque, landing en inglés y política de soporte.",
   },
   {
     phase: "1",
-    title: "Piloto Florida",
     timing: "3-6 meses",
-    text: "Activar Amazon, landing Florida, contacto con tiendas de maquinaria de jardín, empresas de landscaping y campos de golf.",
+    title: "Piloto Florida",
+    text: "Amazon, ecommerce, empresas de landscaping, tiendas de jardín y primeros contactos con golf.",
   },
   {
     phase: "2",
-    title: "Validación y ajuste",
-    timing: "6-12 meses",
-    text: "Medir unidades vendidas, margen, devoluciones, preguntas técnicas, reseñas, tiempos logísticos y respuesta de distribuidores.",
+    timing: "7-12 meses",
+    title: "Validación",
+    text: "Medir margen, devoluciones, reseñas, leads B2B, costo logístico y ajustes de producto.",
   },
   {
     phase: "3",
-    title: "Expansión Texas",
     timing: "12-18 meses",
-    text: "Llevar evidencia de Florida a distribuidores agrícolas, talleres rurales y dealers de maquinaria pesada en Texas.",
+    title: "Escala Texas",
+    text: "Activar distribuidores agrícolas, talleres rurales y pilotos con maquinaria pesada.",
   },
 ];
 
-const nationalBenchmarkGroups = [
-  {
-    title: "E-commerce aplicado a landscaping",
-    unit: "% de adopción digital",
-    scaleMax: 20,
-    note: "Ambos estados quedan por encima del promedio nacional, lo que valida Amazon, landing page y venta directa.",
-    bars: [
-      { label: "Texas", value: 17.8, display: "17.8%", tone: "texas" },
-      { label: "Florida", value: 17.5, display: "17.5%", tone: "florida" },
-      { label: "Promedio nacional", value: 16.4, display: "16.4%", tone: "usa" },
-    ],
-  },
-  {
-    title: "Clima favorable para uso continuo",
-    unit: "temperatura media 2025",
-    scaleMax: 80,
-    note: "Florida y Texas sostienen una temporada de uso mucho más larga que el promedio nacional.",
-    bars: [
-      { label: "Florida", value: 72.3, display: "72.3 F", tone: "florida" },
-      { label: "Texas", value: 67.7, display: "67.7 F", tone: "texas" },
-      { label: "Promedio nacional", value: 54.6, display: "54.6 F", tone: "usa" },
-    ],
-  },
-  {
-    title: "Desgaste que justifica producto premium",
-    unit: "índice / 5",
-    scaleMax: 5,
-    note: "Más calor, humedad, polvo y exposición exterior elevan la necesidad de materiales resistentes.",
-    bars: [
-      { label: "Texas", value: 4.7, display: "4.7 / 5", tone: "texas" },
-      { label: "Florida", value: 4.5, display: "4.5 / 5", tone: "florida" },
-      { label: "Promedio nacional", value: 3.6, display: "3.6 / 5", tone: "usa" },
-    ],
-  },
-  {
-    title: "Dinamismo pyme",
-    unit: "apertura neta de establecimientos",
-    scaleMax: 30,
-    note: "La base empresarial local supera el promedio nacional y facilita distribuidores, aliados y clientes B2B.",
-    bars: [
-      { label: "Texas", value: 27.67, display: "27.67%", tone: "texas" },
-      { label: "Florida", value: 22.39, display: "22.39%", tone: "florida" },
-      { label: "Promedio nacional", value: 19.34, display: "19.34%", tone: "usa" },
-    ],
-  },
-];
-
-const fiscalComparisonRows = [
+const fiscalCards = [
   {
     state: "Florida",
-    rank: 5,
-    personalTax: "0%",
-    businessTax: "Corporate income tax 5.5%",
-    salesTax: "Sales tax base 6.00%",
-    formation: "Sunbiz permite filing online de LLC",
-    reading: "Muy fuerte para iniciar con menor fricción, menor carga personal y logística cercana a Colombia.",
+    rank: "#5",
     tone: "florida",
+    lines: ["Sin impuesto estatal personal", "Corporate income tax 5.5%", "Sales tax base 6.00%", "Sunbiz permite filing online de LLC"],
+    reading: "Mejor encaje para iniciar con menor fricción fiscal, cercania logistica y canales de prueba.",
   },
   {
     state: "Texas",
-    rank: 7,
-    personalTax: "0%",
-    businessTax: "Sin corporate income tax tradicional; franchise tax según condiciones",
-    salesTax: "Sales tax base 6.25%",
-    formation: "SOSDirect permite filing online y servicios same-day / next-day",
-    reading: "Muy atractivo para escalar B2B, distribuidores, volumen agrícola y expansión posterior.",
+    rank: "#7",
     tone: "texas",
+    lines: [
+      "Sin impuesto estatal personal",
+      "Sin corporate income tax tradicional",
+      "Franchise tax segun condiciones",
+      "Sales tax base 6.25%",
+      "SOSDirect y servicios expedited",
+    ],
+    reading: "Muy competitivo para expandir cuando UMO tenga evidencia comercial y pueda negociar B2B.",
   },
   {
     state: "California",
-    rank: 48,
-    personalTax: "Alta carga personal",
-    businessTax: "Corporate tax 8.84% y mínimo anual de USD 800",
-    salesTax: "Sales tax estatal 7.25%",
-    formation: "Expedited online disponible, pero con costos altos",
-    reading: "Mercado grande, pero menos conveniente para un piloto exportador de bajo riesgo.",
+    rank: "#48",
     tone: "other",
+    lines: ["Mayor presión tributaria", "Costos operativos altos", "Entorno más pesado para una prueba inicial"],
+    reading: "Sirve como contraste: gran mercado, pero menos eficiente para validar con bajo riesgo.",
   },
   {
     state: "New York",
-    rank: 50,
-    personalTax: "Top rate alta",
-    businessTax: "Corporate tax graduado 6.5%-7.25%",
-    salesTax: "Sales tax estatal más cargas locales",
-    formation: "Mayor complejidad regulatoria y de costos",
-    reading: "Ejemplo de mercado potente, pero más pesado para validar rápido una línea nueva.",
+    rank: "#50",
     tone: "other",
+    lines: ["Ranking fiscal inferior", "Costos y cumplimiento mas exigentes", "Menor encaje con maquinaria verde como entrada"],
+    reading: "No es el mejor punto de arranque para una propuesta que necesita velocidad y aprendizaje.",
   },
 ];
 
-function formatScore(value: number) {
-  return value.toFixed(2).replace(/\.?0+$/, "");
-}
-
-function getBarWidth(value: number, max: number) {
-  return `${Math.min(100, Math.max(6, (value / max) * 100))}%`;
-}
+const sourceLinks = [
+  { label: "Tax Foundation 2026", href: "https://taxfoundation.org/research/all/state/2026-state-tax-competitiveness-index/" },
+  { label: "Florida DOR", href: "https://floridarevenue.com/taxes/taxesfees/Pages/tax_interest_rates.aspx" },
+  { label: "Florida Sunbiz", href: "https://dos.fl.gov/sunbiz/forms/limited-liability-company/" },
+  { label: "Texas Comptroller", href: "https://comptroller.texas.gov/taxes/franchise/" },
+  { label: "Texas SOS", href: "https://www.sos.state.tx.us/corp/options.shtml" },
+  { label: "National Golf Foundation", href: "https://www.ngf.org/short-game/states-of-public-golf/" },
+];
 
 function getLatestSeriesPoint(indicatorId: string) {
   const indicator = macroIndicators.find((item) => item.id === indicatorId);
@@ -420,621 +616,1051 @@ function getLatestSeriesPoint(indicatorId: string) {
   return series[series.length - 1];
 }
 
-function getEnvironmentAverage(entryId: string) {
-  const detail = getEnvironmentDeepDive(entryId);
-  if (!detail) return null;
-
-  const texasAverage =
-    detail.indicators.reduce((total, indicator) => total + indicator.texas.score, 0) /
-    Math.max(detail.indicators.length, 1);
-  const floridaAverage =
-    detail.indicators.reduce((total, indicator) => total + indicator.florida.score, 0) /
-    Math.max(detail.indicators.length, 1);
-
-  return {
-    texasAverage,
-    floridaAverage,
-    winner:
-      texasAverage === floridaAverage ? "Compartido" : texasAverage > floridaAverage ? "Texas" : "Florida",
-  };
+function getDiagnosticAverage() {
+  const values = diagnosticMetrics.map((item) => item.value);
+  const total = values.reduce((sum, value) => sum + value, 0);
+  return Math.round(total / Math.max(values.length, 1));
 }
 
-function SectionKicker({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
+function goToElement(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function DeckChrome({
+  slides,
+  activeIndex,
+  onGo,
+}: {
+  slides: DeckSlide[];
+  activeIndex: number;
+  onGo: (index: number) => void;
+}) {
+  const activeSlide = slides[activeIndex] ?? slides[0];
+  const progress = ((activeIndex + 1) / slides.length) * 100;
+
   return (
-    <div className="presentation-section-kicker">
-      <span>{eyebrow}</span>
-      <h2>{title}</h2>
-      <p>{text}</p>
-    </div>
+    <>
+      <aside className="presentation-side-rail" aria-label="Índice de la presentación">
+        <div className="presentation-rail-track" aria-hidden="true">
+          <span style={{ height: `${progress}%` }} />
+        </div>
+        {slides.map((slide, index) => (
+          <button
+            key={slide.id}
+            type="button"
+            className={`presentation-rail-item${index === activeIndex ? " is-active" : ""}`}
+            onClick={() => onGo(index)}
+            aria-current={index === activeIndex ? "step" : undefined}
+          >
+            <span>{slide.number}</span>
+            <strong>{slide.shortLabel}</strong>
+          </button>
+        ))}
+      </aside>
+
+      <div className="presentation-deck-status" aria-live="polite">
+        <span>
+          {activeSlide.number} / {slides.length.toString().padStart(2, "0")}
+        </span>
+        <strong>{activeSlide.label}</strong>
+        <i aria-hidden="true">
+          <b style={{ width: `${progress}%` }} />
+        </i>
+      </div>
+
+      <div className="presentation-deck-controls" aria-label="Controles de diapositivas">
+        <button type="button" onClick={() => onGo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Diapositiva anterior">
+          <ChevronUp size={18} />
+        </button>
+        <button
+          type="button"
+          onClick={() => onGo(activeIndex + 1)}
+          disabled={activeIndex === slides.length - 1}
+          aria-label="Diapositiva siguiente"
+        >
+          <ChevronDown size={18} />
+        </button>
+      </div>
+    </>
   );
 }
 
-function IconCard({ card }: { card: NarrativeCard }) {
+function PresentationSlide({
+  slide,
+  children,
+  refSetter,
+}: {
+  slide: DeckSlide;
+  children: ReactNode;
+  refSetter?: (node: HTMLElement | null) => void;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.section
+      id={slide.id}
+      ref={refSetter}
+      className={`presentation-slide${slide.variant ? ` is-${slide.variant}` : ""}`}
+      data-presentation-slide
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 26 }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ amount: 0.28, once: false }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
+    >
+      <div className="presentation-slide-shell">
+        <div className="presentation-slide-copy">
+          <span className="presentation-slide-index">
+            {slide.number} / {slide.eyebrow}
+          </span>
+          <h2>{slide.title}</h2>
+          {slide.summary ? <p>{slide.summary}</p> : null}
+        </div>
+        <div className="presentation-slide-body">{children}</div>
+      </div>
+    </motion.section>
+  );
+}
+
+function InsightPanel({ card, accent }: { card: InsightCard; accent?: "florida" | "texas" }) {
   const Icon = card.icon;
 
   return (
-    <motion.article
-      className="presentation-icon-card"
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-90px" }}
-      transition={{ duration: 0.32 }}
-    >
-      <div className="presentation-icon-head">
-        <span>{card.meta}</span>
+    <article className={`presentation-panel${accent ? ` is-${accent}` : ""}`}>
+      <div className="presentation-panel-head">
         <Icon size={20} />
+        {card.meta ? <span>{card.meta}</span> : null}
       </div>
       <h3>{card.title}</h3>
       <p>{card.text}</p>
-    </motion.article>
-  );
-}
-
-function BenchmarkChart({
-  title,
-  unit,
-  scaleMax,
-  note,
-  bars,
-}: {
-  title: string;
-  unit: string;
-  scaleMax: number;
-  note: string;
-  bars: { label: string; value: number; display: string; tone: string }[];
-}) {
-  return (
-    <article className="presentation-chart-card">
-      <div className="presentation-chart-head">
-        <span>{unit}</span>
-        <BarChart3 size={19} />
-      </div>
-      <h3>{title}</h3>
-      <div className="presentation-bar-stack">
-        {bars.map((bar) => (
-          <div className={`presentation-bar-row is-${bar.tone}`} key={`${title}-${bar.label}`}>
-            <div>
-              <strong>{bar.label}</strong>
-              <em>{bar.display}</em>
-            </div>
-            <span>
-              <i style={{ width: getBarWidth(bar.value, scaleMax) }} />
-            </span>
-          </div>
-        ))}
-      </div>
-      <p>{note}</p>
     </article>
   );
 }
 
-function SourceImageCard({
-  title,
-  text,
-  image,
-  href,
+function MetricRibbon({
+  items,
 }: {
-  title: string;
-  text: string;
-  image: string;
-  href: string;
+  items: Array<{
+    label: string;
+    value: string;
+    text: string;
+  }>;
 }) {
   return (
-    <a className="presentation-source-card" href={href} target="_blank" rel="noreferrer">
-      <img src={image} alt={title} loading="lazy" />
-      <div>
-        <span>Fuente interna</span>
-        <h3>{title}</h3>
-        <p>{text}</p>
-      </div>
-    </a>
+    <div className="presentation-metric-ribbon">
+      {items.map((item) => (
+        <article key={item.label}>
+          <span>{item.label}</span>
+          <strong>{item.value}</strong>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
   );
 }
 
-function PresentationHero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 720], [0, 82]);
-  const opacity = useTransform(scrollY, [0, 560], [1, 0.45]);
+function BenchmarkChart({
+  group,
+  onExpand,
+  expanded = false,
+}: {
+  group: BenchmarkGroup;
+  onExpand?: () => void;
+  expanded?: boolean;
+}) {
+  return (
+    <article className={`presentation-benchmark-card${expanded ? " is-expanded" : ""}`}>
+      <div className="presentation-benchmark-head">
+        <span>{group.unit}</span>
+        {onExpand ? (
+          <button type="button" onClick={onExpand} aria-label={`Ampliar gráfico ${group.title}`}>
+            <Maximize2 size={15} />
+          </button>
+        ) : null}
+        <h3>{group.title}</h3>
+      </div>
+      <div className="presentation-benchmark-bars">
+        {group.bars.map((bar) => {
+          const width = Math.min(100, (bar.value / group.scaleMax) * 100);
+          return (
+            <div key={`${group.title}-${bar.label}`} className={`presentation-benchmark-row is-${bar.tone}`}>
+              <div>
+                <strong>{bar.label}</strong>
+                <em>{bar.display}</em>
+              </div>
+              <span aria-hidden="true">
+                <i style={{ width: `${width}%` }} />
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <p>{group.note}</p>
+    </article>
+  );
+}
+
+function TrendChart({
+  config,
+  onExpand,
+  expanded = false,
+}: {
+  config: TrendChartConfig;
+  onExpand?: () => void;
+  expanded?: boolean;
+}) {
+  const indicator = macroIndicators.find((item) => item.id === config.indicatorId);
+  const series = indicator?.series ?? [];
+  const width = 430;
+  const height = expanded ? 280 : 210;
+  const padding = expanded ? 46 : 34;
+  const values = series.flatMap((point) => [point.florida, point.texas, point.national].filter((value): value is number => typeof value === "number"));
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = Math.max(max - min, 1);
+  const x = (index: number) => padding + (index * (width - padding * 2)) / Math.max(series.length - 1, 1);
+  const y = (value: number) => height - padding - ((value - min) / range) * (height - padding * 2);
+
+  const pathFor = (key: "florida" | "texas" | "national") =>
+    series
+      .filter((point) => typeof point[key] === "number")
+      .map((point, index) => `${index === 0 ? "M" : "L"} ${x(index)} ${y(point[key] as number)}`)
+      .join(" ");
+
+  const latest = series[series.length - 1];
 
   return (
-    <section className="presentation-hero">
-      <motion.div className="presentation-hero-map" style={{ y, opacity }} aria-hidden="true">
-        <span className="presentation-route-line" />
-        <div className="presentation-map-node presentation-map-node-colombia">
-          <small>Origen</small>
-          <strong>Colombia</strong>
-        </div>
-        <div className="presentation-map-node presentation-map-node-florida is-priority">
-          <small>Entrada</small>
-          <strong>Florida</strong>
-        </div>
-        <div className="presentation-map-node presentation-map-node-texas">
-          <small>Escala</small>
-          <strong>Texas</strong>
-        </div>
-      </motion.div>
-
-      <motion.div
-        className="presentation-hero-copy"
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.62 }}
-      >
-        <span>Presentación estratégica / Selección estatal prioritaria</span>
-        <h1>Florida y Texas: los estados más atractivos para la expansión de UMO</h1>
-        <p>
-          Comparación ejecutiva entre Florida y Texas frente a otros estados para definir dónde iniciar con
-          menor fricción, mayor visibilidad comercial y mejor oportunidad de aprendizaje.
-        </p>
-        <div className="presentation-hero-actions">
-          <a href="#decision">
-            Ver recomendación <ArrowUpRight size={17} />
-          </a>
-          <Link to="/entregas/entrega-3/recopilacion">
-            Soportes de entornos <FileText size={17} />
-          </Link>
-        </div>
-      </motion.div>
-
-      <div className="presentation-hero-summary">
-        <article>
-          <small>Recomendación</small>
-          <strong>Florida primero</strong>
-          <p>Validación comercial con landscaping, turfgrass, B2C, B2B ligero y logística más cercana.</p>
-        </article>
-        <article>
-          <small>Expansión</small>
-          <strong>Texas después</strong>
-          <p>Escala productiva para agricultura, ranchos, maquinaria pesada y distribuidores técnicos.</p>
-        </article>
+    <article className={`presentation-trend-card${expanded ? " is-expanded" : ""}`}>
+      <div className="presentation-trend-head">
+        <span>{config.focus}</span>
+        {onExpand ? (
+          <button type="button" onClick={onExpand} aria-label={`Ampliar gráfico ${config.title}`}>
+            <Maximize2 size={15} />
+          </button>
+        ) : null}
+        <h3>{config.title}</h3>
       </div>
-    </section>
+      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={config.title}>
+        {[0, 1, 2].map((line) => (
+          <line
+            key={line}
+            x1={padding}
+            x2={width - padding}
+            y1={padding + line * ((height - padding * 2) / 2)}
+            y2={padding + line * ((height - padding * 2) / 2)}
+            className="presentation-trend-grid-line"
+          />
+        ))}
+        <path className="presentation-trend-line is-florida" d={pathFor("florida")} />
+        <path className="presentation-trend-line is-texas" d={pathFor("texas")} />
+        {series.some((point) => typeof point.national === "number") ? (
+          <path className="presentation-trend-line is-national" d={pathFor("national")} />
+        ) : null}
+        {series.map((point, index) => (
+          <g key={`${config.id}-${point.year}`}>
+            <circle className="presentation-trend-dot is-florida" cx={x(index)} cy={y(point.florida)} r={expanded ? 5 : 4} />
+            <circle className="presentation-trend-dot is-texas" cx={x(index)} cy={y(point.texas)} r={expanded ? 5 : 4} />
+            <text x={x(index)} y={height - 10} textAnchor="middle">
+              {point.year}
+            </text>
+          </g>
+        ))}
+      </svg>
+      <div className="presentation-trend-legend">
+        <span className="is-florida">Florida {latest ? formatChartValue(latest.florida, config.unit) : ""}</span>
+        <span className="is-texas">Texas {latest ? formatChartValue(latest.texas, config.unit) : ""}</span>
+        {latest?.national ? <span className="is-national">EE. UU. {formatChartValue(latest.national, config.unit)}</span> : null}
+      </div>
+      <p>{config.note}</p>
+    </article>
+  );
+}
+
+function formatChartValue(value: number, unit: string) {
+  if (unit === "USD") return `USD ${Math.round(value).toLocaleString("en-US")}`;
+  if (unit === "%") return `${value.toFixed(1)}%`;
+  return `${value.toFixed(1)} ${unit}`;
+}
+
+function StateScorecard({ rows }: { rows: ScorecardRow[] }) {
+  return (
+    <div className="presentation-scorecard">
+      {rows.map((row) => (
+        <article key={row.criterion}>
+          <h3>{row.criterion}</h3>
+          <div className="presentation-score-row is-florida">
+            <div>
+              <strong>Florida</strong>
+              <em>{row.florida.toFixed(1)}/5</em>
+            </div>
+            <span aria-hidden="true">
+              <i style={{ width: `${(row.florida / 5) * 100}%` }} />
+            </span>
+            <p>{row.floridaText}</p>
+          </div>
+          <div className="presentation-score-row is-texas">
+            <div>
+              <strong>Texas</strong>
+              <em>{row.texas.toFixed(1)}/5</em>
+            </div>
+            <span aria-hidden="true">
+              <i style={{ width: `${(row.texas / 5) * 100}%` }} />
+            </span>
+            <p>{row.texasText}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function StrategyFlow() {
+  const steps = [
+    { label: "Colombia", title: "Produccion UMO", text: "Calidad, costos y aprendizaje bajo control.", icon: Factory },
+    { label: "Florida", title: "Piloto comercial", text: "Landscaping, golf, Amazon y distribuidores.", icon: Sprout },
+    { label: "Texas", title: "Escala B2B", text: "Agro, ranchos, dealers y maquinaria pesada.", icon: Tractor },
+  ];
+
+  return (
+    <div className="presentation-strategy-flow">
+      {steps.map((step, index) => {
+        const Icon = step.icon;
+        return (
+          <article key={step.label}>
+            <span>{step.label}</span>
+            <Icon size={22} />
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+            {index < steps.length - 1 ? <ArrowUpRight className="presentation-flow-arrow" size={22} /> : null}
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+const floridaOpportunityPins = [
+  {
+    name: "Miami / Fort Lauderdale",
+    label: "condominios, golf, jardinería premium",
+    x: 71,
+    y: 78,
+    type: "Golf + residencias",
+  },
+  {
+    name: "Orlando",
+    label: "resorts, parques, golf y mantenimiento",
+    x: 53,
+    y: 48,
+    type: "Parques + turismo",
+  },
+  {
+    name: "Tampa Bay",
+    label: "distribuidores, suburbios y landscaping",
+    x: 39,
+    y: 58,
+    type: "Distribución",
+  },
+  {
+    name: "Gainesville / UF",
+    label: "campus, zonas verdes y flotas de mantenimiento",
+    x: 46,
+    y: 32,
+    type: "Universidad",
+  },
+  {
+    name: "Tallahassee / FSU",
+    label: "campus y operación pública de zonas verdes",
+    x: 25,
+    y: 24,
+    type: "Universidad",
+  },
+  {
+    name: "Jacksonville",
+    label: "logística, parques y contratistas",
+    x: 57,
+    y: 22,
+    type: "Logística",
+  },
+];
+
+function FloridaOpportunityMap({ onExpand, expanded = false }: { onExpand?: () => void; expanded?: boolean }) {
+  return (
+    <article className={`presentation-map-card${expanded ? " is-expanded" : ""}`}>
+      <div className="presentation-map-head">
+        <span>Florida / clusters de entrada</span>
+        {onExpand ? (
+          <button type="button" onClick={onExpand} aria-label="Ampliar mapa de Florida">
+            <Maximize2 size={15} />
+          </button>
+        ) : null}
+        <h3>Mapa de compradores potenciales</h3>
+      </div>
+      <div className="presentation-florida-map" aria-label="Mapa visual de oportunidades en Florida">
+        <svg viewBox="0 0 560 430" aria-hidden="true">
+          <path
+            className="presentation-florida-shape"
+            d="M165 42 C202 28 245 38 277 61 L332 100 C359 119 392 118 426 128 C459 138 476 160 470 186 C464 214 438 226 433 253 C426 291 471 329 445 365 C422 398 357 363 335 323 C315 286 318 244 296 215 C277 190 236 185 216 157 C194 128 175 89 165 42 Z"
+          />
+          <path className="presentation-florida-panhandle" d="M76 84 C115 58 152 47 197 58 L189 94 C144 89 112 96 78 121 Z" />
+        </svg>
+        {floridaOpportunityPins.map((pin) => (
+          <div
+            key={pin.name}
+            className="presentation-map-pin"
+            style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
+          >
+            <i />
+            <strong>{pin.name}</strong>
+            <span>{pin.type}</span>
+            {expanded ? <p>{pin.label}</p> : null}
+          </div>
+        ))}
+      </div>
+      <div className="presentation-map-legend">
+        <span>
+          <Landmark size={15} /> Universidades y campus
+        </span>
+        <span>
+          <Flag size={15} /> Campos de golf
+        </span>
+        <span>
+          <Sprout size={15} /> Parques, condominios y landscaping
+        </span>
+      </div>
+      <p className="presentation-map-note">
+        Lectura de prospección: son clusters de compradores potenciales, no clientes confirmados.
+      </p>
+    </article>
+  );
+}
+
+function MiniBarList({ items }: { items: Array<{ label: string; value: number; tone?: string }> }) {
+  const max = Math.max(...items.map((item) => item.value), 1);
+
+  return (
+    <div className="presentation-mini-bar-list">
+      {items.map((item) => (
+        <div key={item.label} className={item.tone ? `is-${item.tone}` : undefined}>
+          <strong>{item.label}</strong>
+          <span>
+            <i style={{ width: `${(item.value / max) * 100}%` }} />
+          </span>
+          <em>{item.value}%</em>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ExpandedVisualModal({
+  visual,
+  onClose,
+}: {
+  visual: ExpandedVisual | null;
+  onClose: () => void;
+}) {
+  if (!visual) return null;
+
+  const benchmark = visual.type === "benchmark" ? benchmarkGroups.find((group) => group.id === visual.id) : null;
+  const trend = visual.type === "trend" ? trendCharts.find((chart) => chart.id === visual.id) : null;
+  const title =
+    visual.type === "map"
+      ? "Mapa de oportunidad en Florida"
+      : benchmark?.title ?? trend?.title ?? "Visualización ampliada";
+
+  return (
+    <motion.div
+      className="presentation-visual-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <button className="presentation-modal-backdrop" type="button" aria-label="Cerrar visualización" onClick={onClose} />
+      <motion.div
+        className="presentation-modal-panel"
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 16, scale: 0.98 }}
+        transition={{ duration: 0.2 }}
+      >
+        <button className="presentation-modal-close" type="button" onClick={onClose} aria-label="Cerrar">
+          <X size={20} />
+        </button>
+        {benchmark ? <BenchmarkChart group={benchmark} expanded /> : null}
+        {trend ? <TrendChart config={trend} expanded /> : null}
+        {visual.type === "map" ? <FloridaOpportunityMap expanded /> : null}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function SourceNote() {
+  return (
+    <p className="presentation-source-note-v2">
+      Fuentes de soporte:{" "}
+      {sourceLinks.map((source, index) => (
+        <span key={source.href}>
+          <a href={source.href} target="_blank" rel="noreferrer">
+            {source.label}
+          </a>
+          {index < sourceLinks.length - 1 ? " · " : ""}
+        </span>
+      ))}
+    </p>
   );
 }
 
 export default function PresentationPage({ locale }: { locale: Locale }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [expandedVisual, setExpandedVisual] = useState<ExpandedVisual | null>(null);
+  const slideRefs = useRef<Record<string, HTMLElement | null>>({});
+
   const turfgrass2025 = getLatestSeriesPoint("turfgrass");
   const agriculture2025 = getLatestSeriesPoint("agricultura");
   const income2025 = getLatestSeriesPoint("ingreso");
   const unemployment2025 = getLatestSeriesPoint("desempleo");
 
-  const environmentScoreRows = useMemo(
-    () =>
-      environmentEntries.map((entry) => ({
-        entry,
-        score: getEnvironmentAverage(entry.id),
-      })),
+  const diagnosticAverage = useMemo(() => getDiagnosticAverage(), []);
+  const strategicCanvasBlocks = useMemo(
+    () => canvasBlocks.filter((block) => ["Propuesta de valor", "Segmentos", "Canales", "Socios clave"].includes(block.title.es)),
     [],
   );
+  const slidesById = useMemo(() => Object.fromEntries(deckSlides.map((slide) => [slide.id, slide])) as Record<string, DeckSlide>, []);
 
-  const sourceHighlights = [
-    {
-      title: "Diagnóstico P-I",
-      text: "Identifica fortalezas en direccionamiento y alianzas, pero también brechas en talento internacional, CRM y modos formales de entrada.",
-      image: "/assets/content/diagnostico-pi-resumen.png",
-      href: documents.find((document) => document.id === "diagnostic-capture")?.href ?? "/assets/content/diagnostico-pi-resumen.png",
-    },
-    {
-      title: "Business Model Canvas",
-      text: "Ordena propuesta de valor, segmentos, canales, actividades clave y socios alrededor de sillines y soluciones de comodidad para maquinaria.",
-      image: "/assets/content/business-model-canvas.png",
-      href: documents.find((document) => document.id === "canvas-img")?.href ?? "/assets/content/business-model-canvas.png",
-    },
-    {
-      title: "DOFA",
-      text: "Permite leer fortalezas, oportunidades, debilidades y amenazas para convertir la internacionalización en una ruta gradual y controlada.",
-      image: "/assets/content/dofa.png",
-      href: documents.find((document) => document.id === "dofa-img")?.href ?? "/assets/content/dofa.png",
-    },
-  ];
+  useEffect(() => {
+    if (!expandedVisual) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-  const strongestDiagnosticMetrics = [...diagnosticMetrics]
-    .sort((left, right) => right.value - left.value)
-    .slice(0, 5);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setExpandedVisual(null);
+    };
 
-  const strategicCanvasBlocks = canvasBlocks.filter((block) =>
-    ["Propuesta de valor", "Segmentos", "Canales", "Socios clave"].includes(block.title.es),
-  );
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [expandedVisual]);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateActiveSlide = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const anchor = window.innerWidth < 860 ? 118 : window.innerHeight * 0.34;
+        const distances = deckSlides.map((slide, index) => {
+          const node = document.getElementById(slide.id);
+          if (!node) return { index, distance: Number.POSITIVE_INFINITY };
+          return { index, distance: Math.abs(node.getBoundingClientRect().top - anchor) };
+        });
+        const closest = distances.sort((a, b) => a.distance - b.distance)[0];
+        if (closest && Number.isFinite(closest.distance)) setActiveIndex(closest.index);
+      });
+    };
+
+    updateActiveSlide();
+    window.addEventListener("scroll", updateActiveSlide, { passive: true });
+    window.addEventListener("resize", updateActiveSlide);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveSlide);
+      window.removeEventListener("resize", updateActiveSlide);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("input, textarea, select, button, a")) return;
+
+      if (["ArrowDown", "PageDown"].includes(event.key)) {
+        event.preventDefault();
+        goToSlide(activeIndex + 1);
+      }
+
+      if (["ArrowUp", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        goToSlide(activeIndex - 1);
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        goToSlide(0);
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        goToSlide(deckSlides.length - 1);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [activeIndex]);
+
+  function goToSlide(index: number) {
+    const nextIndex = Math.min(Math.max(index, 0), deckSlides.length - 1);
+    const slide = deckSlides[nextIndex];
+    const node = slideRefs.current[slide.id] ?? document.getElementById(slide.id);
+    node?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
-    <main className="presentation-page" lang={locale === "es" ? "es" : "es"}>
-      <PresentationHero />
+    <main className="presentation-page presentation-deck-page" lang={locale === "es" ? "es" : "es"}>
+      <DeckChrome slides={deckSlides} activeIndex={activeIndex} onGo={goToSlide} />
 
-      <nav className="presentation-chapter-nav" aria-label="Navegación de la presentación">
-        {chapters.map((chapter) => (
-          <a key={chapter.id} href={`#${chapter.id}`}>
-            {chapter.label}
-          </a>
-        ))}
-      </nav>
+      <div className="presentation-deck-shell">
+        <motion.section
+          id="portada"
+          ref={(node) => {
+            slideRefs.current.portada = node;
+          }}
+          className="presentation-slide is-hero"
+          data-presentation-slide
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+        >
+          <div className="presentation-hero-stage">
+            <div className="presentation-hero-copy-v2">
+              <span>{deckSlides[0].eyebrow}</span>
+              <h1>{deckSlides[0].title}</h1>
+              <p>{deckSlides[0].summary}</p>
+              <div className="presentation-hero-actions-v2">
+                <button type="button" onClick={() => goToElement("decision")}>
+                  Ver decisión <ArrowUpRight size={16} />
+                </button>
+                <button type="button" onClick={() => goToElement("benchmarks")}>
+                  Ver benchmarks
+                </button>
+              </div>
+            </div>
 
-      <section className="presentation-signal-strip" aria-label="Métricas clave del dossier">
-        <article>
-          <span>Turfgrass Florida</span>
-          <strong>USD {turfgrass2025?.florida.toFixed(1)}B</strong>
-          <p>Lectura 2025 frente a Texas: USD {turfgrass2025?.texas.toFixed(1)}B.</p>
-        </article>
-        <article>
-          <span>Ruta logística</span>
-          <strong>6 días</strong>
-          <p>Florida reduce fricción de entrada frente a la ruta más larga hacia Texas.</p>
-        </article>
-        <article>
-          <span>Agricultura Texas</span>
-          <strong>USD {agriculture2025?.texas.toFixed(1)}B</strong>
-          <p>Base productiva para segunda etapa; Florida: USD {agriculture2025?.florida.toFixed(1)}B.</p>
-        </article>
-        <article>
-          <span>Poder adquisitivo</span>
-          <strong>USD {((income2025?.florida ?? 0) / 1000).toFixed(1)}k</strong>
-          <p>Florida queda muy cerca de Texas, que marca USD {((income2025?.texas ?? 0) / 1000).toFixed(1)}k.</p>
-        </article>
-      </section>
+            <div className="presentation-route-canvas" aria-hidden="true">
+              <span className="presentation-route-line-v2" />
+              <i className="presentation-route-node is-colombia">
+                <small>Origen</small>
+                <strong>Colombia</strong>
+              </i>
+              <i className="presentation-route-node is-florida">
+                <small>Entrada</small>
+                <strong>Florida</strong>
+              </i>
+              <i className="presentation-route-node is-texas">
+                <small>Escala</small>
+                <strong>Texas</strong>
+              </i>
+            </div>
 
-      <section id="contexto" className="presentation-section presentation-context-grid">
-        <SectionKicker
-          eyebrow="01 / Contexto empresarial"
-          title="UMO no vende solo piezas: fabrica comodidad para operación intensiva"
-          text="UMO S.A. es una empresa colombiana con trayectoria industrial, experiencia en autopartes, sillines, cojines, asientos y soluciones de bienestar. Esa base permite leer su internacionalización como una oportunidad en ergonomía, soporte y durabilidad para usuarios que trabajan durante horas sobre maquinaria."
-        />
-        <div className="presentation-company-panel">
-          <article>
-            <Building2 size={22} />
-            <span>Empresa</span>
-            <h3>{companyProfile.name}</h3>
-            <p>
-              Fundada en 1968 en Medellín, con más de {companyProfile.experience} años de experiencia
-              industrial y una base productiva que puede adaptarse a soluciones de confort para maquinaria.
-            </p>
-          </article>
-          <article>
-            <Factory size={22} />
-            <span>Capacidad</span>
-            <h3>Fabricación adaptable</h3>
-            <p>
-              La experiencia en poliuretano, tapizado, sillines, accesorios y bienestar permite desarrollar
-              repuestos o upgrades para podadoras, tractores pequeños, vehículos utilitarios y equipos de mantenimiento.
-            </p>
-          </article>
-          <article>
-            <Tractor size={22} />
-            <span>Aplicación del producto</span>
-            <h3>Maquinaria de césped y campo</h3>
-            <p>
-              El usuario objetivo pasa largas jornadas sentado en podadoras, tractores pequeños o vehículos de
-              mantenimiento; la comodidad se vuelve productividad, salud lumbar y vida útil del equipo.
-            </p>
-          </article>
-        </div>
-        <div className="presentation-product-rack">
-          {canvasHighlights.map((item) => (
-            <article key={item.title.es}>
-              <span>{item.title.es}</span>
-              <p>{item.text.es}</p>
+            <MetricRibbon
+              items={[
+                {
+                  label: "Entrada inicial",
+                  value: "Florida",
+                  text: "Landscaping, turfgrass, golf, urbanizaciones, B2C y alianzas locales.",
+                },
+                {
+                  label: "Expansión posterior",
+                  value: "Texas",
+                  text: "Agricultura, ranchos, maquinaria pesada, repuestos y distribuidores B2B.",
+                },
+                {
+                  label: "Modo de entrada",
+                  value: "Exportar + aliar",
+                  text: "Menor riesgo operativo antes de abrir estructura propia.",
+                },
+              ]}
+            />
+          </div>
+        </motion.section>
+
+        <PresentationSlide
+          slide={slidesById.umo}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.umo = node;
+          }}
+        >
+          <div className="presentation-company-story">
+            <article className="presentation-company-lead">
+              <Building2 size={24} />
+              <span>{companyProfile.name}</span>
+              <h3>{companyProfile.experience} años de experiencia industrial</h3>
+              <p>
+                UMO nace en Medellin y llega a esta decisión con trayectoria en manufactura, autopartes, sillines,
+                cojines, bienestar y soluciones que pueden migrar hacia comodidad operativa en maquinaria.
+              </p>
             </article>
-          ))}
-        </div>
-      </section>
+            <div className="presentation-panel-grid">
+              {[
+                {
+                  title: "Cojines y sillines",
+                  text: "Base natural para hablar de soporte, ergonomía, ajuste y comodidad.",
+                  meta: "Producto",
+                  icon: BadgeCheck,
+                },
+                {
+                  title: "Asientos y componentes",
+                  text: "Aplicacion directa en podadoras, tractores pequeños y vehículos utilitarios.",
+                  meta: "Aplicacion",
+                  icon: Truck,
+                },
+                {
+                  title: "Capacidad exportadora",
+                  text: "La entrada debe aprovechar produccion colombiana, control de calidad y aprendizaje comercial.",
+                  meta: "Operación",
+                  icon: Globe2,
+                },
+              ].map((card) => (
+                <InsightPanel key={card.title} card={card} />
+              ))}
+            </div>
+          </div>
+        </PresentationSlide>
 
-      <section id="sintesis" className="presentation-section">
-        <SectionKicker
-          eyebrow="02 / Síntesis de entregas anteriores"
-          title="De un diagnóstico general a una decisión territorial concreta"
-          text="Las fases anteriores permitieron pasar de entender la empresa y su preparación internacional a comparar cuáles estados ofrecen mejores condiciones reales para iniciar. El punto ya no es explicar el país; es demostrar por qué Florida y Texas sobresalen frente al resto."
-        />
-        <div className="presentation-phase-grid">
-          {deliveries.map((delivery) => (
-            <article key={delivery.id} className="presentation-phase-card">
-              <span>{delivery.code}</span>
-              <h3>{delivery.title.es}</h3>
-              <p>{delivery.summary.es}</p>
-              <strong>{delivery.modules.length} módulos integrados</strong>
+        <PresentationSlide
+          slide={slidesById.proceso}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.proceso = node;
+          }}
+        >
+          <div className="presentation-process-layout">
+            <div className="presentation-timeline is-wide">
+              {deliveries.map((delivery) => (
+                <article key={delivery.id}>
+                  <span>{delivery.code}</span>
+                  <h3>{delivery.title.es}</h3>
+                  <p>{delivery.summary.es}</p>
+                </article>
+              ))}
+            </div>
+            <article className="presentation-process-summary">
+              <Route size={24} />
+              <span>Lectura ejecutiva</span>
+              <strong>El análisis deja de ser académico cuando se convierte en secuencia de entrada.</strong>
+              <p>Primero se valida dónde aprender más rápido; después se elige dónde escalar con más volumen.</p>
             </article>
-          ))}
-        </div>
-        <div className="presentation-source-grid">
-          {sourceHighlights.map((source) => (
-            <SourceImageCard key={source.title} {...source} />
-          ))}
-        </div>
-        <div className="presentation-findings-grid">
-          <article className="presentation-finding-main">
-            <span>Hallazgo ejecutivo</span>
-            <h3>Florida abre mejor; Texas escala mejor.</h3>
-            <p>
-              El macrocomparativo demuestra que Texas tiene fuerza estructural en agricultura y volumen.
-              El análisis de entornos complementa esa lectura mostrando que Florida ofrece una entrada más
-              rápida, visible y comercialmente flexible para validar UMO frente a otros estados posibles.
-            </p>
-          </article>
-          <div className="presentation-mini-metrics">
-            {strongestDiagnosticMetrics.map((metric) => (
-              <article key={metric.label}>
-                <span>{metric.label}</span>
-                <strong>{metric.value}%</strong>
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.diagnostico}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.diagnostico = node;
+          }}
+        >
+          <div className="presentation-diagnostic-layout">
+            <article className="presentation-evidence-hero">
+              <FileText size={22} />
+              <span>Diagnóstico P-I</span>
+              <strong>{diagnosticAverage}%</strong>
+              <p>La preparación existe, pero el modo de entrada debe reducir riesgo y validar canales antes de escalar.</p>
+            </article>
+            <div className="presentation-diagnostic-bars">
+              <span>Capacidades internas principales</span>
+              <MiniBarList
+                items={diagnosticMetrics.slice(0, 7).map((metric) => ({
+                  label: metric.label,
+                  value: metric.value,
+                  tone: metric.tone,
+                }))}
+              />
+            </div>
+            <div className="presentation-evidence-stack is-compact">
+              <article>
+                <Target size={20} />
+                <span>Modelo de negocio</span>
+                <p>{canvasHighlights[0]?.text.es ?? "La propuesta se organiza alrededor de valor, canales, aliados y segmentos."}</p>
               </article>
+              <article>
+                <ShieldCheck size={20} />
+                <span>DOFA ejecutivo</span>
+                <p>
+                  {swotDetailedBlocks[0]?.items[0]?.es ??
+                    "Experiencia industrial y capacidad de adaptar producto sostiene la entrada internacional."}
+                </p>
+              </article>
+            </div>
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.indicadores}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.indicadores = node;
+          }}
+        >
+          <div className="presentation-visual-gallery">
+            {trendCharts.map((chart) => (
+              <TrendChart
+                key={chart.id}
+                config={chart}
+                onExpand={() => setExpandedVisual({ type: "trend", id: chart.id })}
+              />
             ))}
           </div>
-        </div>
-      </section>
+        </PresentationSlide>
 
-      <section id="comparativo" className="presentation-section">
-        <SectionKicker
-          eyebrow="03 / Análisis comparativo"
-          title="Florida y Texas son opciones fuertes, pero cumplen roles distintos"
-          text="La recomendación no busca presentar a Texas como una mala opción. Texas es estratégico para una segunda etapa. La pregunta es dónde conviene iniciar con menor fricción y mayor capacidad de aprendizaje comercial."
-        />
-        <div className="presentation-state-split">
-          <article className="presentation-state-panel is-florida">
-            <MapPinned size={24} />
-            <span>Florida / Entrada prioritaria</span>
-            <h3>Mercado verde, residencial y profesional</h3>
+        <PresentationSlide
+          slide={slidesById.benchmarks}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.benchmarks = node;
+          }}
+        >
+          <div className="presentation-benchmark-grid-v2">
+            {benchmarkGroups.map((group) => (
+              <BenchmarkChart
+                key={group.title}
+                group={group}
+                onExpand={() => setExpandedVisual({ type: "benchmark", id: group.id })}
+              />
+            ))}
+          </div>
+          <div className="presentation-benchmark-argument">
+            <BarChart3 size={22} />
             <p>
-              Florida combina turfgrass, landscaping, césped residencial, campos de golf, condominios,
-              urbanizaciones, compradores digitales y ruta logística más cercana desde Colombia.
+              La comparación con el promedio nacional refuerza la selección: ambos estados muestran más uso potencial,
+              mayor dinamismo comercial y condiciones ambientales que hacen más urgente la comodidad y durabilidad del
+              producto.
             </p>
-          </article>
-          <article className="presentation-state-panel is-texas">
-            <Landmark size={24} />
-            <span>Texas / Segunda etapa</span>
-            <h3>Mercado productivo, rural y de escala</h3>
-            <p>
-              Texas concentra agricultura, ganadería, ranchos, distribuidores agrícolas, maquinaria pesada
-              y un potencial B2B robusto para crecer después de la validación inicial.
-            </p>
-          </article>
-        </div>
-        <div className="presentation-table-shell">
-          <table className="presentation-comparison-table">
-            <thead>
-              <tr>
-                <th>Criterio</th>
-                <th>Florida</th>
-                <th>Texas</th>
-                <th>Lectura estratégica</th>
-                <th>Prioridad</th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonRows.map((row) => (
-                <tr key={row.criteria}>
-                  <th>{row.criteria}</th>
-                  <td>{row.florida}</td>
-                  <td>{row.texas}</td>
-                  <td>{row.reading}</td>
-                  <td>
-                    <span className={`presentation-priority-chip is-${row.priority.toLowerCase()}`}>
-                      {row.priority}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+          </div>
+        </PresentationSlide>
 
-      <section id="benchmarks" className="presentation-section presentation-benchmark-section">
-        <SectionKicker
-          eyebrow="04 / Benchmark nacional y fiscal"
-          title="Florida y Texas destacan frente al promedio nacional y frente a estados más costosos"
-          text="El argumento ejecutivo no es que sean los únicos mercados posibles. Es que combinan demanda real para maquinaria exterior, temporada de uso, compra digital, dinamismo empresarial y un marco fiscal más amigable que alternativas grandes como California o New York."
-        />
-        <div className="presentation-benchmark-grid">
-          {nationalBenchmarkGroups.map((group) => (
-            <BenchmarkChart key={group.title} {...group} />
-          ))}
-        </div>
-        <div className="presentation-market-fit">
-          <article>
-            <span>Encaje comercial UMO / Florida</span>
-            <h3>Turfgrass, landscaping y mantenimiento de césped</h3>
-            <div className="presentation-fit-bars">
-              <div>
-                <strong>Florida</strong>
-                <span>
-                  <i style={{ width: getBarWidth(turfgrass2025?.florida ?? 0, 50) }} />
-                </span>
-                <em>USD {turfgrass2025?.florida.toFixed(1)}B</em>
-              </div>
-              <div>
-                <strong>Texas</strong>
-                <span>
-                  <i style={{ width: getBarWidth(turfgrass2025?.texas ?? 0, 50) }} />
-                </span>
-                <em>USD {turfgrass2025?.texas.toFixed(1)}B</em>
-              </div>
-            </div>
-            <p>
-              Este gráfico refuerza por qué Florida es la puerta de entrada: el producto puede probarse en
-              césped profesional, campos de golf, condominios, urbanizaciones y empresas de mantenimiento.
-            </p>
-          </article>
-          <article>
-            <span>Encaje comercial UMO / Texas</span>
-            <h3>Agricultura, ranchos y maquinaria pesada</h3>
-            <div className="presentation-fit-bars">
-              <div>
-                <strong>Texas</strong>
-                <span>
-                  <i style={{ width: getBarWidth(agriculture2025?.texas ?? 0, 40) }} />
-                </span>
-                <em>USD {agriculture2025?.texas.toFixed(1)}B</em>
-              </div>
-              <div>
-                <strong>Florida</strong>
-                <span>
-                  <i style={{ width: getBarWidth(agriculture2025?.florida ?? 0, 40) }} />
-                </span>
-                <em>USD {agriculture2025?.florida.toFixed(1)}B</em>
-              </div>
-            </div>
-            <p>
-              Texas se fortalece como segunda etapa: cuando UMO tenga validación en Florida, puede
-              llevar evidencia comercial a distribuidores agrícolas, ranchos y canales B2B técnicos.
-            </p>
-          </article>
-        </div>
-        <div className="presentation-tax-layout">
-          <article className="presentation-tax-intro">
-            <CircleDollarSign size={22} />
-            <span>Impuestos y facilidad legal de entrada</span>
-            <h3>Florida y Texas reducen fricción frente a estados más pesados</h3>
-            <p>
-              Para una primera fase exportadora, UMO no necesita abrir sede propia. Aun así, comparar el entorno
-              fiscal y la facilidad de registro ayuda a demostrar por qué Florida y Texas son más prácticos para
-              validar mercado que zonas con mayor carga tributaria o costos de cumplimiento.
-            </p>
-          </article>
-          <div className="presentation-tax-cards">
-            {fiscalComparisonRows.map((row) => (
-              <article className={`presentation-tax-card is-${row.tone}`} key={row.state}>
+        <PresentationSlide
+          slide={slidesById.fiscal}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.fiscal = node;
+          }}
+        >
+          <div className="presentation-tax-grid-v2">
+            {fiscalCards.map((card) => (
+              <article key={card.state} className={`presentation-tax-card-v2 is-${card.tone}`}>
                 <div>
                   <span>Tax Foundation 2026</span>
-                  <strong>#{row.rank}</strong>
+                  <strong>{card.rank}</strong>
                 </div>
-                <h3>{row.state}</h3>
+                <h3>{card.state}</h3>
                 <ul>
-                  <li>{row.personalTax} impuesto estatal personal.</li>
-                  <li>{row.businessTax}.</li>
-                  <li>{row.salesTax}.</li>
-                  <li>{row.formation}.</li>
+                  {card.lines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
                 </ul>
-                <p>{row.reading}</p>
+                <p>{card.reading}</p>
               </article>
             ))}
           </div>
-        </div>
-        <p className="presentation-source-note">
-          Fuentes consultadas: Tax Foundation 2026 State Tax Competitiveness Index, Florida Department of
-          Revenue, Florida Sunbiz, Texas Comptroller, Texas Secretary of State, California Franchise Tax Board y
-          California Secretary of State. Esta lectura es estratégica y no reemplaza asesoría legal o tributaria local.
-        </p>
-      </section>
+          <SourceNote />
+        </PresentationSlide>
 
-      <section id="florida" className="presentation-section presentation-deep-section">
-        <SectionKicker
-          eyebrow="05 / Profundización Florida"
-          title="Florida es atractiva por el mercado de césped, jardinería profesional y mantenimiento continuo"
-          text="La entrada por Florida permite probar UMO en un mercado donde la comodidad del operador se conecta con residencias, empresas de landscaping, campos de golf, condominios, urbanizaciones y maquinaria de jardín de uso frecuente."
-        />
-        <div className="presentation-icon-grid">
-          {floridaOpportunityCards.map((card) => (
-            <IconCard key={card.title} card={card} />
-          ))}
-        </div>
-        <div className="presentation-evidence-band">
-          <article>
-            <span>Dato del dossier</span>
-            <strong>USD {turfgrass2025?.florida.toFixed(1)}B</strong>
-            <p>Turfgrass Florida 2025, por encima de Texas en la serie usada por la Entrega 2.</p>
-          </article>
-          <article>
-            <span>Empleo estable</span>
-            <strong>{unemployment2025?.florida.toFixed(1)}%</strong>
-            <p>Desempleo 2025 menor que Texas, útil para demanda recurrente de servicios y mantenimiento.</p>
-          </article>
-          <article>
-            <span>Ruta Colombia</span>
-            <strong>6 días</strong>
-            <p>La lectura logística de entornos favorece Florida para probar mercado con menos fricción inicial.</p>
-          </article>
-        </div>
-      </section>
+        <PresentationSlide
+          slide={slidesById.comparativo}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.comparativo = node;
+          }}
+        >
+          <StateScorecard rows={scorecardRows} />
+        </PresentationSlide>
 
-      <section id="texas" className="presentation-section presentation-deep-section">
-        <SectionKicker
-          eyebrow="06 / Profundización Texas"
-          title="Texas conserva alto atractivo para una segunda etapa de expansión"
-          text="Texas no pierde atractivo. Su tamaño, cultura agrícola, base ganadera, ranchos y ecosistema de distribuidores lo convierten en un destino sólido cuando UMO ya haya validado producto, precio, logística y canales en Florida."
-        />
-        <div className="presentation-icon-grid">
-          {texasOpportunityCards.map((card) => (
-            <IconCard key={card.title} card={card} />
-          ))}
-        </div>
-        <div className="presentation-evidence-band">
-          <article>
-            <span>Agricultura Texas</span>
-            <strong>USD {agriculture2025?.texas.toFixed(1)}B</strong>
-            <p>Base productiva 2025 muy superior a Florida, útil para tractores, ranchos y maquinaria pesada.</p>
-          </article>
-          <article>
-            <span>DIY Texas</span>
-            <strong>79%</strong>
-            <p>La preferencia por mantenimiento directo abre oportunidad de aftermarket y repuestos.</p>
-          </article>
-          <article>
-            <span>Rol recomendado</span>
-            <strong>Escala</strong>
-            <p>Texas es la fase natural para distribuidores agrícolas y B2B técnico después del piloto.</p>
-          </article>
-        </div>
-      </section>
+        <PresentationSlide
+          slide={slidesById.florida}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.florida = node;
+          }}
+        >
+          <div className="presentation-state-story is-florida">
+            <div className="presentation-state-hero">
+              <MapPinned size={26} />
+              <span>Entrada prioritaria</span>
+              <h3>Landscaping, turfgrass y mantenimiento de césped.</h3>
+              <p>
+                Florida conecta la propuesta de UMO con operadores que pasan varias horas en maquinaria pequeña y
+                mediana: podadoras, tractores de jardín, vehículos utilitarios y equipos de mantenimiento.
+              </p>
+            </div>
+            <div className="presentation-panel-grid">
+              {floridaCards.map((card) => (
+                <InsightPanel key={card.title} card={card} accent="florida" />
+              ))}
+            </div>
+          </div>
+          <MetricRibbon
+            items={[
+              {
+                label: "Turfgrass 2025",
+                value: `USD ${turfgrass2025?.florida.toFixed(1) ?? "44.1"}B`,
+                text: "Mayor lectura de césped profesional frente a Texas.",
+              },
+              {
+                label: "Ingreso 2025",
+                value: `USD ${(income2025?.florida ?? 68300).toLocaleString("en-US")}`,
+                text: "Capacidad para absorber una propuesta de mayor valor.",
+              },
+              {
+                label: "Desempleo 2025",
+                value: `${unemployment2025?.florida.toFixed(1) ?? "3.8"}%`,
+                text: "Mercado laboral estable para servicios recurrentes.",
+              },
+            ]}
+          />
+        </PresentationSlide>
 
-      <section id="decision" className="presentation-section presentation-decision-section">
-        <div className="presentation-decision-copy">
-          <span>07 / Selección final</span>
-          <h2>Florida se recomienda como mercado inicial prioritario.</h2>
-          <p>
-            Florida permite validar la propuesta de UMO en un entorno donde convergen el uso frecuente de
-            maquinaria de césped, la demanda de soluciones prácticas de comodidad y la posibilidad de combinar
-            canales digitales con alianzas locales.
-          </p>
-        </div>
-        <div className="presentation-decision-grid">
-          <article>
-            <CheckCircle2 size={20} />
-            <h3>Por qué Florida primero</h3>
-            <ul>
-              <li>Mercado residencial, comercial y profesional en la misma entrada.</li>
-              <li>Landscaping, turfgrass, campos de golf y mantenimiento de zonas verdes.</li>
-              <li>Oportunidad B2C en Amazon y B2B con empresas de landscaping.</li>
-              <li>Ruta logística más rápida desde Colombia y afinidad comercial inicial.</li>
-              <li>Mejor entorno para aprender rápido sobre compatibilidad, precio y demanda.</li>
-            </ul>
-          </article>
-          <article>
-            <Flag size={20} />
-            <h3>Cómo queda Texas</h3>
-            <p>
-              Texas debe entenderse como una segunda etapa de expansión, no como un mercado descartado. Su tamaño,
-              cultura agrícola y base ganadera lo convierten en un destino atractivo una vez UMO haya validado
-              producto, logística, precios y canales en Florida.
-            </p>
-          </article>
-        </div>
-      </section>
+        <PresentationSlide
+          slide={slidesById["mapa-florida"]}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current["mapa-florida"] = node;
+          }}
+        >
+          <div className="presentation-map-slide-layout">
+            <FloridaOpportunityMap onExpand={() => setExpandedVisual({ type: "map", id: "florida" })} />
+            <div className="presentation-map-insights">
+              <article>
+                <Flag size={20} />
+                <span>Golf y turfgrass</span>
+                <strong>1,290 campos</strong>
+                <p>Florida lidera el país en campos de golf, reforzando la demanda de mantenimiento de césped y comodidad operativa.</p>
+              </article>
+              <article>
+                <Landmark size={20} />
+                <span>Universidades y campus</span>
+                <p>UF, FSU, UCF y University of Miami representan ejemplos de campus con operación continua de zonas verdes.</p>
+              </article>
+              <article>
+                <Sprout size={20} />
+                <span>Parques y comunidades</span>
+                <p>Orlando, Tampa, Miami y Jacksonville concentran turismo, condominios, parques, resorts y contratistas de landscaping.</p>
+              </article>
+            </div>
+          </div>
+        </PresentationSlide>
 
-      <section id="estrategia" className="presentation-section">
-        <SectionKicker
-          eyebrow="08 / Estrategia de internacionalización"
-          title="Exportación directa + alianzas locales: entrada controlada, medible y escalable"
-          text="A partir de la consigna estratégica del archivo Markdown y los análisis del dossier, la ruta recomendada es exportar directamente desde Colombia y combinar la operación con distribuidores, marketplaces y contactos B2B en Florida; posteriormente, replicar aprendizajes hacia Texas."
-        />
-        <div className="presentation-icon-grid">
-          {entryStrategyCards.map((card) => (
-            <IconCard key={card.title} card={card} />
-          ))}
-        </div>
-        <div className="presentation-strategy-layout">
-          <article>
-            <span>Por qué no abrir sede propia al inicio</span>
-            <p>
-              Una sede propia elevaría costos fijos, requeriría contratación local, cumplimiento más complejo y
-              exposición financiera antes de conocer la demanda real. La exportación directa permite validar el
-              mercado con menor riesgo y ajustar producto, empaque, precios y soporte sin sobredimensionar la operación.
-            </p>
-          </article>
-          <article>
-            <span>Canales de entrada recomendados</span>
-            <div className="presentation-channel-cloud">
+        <PresentationSlide
+          slide={slidesById.texas}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.texas = node;
+          }}
+        >
+          <div className="presentation-state-story is-texas">
+            <div className="presentation-state-hero">
+              <Tractor size={26} />
+              <span>Segunda etapa fuerte</span>
+              <h3>Agricultura, ganadería, ranchos y maquinaria pesada.</h3>
+              <p>
+                Texas debe entrar cuando UMO pueda vender con evidencia: producto probado, fichas técnicas, soporte,
+                precios validados y argumento B2B mas robusto para dealers agrícolas.
+              </p>
+            </div>
+            <div className="presentation-panel-grid">
+              {texasCards.map((card) => (
+                <InsightPanel key={card.title} card={card} accent="texas" />
+              ))}
+            </div>
+          </div>
+          <MetricRibbon
+            items={[
+              {
+                label: "Agricultura 2025",
+                value: `USD ${agriculture2025?.texas.toFixed(1) ?? "38.2"}B`,
+                text: "Escala productiva superior para maquinaria y repuestos.",
+              },
+              {
+                label: "Ingreso 2025",
+                value: `USD ${(income2025?.texas ?? 69100).toLocaleString("en-US")}`,
+                text: "Base de compra fuerte para canales especializados.",
+              },
+              {
+                label: "Rol estratégico",
+                value: "Escala B2B",
+                text: "Distribuidores agrícolas, ranchos, talleres y maquinaria pesada.",
+              },
+            ]}
+          />
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.decision}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.decision = node;
+          }}
+        >
+          <div className="presentation-decision-layout">
+            <article className="presentation-decision-primary">
+              <CheckCircle2 size={24} />
+              <span>Recomendacion principal</span>
+              <h3>Florida como mercado inicial prioritario.</h3>
+              <p>
+                Florida permite validar la propuesta de UMO en un entorno donde convergen uso frecuente de maquinaria
+                de césped, demanda de comodidad, canales digitales y alianzas locales con clientes visibles.
+              </p>
+            </article>
+            <article className="presentation-decision-secondary">
+              <Flag size={24} />
+              <span>Lectura sobre Texas</span>
+              <h3>Texas no se descarta: se reserva para escalar.</h3>
+              <p>
+                Su tamaño, cultura agrícola, base ganadera y red de distribuidores lo convierten en el siguiente paso
+                cuando UMO ya tenga evidencia de producto, logistica, precio y soporte.
+              </p>
+            </article>
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.entrada}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.entrada = node;
+          }}
+        >
+          <StrategyFlow />
+          <div className="presentation-panel-grid is-three">
+            {entryCards.map((card) => (
+              <InsightPanel key={card.title} card={card} />
+            ))}
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.producto}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.producto = node;
+          }}
+        >
+          <div className="presentation-panel-grid is-three">
+            {productCards.map((card) => (
+              <InsightPanel key={card.title} card={card} />
+            ))}
+          </div>
+          <div className="presentation-canvas-strip">
+            {strategicCanvasBlocks.map((block) => (
+              <article key={block.title.es}>
+                <span>{block.title.es}</span>
+                <p>{block.text.es}</p>
+              </article>
+            ))}
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.marketing}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.marketing = node;
+          }}
+        >
+          <div className="presentation-channel-layout">
+            <div className="presentation-panel-grid">
+              {channelCards.map((card) => (
+                <InsightPanel key={card.title} card={card} />
+              ))}
+            </div>
+            <div className="presentation-channel-map">
               {[
                 "Amazon",
-                "E-commerce propio",
-                "Landing de mercado",
+                "Ecommerce propio",
                 "Landing Florida",
-                "Marketplaces",
+                "Marketplace",
                 "Distribuidores locales",
                 "Empresas de landscaping",
                 "Tiendas de maquinaria",
@@ -1042,132 +1668,76 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
                 "Ventas B2B",
                 "Ventas B2C",
               ].map((channel) => (
-                <i key={channel}>{channel}</i>
+                <span key={channel}>{channel}</span>
               ))}
             </div>
-          </article>
-        </div>
-      </section>
+          </div>
+        </PresentationSlide>
 
-      <section id="marketing" className="presentation-section">
-        <SectionKicker
-          eyebrow="09 / Plan de marketing digital"
-          title="La demanda debe capturarse con contenido técnico, prueba social y canales medibles"
-          text="La estrategia digital no debe limitarse a publicar el producto. Debe convertir la ventaja de UMO en argumentos claros: menos fatiga, mayor durabilidad, compatibilidad, soporte climático y mejor relación valor-precio frente a repuestos OEM."
-        />
-        <div className="presentation-icon-grid">
-          {marketingCards.map((card) => (
-            <IconCard key={card.title} card={card} />
-          ))}
-        </div>
-        <div className="presentation-canvas-grid">
-          {strategicCanvasBlocks.map((block) => (
-            <article key={block.title.es}>
-              <span>{block.title.es}</span>
-              <p>{block.text.es}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="roadmap" className="presentation-section">
-        <SectionKicker
-          eyebrow="10 / Ruta de implementación"
-          title="Primero validar, después escalar"
-          text="La recomendación ejecutiva es secuencial: Florida se usa para aprender con bajo riesgo relativo; Texas se activa cuando ya exista evidencia comercial suficiente para negociar con canales más técnicos y de mayor volumen."
-        />
-        <div className="presentation-roadmap">
-          {roadmap.map((step) => (
-            <article key={step.phase} data-phase={step.phase}>
-              <span>Fase {step.phase}</span>
-              <strong>{step.timing}</strong>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
-          ))}
-        </div>
-        <div className="presentation-kpi-panel">
-          <article>
-            <BarChart3 size={20} />
-            <span>Indicadores de validación</span>
-            <p>
-              Unidades vendidas, margen por canal, tasa de devolución, costo logístico, leads B2B, reseñas, preguntas
-              técnicas, tasa de recompra y distribuidores interesados.
-            </p>
-          </article>
-          <article>
-            <Globe2 size={20} />
-            <span>Conclusión general</span>
-            <p>
-              La internacionalización de UMO debe iniciar donde sea más fácil aprender,
-              demostrar valor y corregir rápido. Por eso Florida es la primera entrada y Texas queda como el
-              siguiente mercado de escala.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section className="presentation-section presentation-video-section">
-        <div>
-          <span>11 / Video ejecutivo en inglés</span>
-          <h2>Espacio preparado para la exposición de máximo 5 minutos</h2>
-          <p>
-            El archivo Markdown exige incluir una presentación en inglés. Como aún no hay un video cargado en el
-            repositorio, esta sección queda lista para insertar el archivo final y deja una estructura de guion.
-          </p>
-        </div>
-        <article>
-          <Video size={22} />
-          <h3>Suggested English flow</h3>
-          <ol>
-            <li>UMO company context and product opportunity.</li>
-            <li>Why Florida and Texas stand out among the most attractive state options.</li>
-            <li>Florida vs Texas comparison and strategic roles.</li>
-            <li>Recommended entry strategy: Florida first, Texas second.</li>
-            <li>Digital marketing, channels and implementation roadmap.</li>
-          </ol>
-        </article>
-      </section>
-
-      <section className="presentation-section presentation-support-section">
-        <SectionKicker
-          eyebrow="12 / Sustento del expediente"
-          title="Referencias y materiales usados para construir la presentación"
-          text="La nueva sección se apoya en los documentos internos del proyecto, las entregas cargadas, el análisis macroeconómico, los entornos, el DOFA, el Canvas, el diagnóstico P-I y la consigna estratégica del archivo Markdown."
-        />
-        <div className="presentation-reference-layout">
-          <article>
-            <span>Lecturas DOFA relevantes</span>
-            {swotDetailedBlocks.map((block) => (
-              <div key={block.title.es} className="presentation-bullet-cluster">
-                <strong>{block.title.es}</strong>
-                <ul>
-                  {block.items.slice(0, 2).map((item) => (
-                    <li key={item.es}>{item.es}</li>
-                  ))}
-                </ul>
-              </div>
+        <PresentationSlide
+          slide={slidesById.riesgos}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.riesgos = node;
+          }}
+        >
+          <div className="presentation-risk-grid">
+            {riskControls.map((item) => (
+              <article key={item.risk}>
+                <ShieldCheck size={20} />
+                <span>Riesgo</span>
+                <h3>{item.risk}</h3>
+                <p>{item.control}</p>
+              </article>
             ))}
-          </article>
-          <article>
-            <span>Criterios SMART y viabilidad</span>
-            {[...smartCriteria, ...viabilityPillars.slice(0, 3)].map((item) => (
-              <div key={item.title.es} className="presentation-bullet-cluster">
-                <strong>{item.title.es}</strong>
-                <p>{item.text.es}</p>
-              </div>
+          </div>
+          <MetricRibbon
+            items={[
+              { label: "KPI comercial", value: "50-70", text: "Unidades piloto para validar precio, compatibilidad y canal." },
+              { label: "KPI canal", value: "Leads B2B", text: "Distribuidores, empresas de landscaping, golf y tiendas especializadas." },
+              { label: "KPI producto", value: "Reseñas", text: "Devoluciones, preguntas técnicas, soporte y satisfacción." },
+            ]}
+          />
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.ruta}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.ruta = node;
+          }}
+        >
+          <div className="presentation-roadmap-rail">
+            {roadmap.map((step) => (
+              <article key={step.phase} data-phase={step.phase}>
+                <span>Fase {step.phase}</span>
+                <strong>{step.timing}</strong>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
             ))}
-          </article>
-          <article>
-            <span>Referencias APA consolidadas</span>
-            <div className="presentation-reference-list">
-              {macroReferenceList.slice(0, 8).map((reference) => (
-                <p key={reference}>{reference}</p>
-              ))}
-            </div>
-          </article>
-        </div>
-      </section>
+          </div>
+          <div className="presentation-final-grid">
+            <article>
+              <CalendarRange size={22} />
+              <span>Secuencia</span>
+              <p>Primero aprender con Florida; despues llegar a Texas con evidencia y poder de negociacion.</p>
+            </article>
+            <article>
+              <CircleDollarSign size={22} />
+              <span>Precio y margen</span>
+              <p>Usar el piloto para ajustar rango de precio, costo logístico, margen por canal y política de soporte.</p>
+            </article>
+            <article>
+              <Landmark size={22} />
+              <span>Soporte ejecutivo</span>
+              <p>
+                Referencias macro y legales disponibles en el dossier: {macroReferenceList.length} fuentes consolidadas
+                y analisis por entornos.
+              </p>
+            </article>
+          </div>
+        </PresentationSlide>
+      </div>
+      <ExpandedVisualModal visual={expandedVisual} onClose={() => setExpandedVisual(null)} />
     </main>
   );
 }
