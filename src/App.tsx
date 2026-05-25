@@ -208,7 +208,7 @@ function Loader() {
             transition={{ duration: 0.95, ease: "easeInOut" }}
           />
         </div>
-        <small>MEDELLIN, ANTIOQUIA / ESIC / USA SIGNAL TRACE</small>
+        <small>MEDELLÍN, ANTIOQUIA / ESIC / USA SIGNAL TRACE</small>
       </motion.div>
     </motion.div>
   );
@@ -250,7 +250,7 @@ function Header({
           <Languages size={16} />
           {locale === "es" ? "EN" : "ES"}
         </button>
-        <button className="menu-toggle" onClick={() => setOpen(true)} aria-label="Abrir menu">
+        <button className="menu-toggle" onClick={() => setOpen(true)} aria-label="Abrir menú">
           <Menu size={20} />
         </button>
       </div>
@@ -262,7 +262,7 @@ function Header({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <button onClick={() => setOpen(false)} aria-label="Cerrar menu">
+            <button onClick={() => setOpen(false)} aria-label="Cerrar menú">
               <X size={22} />
             </button>
             {navItems.map((item) => (
@@ -308,7 +308,7 @@ function CompanyHero({ locale, backend }: { locale: Locale; backend: BackendSnap
         <h1>UMO S.A.</h1>
         <p>
           {locale === "es"
-            ? "Empresa colombiana con mas de cinco decadas de experiencia industrial en autopartes, accesorios para movilidad y soluciones de bienestar. Este dossier organiza su ruta de internacionalizacion hacia Estados Unidos."
+            ? "Empresa colombiana con más de cinco décadas de experiencia industrial en autopartes, accesorios para movilidad y soluciones de bienestar. Este dossier organiza su ruta de internacionalización hacia Estados Unidos."
             : "Colombian company with more than five decades of industrial experience in auto parts, mobility accessories and wellness solutions. This dossier organizes its internationalization route into the United States."}
         </p>
         <div className="hero-actions">
@@ -370,13 +370,33 @@ function CompanyHome({ locale, backend }: { locale: Locale; backend: BackendSnap
     <>
       <CompanyHero locale={locale} backend={backend} />
       <main>
+        <section className="company-section company-video-section">
+          <div className="company-video-copy">
+            <span>{locale === "es" ? "VIDEO / UMO EN CONTEXTO" : "VIDEO / UMO CONTEXT"}</span>
+            <h2>{locale === "es" ? "Una mirada directa a UMO" : "A direct look at UMO"}</h2>
+            <p>
+              {locale === "es"
+                ? "El video permite ver la empresa desde la página, sin salir del dossier, y complementa la lectura estratégica con contexto visual."
+                : "The video can be watched directly on the page, without leaving the dossier, and adds visual context to the strategic reading."}
+            </p>
+          </div>
+          <div className="company-video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/a8ymwl__ZMQ?rel=0&modestbranding=1"
+              title="Video UMO Global Dossier"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </section>
+
         <section className="company-section">
           <SectionIntro
             eyebrow="UMO / CONTEXT"
             title={locale === "es" ? "Industria, confort y movilidad" : "Industry, comfort and mobility"}
             subtitle={
               locale === "es"
-                ? "La home funciona como portada editorial de la empresa: quien es, que produce y por que su caso tiene sentido para internacionalizacion."
+                ? "La home funciona como portada editorial de la empresa: quién es, qué produce y por qué su caso tiene sentido para la internacionalización."
                 : "The homepage works as the company's editorial cover: who it is, what it makes and why it makes sense as an internationalization case."
             }
           />
@@ -421,7 +441,7 @@ function CompanyHome({ locale, backend }: { locale: Locale; backend: BackendSnap
             title={locale === "es" ? "Una empresa con historia productiva" : "A company with productive history"}
             subtitle={
               locale === "es"
-                ? "El dossier parte de una empresa con trayectoria real, no de una idea abstracta. Esa historia sostiene el analisis de entrada a Estados Unidos."
+                ? "El dossier parte de una empresa con trayectoria real, no de una idea abstracta. Esa historia sostiene el análisis de entrada a Estados Unidos."
                 : "The dossier starts from a company with a real track record, not an abstract idea. That history supports the U.S. entry analysis."
             }
           />
@@ -443,10 +463,10 @@ function CompanyHome({ locale, backend }: { locale: Locale; backend: BackendSnap
         <section className="company-section">
           <SectionIntro
             eyebrow="USA ENTRY / PROJECT FRAME"
-            title={locale === "es" ? "Por que internacionalizar" : "Why internationalize"}
+            title={locale === "es" ? "Por qué internacionalizar" : "Why internationalize"}
             subtitle={
               locale === "es"
-                ? "El proyecto no solo guarda archivos: convierte entregas, matrices y diagnosticos en una lectura ordenada para decidir como UMO podria entrar al mercado estadounidense."
+                ? "El proyecto no solo guarda archivos: convierte entregas, matrices y diagnósticos en una lectura ordenada para decidir cómo UMO podría entrar al mercado estadounidense."
                 : "The project does not just store files: it turns submissions, matrices and diagnostics into an organized reading for deciding how UMO could enter the U.S. market."
             }
           />
@@ -471,7 +491,7 @@ function DocumentActions({ documents, locale }: { documents: DocumentItem[]; loc
   if (documents.length === 0) {
     return (
       <div className="source-actions empty">
-        <span>{locale === "es" ? "Sin archivo cargado aun" : "No file uploaded yet"}</span>
+        <span>{locale === "es" ? "Sin archivo cargado aún" : "No file uploaded yet"}</span>
       </div>
     );
   }
@@ -684,7 +704,7 @@ function CanvasModule({ module, locale }: { module: WorkModule; locale: Locale }
       <InsightGrid items={canvasHighlights} locale={locale} className="canvas-highlight-grid" />
       <div className="matrix-shell">
         <div className="matrix-head">
-          <span>{locale === "es" ? "Descripcion del bien y business model canvas" : "Product description and business model canvas"}</span>
+          <span>{locale === "es" ? "Descripción del bien y Business Model Canvas" : "Product description and business model canvas"}</span>
         </div>
       <div className="canvas-board">
         {canvasBlocks.map((block) => (
@@ -773,7 +793,7 @@ function DiagnosticModule({ module, locale }: { module: WorkModule; locale: Loca
           <span>{locale === "es" ? "Lectura del Excel" : "Spreadsheet reading"}</span>
           <p>
             {locale === "es"
-              ? "La tabla baja a pantalla las dimensiones del diagnostico, con puntaje obtenido y techo maximo, para que la decision se lea sin abrir el archivo."
+              ? "La tabla baja a pantalla las dimensiones del diagnóstico, con puntaje obtenido y techo máximo, para que la decisión se lea sin abrir el archivo."
               : "The table brings the diagnostic dimensions to screen, with achieved and maximum scores, so the decision can be read without opening the file."}
           </p>
         </div>
@@ -1292,7 +1312,7 @@ function DeliveriesArchive({ locale }: { locale: Locale }) {
         title={locale === "es" ? "Archivo de entregas" : "Delivery archive"}
         subtitle={
           locale === "es"
-            ? "Entregas 01 y 02 ya estan organizadas como archivo vivo: acuerdo de equipo, diagnostico base, Canvas, DOFA, SMART, sostenibilidad y comparacion Texas vs Florida."
+            ? "Entregas 01 y 02 ya están organizadas como archivo vivo: acuerdo de equipo, diagnóstico base, Canvas, DOFA, SMART, sostenibilidad y comparación Texas vs Florida."
             : "Deliveries 01 and 02 are already organized as a living archive: team agreement, baseline diagnostic, Canvas, SWOT, SMART, sustainability and the Texas vs Florida comparison."
         }
       />
@@ -1385,7 +1405,7 @@ function DeliveriesSidebar({
           >
             <small>{delivery.code}</small>
             <strong>{delivery.title[locale]}</strong>
-            <span>{delivery.modules.length} modulos</span>
+            <span>{delivery.modules.length} módulos</span>
           </NavLink>
         ))}
       </nav>
@@ -1456,7 +1476,7 @@ function DeliveryCardGrid({ delivery, locale }: { delivery: Delivery; locale: Lo
         <span>{locale === "es" ? "Sin trabajos cargados" : "No work loaded"}</span>
         <p>
           {locale === "es"
-            ? "Esta entrega queda como carpeta futura. Cuando subas archivos, apareceran aqui como trabajos individuales."
+            ? "Esta entrega queda como carpeta futura. Cuando subas archivos, aparecerán aquí como trabajos individuales."
             : "This delivery remains as a future folder. When files are uploaded, they will appear here as individual works."}
         </p>
       </div>
@@ -1482,7 +1502,7 @@ function DeliveryCardGrid({ delivery, locale }: { delivery: Delivery; locale: Lo
         <div className="tile-tags">
           <i>{delivery.modules.length} {locale === "es" ? "trabajos" : "works"}</i>
           <i>{getSourceCountLabel(totalSources, locale)}</i>
-          <i>{locale === "es" ? "presentacion" : "presentation"}</i>
+          <i>{locale === "es" ? "presentación" : "presentation"}</i>
         </div>
         <div className="tile-footer">
           <small>{locale === "es" ? "Todo organizado junto" : "Everything organized together"}</small>
@@ -1573,7 +1593,7 @@ function DeliveryWorkspaceShell({
           </button>
           <span className="workspace-toolbar-hint">
             {locale === "es"
-              ? "Modo presentacion: mas espacio para el contenido."
+              ? "Modo presentación: más espacio para el contenido."
               : "Presentation mode: more space for content."}
           </span>
         </div>
@@ -1638,7 +1658,7 @@ function DeliveryPresentation({ locale }: { locale: Locale }) {
       title={locale === "es" ? "Recopilacion general" : "General compilation"}
       subtitle={
         locale === "es"
-          ? "Esta es la unica tarjeta pensada para ver toda la entrega junta. Recorre todos los trabajos en una sola presentacion continua."
+          ? "Esta es la única tarjeta pensada para ver toda la entrega junta. Recorre todos los trabajos en una sola presentación continua."
           : "This is the only card meant to view the whole delivery together. It walks through every work in one continuous presentation."
       }
       tags={[...activeDelivery.tags, "presentation"]}
@@ -1655,7 +1675,7 @@ function DeliveryPresentation({ locale }: { locale: Locale }) {
           <span>{locale === "es" ? "Sin trabajos cargados" : "No work loaded"}</span>
           <p>
             {locale === "es"
-              ? "Esta entrega aun no tiene trabajos para recopilar."
+              ? "Esta entrega aún no tiene trabajos para recopilar."
               : "This delivery does not yet have work to compile."}
           </p>
         </div>

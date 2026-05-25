@@ -98,6 +98,7 @@ type ScorecardRow = {
 type ExpandedVisual =
   | { type: "benchmark"; id: string }
   | { type: "trend"; id: string }
+  | { type: "national"; id: "benchmarks" }
   | { type: "map"; id: "florida" };
 
 const deckSlides: DeckSlide[] = [
@@ -109,12 +110,23 @@ const deckSlides: DeckSlide[] = [
     eyebrow: "Presentación ejecutiva",
     title: "Florida primero. Texas escala.",
     summary:
-      "La decisión ya no es escoger país. La decisión estratégica es elegir el estado que permite validar más rápido y preparar la expansión con más fuerza.",
+      "La decisión ejecutiva es escoger el estado que valida demanda más rápido y deja preparada la expansión de mayor volumen.",
     variant: "hero",
   },
   {
-    id: "umo",
+    id: "estadistica",
     number: "02",
+    label: "Dato de apertura",
+    shortLabel: "Dato",
+    eyebrow: "Señal de mercado",
+    title: "1,290 campos de golf.",
+    summary:
+      "Es una señal directa de turfgrass, mantenimiento recurrente, maquinaria de césped y operadores que necesitan comodidad durante jornadas exteriores.",
+    variant: "support",
+  },
+  {
+    id: "umo",
+    number: "03",
     label: "Contexto UMO",
     shortLabel: "UMO",
     eyebrow: "Capacidad empresarial",
@@ -124,7 +136,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "proceso",
-    number: "03",
+    number: "04",
     label: "Proceso de análisis",
     shortLabel: "Proceso",
     eyebrow: "De las fases previas a la decisión",
@@ -134,27 +146,37 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "diagnostico",
-    number: "04",
+    number: "05",
     label: "Hallazgos previos",
     shortLabel: "Hallazgos",
     eyebrow: "Lo que ya probó el dossier",
-    title: "La base está lista; el riesgo está en cómo entrar.",
+    title: "Base lista. Entrada gradual.",
     summary:
       "El diagnóstico, el Canvas y el DOFA dejan una conclusión práctica: UMO tiene capacidad, pero necesita validar canal, soporte y compatibilidad antes de escalar.",
   },
   {
     id: "indicadores",
-    number: "05",
+    number: "06",
     label: "Indicadores principales",
     shortLabel: "Indicadores",
     eyebrow: "Gráficos de decisión",
-    title: "Los indicadores explican el rol de cada estado.",
+    title: "Los indicadores asignan roles.",
     summary:
-      "Florida se fortalece en turfgrass, estabilidad y uso continuo; Texas conserva fuerza en escala agrícola y volumen B2B.",
+      "Florida gana foco en turfgrass y uso continuo; Texas mantiene fuerza en escala agrícola y volumen B2B.",
+  },
+  {
+    id: "vs-eeuu",
+    number: "07",
+    label: "Comparación nacional",
+    shortLabel: "Vs EE. UU.",
+    eyebrow: "Nuestros estados frente al promedio",
+    title: "Florida y Texas sobresalen.",
+    summary:
+      "La selección se refuerza cuando ambos estados se comparan con el promedio nacional en uso digital, clima, desgaste ambiental y dinamismo pyme.",
   },
   {
     id: "benchmarks",
-    number: "06",
+    number: "08",
     label: "Benchmark estatal",
     shortLabel: "Benchmarks",
     eyebrow: "Florida y Texas frente al resto",
@@ -164,7 +186,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "fiscal",
-    number: "07",
+    number: "09",
     label: "Impuestos y entrada legal",
     shortLabel: "Fiscal",
     eyebrow: "Facilidad fiscal y formalización",
@@ -174,7 +196,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "comparativo",
-    number: "08",
+    number: "10",
     label: "Florida vs Texas",
     shortLabel: "Roles",
     eyebrow: "Comparativo ejecutivo",
@@ -184,7 +206,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "florida",
-    number: "09",
+    number: "11",
     label: "Oportunidad Florida",
     shortLabel: "Florida",
     eyebrow: "Entrada prioritaria",
@@ -194,17 +216,17 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "mapa-florida",
-    number: "10",
+    number: "12",
     label: "Mapa de oportunidad",
     shortLabel: "Mapa FL",
     eyebrow: "Compradores potenciales",
-    title: "Dónde se concentraría la entrada.",
+    title: "Clusters de entrada en Florida.",
     summary:
       "El mapa muestra clusters posibles para UMO: universidades con mantenimiento de campus, campos de golf, parques, resorts, condominios y zonas residenciales.",
   },
   {
     id: "texas",
-    number: "11",
+    number: "13",
     label: "Oportunidad Texas",
     shortLabel: "Texas",
     eyebrow: "Segunda etapa estratégica",
@@ -214,7 +236,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "decision",
-    number: "12",
+    number: "14",
     label: "Decisión recomendada",
     shortLabel: "Decisión",
     eyebrow: "Secuencia recomendada",
@@ -225,7 +247,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "entrada",
-    number: "13",
+    number: "15",
     label: "Modo de entrada",
     shortLabel: "Entrada",
     eyebrow: "Estrategia de internacionalización",
@@ -235,7 +257,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "producto",
-    number: "14",
+    number: "16",
     label: "Producto y propuesta",
     shortLabel: "Producto",
     eyebrow: "Adaptación y valor",
@@ -245,17 +267,17 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "marketing",
-    number: "15",
+    number: "17",
     label: "Marketing y canales",
     shortLabel: "Go-to-market",
     eyebrow: "Captura de demanda",
-    title: "El canal digital mide; el canal local convierte.",
+    title: "Digital mide. Local convierte.",
     summary:
       "Amazon, ecommerce, landing enfocada en Florida y contacto B2B deben trabajar con distribuidores, empresas de landscaping, campos de golf y tiendas de maquinaria.",
   },
   {
     id: "riesgos",
-    number: "16",
+    number: "18",
     label: "Riesgos y control",
     shortLabel: "Riesgos",
     eyebrow: "Gestión ejecutiva",
@@ -265,7 +287,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "ruta",
-    number: "17",
+    number: "19",
     label: "Ruta de acción",
     shortLabel: "Ruta",
     eyebrow: "Cierre ejecutivo",
@@ -344,7 +366,7 @@ const trendCharts: TrendChartConfig[] = [
   {
     id: "turfgrass",
     indicatorId: "turfgrass",
-    title: "Turfgrass 2021-2025",
+    title: "Turfgrass",
     unit: "USD B",
     focus: "Florida lidera",
     note: "Muestra por qué Florida es el foco: césped profesional, golf, landscaping y mantenimiento continuo.",
@@ -352,7 +374,7 @@ const trendCharts: TrendChartConfig[] = [
   {
     id: "agricultura",
     indicatorId: "agricultura",
-    title: "Agricultura 2021-2025",
+    title: "Agricultura",
     unit: "USD B",
     focus: "Texas escala",
     note: "Texas explica la segunda etapa por volumen agrícola, ranchos y maquinaria pesada.",
@@ -436,19 +458,19 @@ const floridaCards: InsightCard[] = [
 
 const texasCards: InsightCard[] = [
   {
-    title: "Escala productiva",
+    title: "Escala agro",
     text: "La agricultura, ganadería, ranchos y grandes extensiones sostienen una demanda natural por tractores, maquinaria pesada y repuestos.",
     meta: "Agro + ranchos",
     icon: Tractor,
   },
   {
-    title: "Venta más técnica",
+    title: "Venta técnica",
     text: "La entrada exige dealers agrícolas, talleres rurales, pruebas de compatibilidad y argumentos de resistencia más robustos.",
     meta: "B2B especializado",
     icon: BriefcaseBusiness,
   },
   {
-    title: "Expansión con evidencia",
+    title: "Evidencia",
     text: "Con reseñas, datos de devolución, margen y soporte validados en Florida, Texas se negocia con mas credibilidad.",
     meta: "Fase de escala",
     icon: LineChart,
@@ -500,19 +522,19 @@ const productCards: InsightCard[] = [
 const channelCards: InsightCard[] = [
   {
     title: "B2C medible",
-    text: "Amazon, marketplace, ecommerce y landing de Florida permiten medir busquedas, conversion, reseñas y sensibilidad de precio.",
+    text: "Amazon, marketplace, ecommerce y landing de Florida miden búsquedas, conversión, reseñas y precio.",
     meta: "Demanda digital",
     icon: MonitorSmartphone,
   },
   {
     title: "B2B local",
-    text: "Empresas de landscaping, distribuidores, campos de golf y tiendas especializadas convierten la validacion en volumen recurrente.",
+    text: "Landscaping, distribuidores, golf y tiendas especializadas convierten la validación en volumen.",
     meta: "Ventas consultivas",
     icon: UsersRound,
   },
   {
-    title: "Contenido técnico",
-    text: "Comparativos, guías de instalación, videos cortos y pruebas de desgaste deben responder dudas antes del contacto comercial.",
+    title: "Prueba técnica",
+    text: "Comparativos, instalación, videos y pruebas de desgaste responden dudas antes del contacto.",
     meta: "Confianza",
     icon: Video,
   },
@@ -608,7 +630,21 @@ const sourceLinks = [
   { label: "Texas Comptroller", href: "https://comptroller.texas.gov/taxes/franchise/" },
   { label: "Texas SOS", href: "https://www.sos.state.tx.us/corp/options.shtml" },
   { label: "National Golf Foundation", href: "https://www.ngf.org/short-game/states-of-public-golf/" },
+  { label: "Mapa base Florida", href: "https://commons.wikimedia.org/wiki/File:USA_Florida_location_map.svg" },
 ];
+
+const diagnosticShortMetrics = [
+  { label: "Dirección", value: 100, tone: "strong" },
+  { label: "Alianzas", value: 100, tone: "strong" },
+  { label: "Exportación", value: 70, tone: "mid" },
+  { label: "Producto", value: 61, tone: "mid" },
+  { label: "Potencial intl.", value: 44, tone: "mid" },
+  { label: "Modo entrada", value: 33, tone: "risk" },
+];
+
+const nationalBenchmarkGroups = benchmarkGroups.filter((group) =>
+  ["ecommerce-landscaping", "temporada-clima", "desgaste-ambiental", "dinamismo-pyme"].includes(group.id),
+);
 
 function getLatestSeriesPoint(indicatorId: string) {
   const indicator = macroIndicators.find((item) => item.id === indicatorId);
@@ -799,6 +835,51 @@ function BenchmarkChart({
   );
 }
 
+function NationalComparisonChart({
+  onExpand,
+  expanded = false,
+}: {
+  onExpand?: () => void;
+  expanded?: boolean;
+}) {
+  return (
+    <article className={`presentation-national-card${expanded ? " is-expanded" : ""}`}>
+      <div className="presentation-benchmark-head">
+        <span>Florida + Texas vs EE. UU.</span>
+        {onExpand ? (
+          <button type="button" onClick={onExpand} aria-label="Ampliar comparación con promedio nacional">
+            <Maximize2 size={15} />
+          </button>
+        ) : null}
+        <h3>{expanded ? "Comparación contra EE. UU." : "Ambos estados superan el promedio nacional"}</h3>
+      </div>
+      <div className="presentation-national-grid">
+        {nationalBenchmarkGroups.map((group) => (
+          <div key={group.id} className="presentation-national-metric">
+            <strong>{group.title}</strong>
+            {group.bars.map((bar) => {
+              const width = Math.min(100, (bar.value / group.scaleMax) * 100);
+              return (
+                <div key={`${group.id}-${bar.label}`} className={`presentation-national-row is-${bar.tone}`}>
+                  <span>{bar.label}</span>
+                  <i aria-hidden="true">
+                    <b style={{ width: `${width}%` }} />
+                  </i>
+                  <em>{bar.display}</em>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+      <p>
+        Esta comparación responde la pregunta clave: Florida y Texas no solo son viables, sino que están por encima del
+        promedio nacional en señales comerciales y de uso exterior relevantes para UMO.
+      </p>
+    </article>
+  );
+}
+
 function TrendChart({
   config,
   onExpand,
@@ -810,9 +891,9 @@ function TrendChart({
 }) {
   const indicator = macroIndicators.find((item) => item.id === config.indicatorId);
   const series = indicator?.series ?? [];
-  const width = 430;
-  const height = expanded ? 280 : 210;
-  const padding = expanded ? 46 : 34;
+  const width = expanded ? 760 : 430;
+  const height = expanded ? 420 : 210;
+  const padding = expanded ? 66 : 34;
   const values = series.flatMap((point) => [point.florida, point.texas, point.national].filter((value): value is number => typeof value === "number"));
   const min = Math.min(...values);
   const max = Math.max(...values);
@@ -941,44 +1022,44 @@ function StrategyFlow() {
 const floridaOpportunityPins = [
   {
     name: "Miami / Fort Lauderdale",
-    label: "condominios, golf, jardinería premium",
-    x: 71,
-    y: 78,
+    label: "condominios, golf, residencias premium y jardinería profesional",
+    x: 72,
+    y: 83,
     type: "Golf + residencias",
   },
   {
     name: "Orlando",
-    label: "resorts, parques, golf y mantenimiento",
-    x: 53,
-    y: 48,
+    label: "resorts, parques, golf, turismo y mantenimiento de zonas verdes",
+    x: 55,
+    y: 55,
     type: "Parques + turismo",
   },
   {
     name: "Tampa Bay",
-    label: "distribuidores, suburbios y landscaping",
-    x: 39,
-    y: 58,
+    label: "distribuidores, suburbios, landscaping y maquinaria de jardín",
+    x: 43,
+    y: 63,
     type: "Distribución",
   },
   {
     name: "Gainesville / UF",
-    label: "campus, zonas verdes y flotas de mantenimiento",
-    x: 46,
-    y: 32,
+    label: "campus, zonas verdes y flotas de mantenimiento universitario",
+    x: 44,
+    y: 40,
     type: "Universidad",
   },
   {
     name: "Tallahassee / FSU",
-    label: "campus y operación pública de zonas verdes",
-    x: 25,
-    y: 24,
+    label: "campus, operación pública y zonas verdes institucionales",
+    x: 23,
+    y: 29,
     type: "Universidad",
   },
   {
     name: "Jacksonville",
-    label: "logística, parques y contratistas",
-    x: 57,
-    y: 22,
+    label: "logística, parques, contratistas y compradores institucionales",
+    x: 58,
+    y: 33,
     type: "Logística",
   },
 ];
@@ -993,28 +1074,40 @@ function FloridaOpportunityMap({ onExpand, expanded = false }: { onExpand?: () =
             <Maximize2 size={15} />
           </button>
         ) : null}
-        <h3>Mapa de compradores potenciales</h3>
+        <h3>{expanded ? "Clusters Florida" : "Mapa de compradores potenciales"}</h3>
       </div>
-      <div className="presentation-florida-map" aria-label="Mapa visual de oportunidades en Florida">
-        <svg viewBox="0 0 560 430" aria-hidden="true">
-          <path
-            className="presentation-florida-shape"
-            d="M165 42 C202 28 245 38 277 61 L332 100 C359 119 392 118 426 128 C459 138 476 160 470 186 C464 214 438 226 433 253 C426 291 471 329 445 365 C422 398 357 363 335 323 C315 286 318 244 296 215 C277 190 236 185 216 157 C194 128 175 89 165 42 Z"
+      <div className="presentation-florida-map" aria-label="Mapa real de Florida con clusters de oportunidad">
+        <div className="presentation-florida-map-frame">
+          <img
+            src="/assets/content/florida-location-map.svg"
+            alt="Mapa de Florida"
+            className="presentation-florida-base-map"
+            loading="lazy"
           />
-          <path className="presentation-florida-panhandle" d="M76 84 C115 58 152 47 197 58 L189 94 C144 89 112 96 78 121 Z" />
-        </svg>
-        {floridaOpportunityPins.map((pin) => (
-          <div
-            key={pin.name}
-            className="presentation-map-pin"
-            style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
-          >
-            <i />
-            <strong>{pin.name}</strong>
-            <span>{pin.type}</span>
-            {expanded ? <p>{pin.label}</p> : null}
-          </div>
-        ))}
+          <span className="presentation-map-water is-gulf">Golfo de México</span>
+          <span className="presentation-map-water is-atlantic">Océano Atlántico</span>
+          {floridaOpportunityPins.map((pin, index) => (
+            <div
+              key={pin.name}
+              className="presentation-map-pin"
+              style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
+              data-pin={(index + 1).toString().padStart(2, "0")}
+            >
+              <i />
+              <strong>{pin.name}</strong>
+              <span>{pin.type}</span>
+            </div>
+          ))}
+        </div>
+        <div className="presentation-map-cluster-list">
+          {floridaOpportunityPins.map((pin) => (
+            <article key={`${pin.name}-cluster`}>
+              <strong>{pin.name}</strong>
+              <span>{pin.type}</span>
+              {expanded ? <p>{pin.label}</p> : null}
+            </article>
+          ))}
+        </div>
       </div>
       <div className="presentation-map-legend">
         <span>
@@ -1066,6 +1159,8 @@ function ExpandedVisualModal({
   const title =
     visual.type === "map"
       ? "Mapa de oportunidad en Florida"
+      : visual.type === "national"
+        ? "Comparación con promedio nacional"
       : benchmark?.title ?? trend?.title ?? "Visualización ampliada";
 
   return (
@@ -1091,6 +1186,7 @@ function ExpandedVisualModal({
         </button>
         {benchmark ? <BenchmarkChart group={benchmark} expanded /> : null}
         {trend ? <TrendChart config={trend} expanded /> : null}
+        {visual.type === "national" ? <NationalComparisonChart expanded /> : null}
         {visual.type === "map" ? <FloridaOpportunityMap expanded /> : null}
       </motion.div>
     </motion.div>
@@ -1241,43 +1337,61 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
               </div>
             </div>
 
-            <div className="presentation-route-canvas" aria-hidden="true">
-              <span className="presentation-route-line-v2" />
-              <i className="presentation-route-node is-colombia">
-                <small>Origen</small>
-                <strong>Colombia</strong>
-              </i>
-              <i className="presentation-route-node is-florida">
-                <small>Entrada</small>
-                <strong>Florida</strong>
-              </i>
-              <i className="presentation-route-node is-texas">
-                <small>Escala</small>
-                <strong>Texas</strong>
-              </i>
+            <div className="presentation-hero-photo">
+              <img src="/assets/content/florida-turf-hero.jpg" alt="Campo de golf y césped profesional en Florida" />
+              <div>
+                <span>Florida / turfgrass</span>
+                <strong>1,290 campos</strong>
+                <p>La señal visual del mercado: césped, golf, landscaping y mantenimiento recurrente.</p>
+              </div>
             </div>
 
-            <MetricRibbon
-              items={[
-                {
-                  label: "Entrada inicial",
-                  value: "Florida",
-                  text: "Landscaping, turfgrass, golf, urbanizaciones, B2C y alianzas locales.",
-                },
-                {
-                  label: "Expansión posterior",
-                  value: "Texas",
-                  text: "Agricultura, ranchos, maquinaria pesada, repuestos y distribuidores B2B.",
-                },
-                {
-                  label: "Modo de entrada",
-                  value: "Exportar + aliar",
-                  text: "Menor riesgo operativo antes de abrir estructura propia.",
-                },
-              ]}
-            />
+            <div className="presentation-hero-proofline">
+              <span>Entrada inicial: Florida</span>
+              <span>Escala posterior: Texas</span>
+              <span>Modelo: exportar + aliar</span>
+            </div>
           </div>
         </motion.section>
+
+        <PresentationSlide
+          slide={slidesById.estadistica}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.estadistica = node;
+          }}
+        >
+          <div className="presentation-stat-layout">
+            <article className="presentation-stat-hero">
+              <Flag size={28} />
+              <span>Florida como foco</span>
+              <strong>1,290</strong>
+              <h3>campos de golf</h3>
+              <p>
+                Este dato convierte a Florida en una vitrina natural para validar comodidad, resistencia al clima y
+                uso frecuente en maquinaria de césped.
+              </p>
+            </article>
+            <div className="presentation-stat-bars">
+              {benchmarkGroups
+                .find((group) => group.id === "golf-florida")
+                ?.bars.map((bar) => {
+                  const width = Math.min(100, (bar.value / 1290) * 100);
+                  return (
+                    <div key={bar.label} className={`presentation-stat-row is-${bar.tone}`}>
+                      <div>
+                        <strong>{bar.label}</strong>
+                        <em>{bar.display}</em>
+                      </div>
+                      <span aria-hidden="true">
+                        <i style={{ width: `${width}%` }} />
+                      </span>
+                    </div>
+                  );
+                })}
+              <p>Florida queda por encima de alternativas grandes como California, New York y Texas en este indicador.</p>
+            </div>
+          </div>
+        </PresentationSlide>
 
         <PresentationSlide
           slide={slidesById.umo}
@@ -1362,13 +1476,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             </article>
             <div className="presentation-diagnostic-bars">
               <span>Capacidades internas principales</span>
-              <MiniBarList
-                items={diagnosticMetrics.slice(0, 7).map((metric) => ({
-                  label: metric.label,
-                  value: metric.value,
-                  tone: metric.tone,
-                }))}
-              />
+              <MiniBarList items={diagnosticShortMetrics} />
             </div>
             <div className="presentation-evidence-stack is-compact">
               <article>
@@ -1394,8 +1502,8 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             slideRefs.current.indicadores = node;
           }}
         >
-          <div className="presentation-visual-gallery">
-            {trendCharts.map((chart) => (
+          <div className="presentation-visual-gallery is-decision">
+            {trendCharts.slice(0, 2).map((chart) => (
               <TrendChart
                 key={chart.id}
                 config={chart}
@@ -1403,6 +1511,15 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
               />
             ))}
           </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById["vs-eeuu"]}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current["vs-eeuu"] = node;
+          }}
+        >
+          <NationalComparisonChart onExpand={() => setExpandedVisual({ type: "national", id: "benchmarks" })} />
         </PresentationSlide>
 
         <PresentationSlide
@@ -1650,7 +1767,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
           }}
         >
           <div className="presentation-channel-layout">
-            <div className="presentation-panel-grid">
+            <div className="presentation-channel-funnel">
               {channelCards.map((card) => (
                 <InsightPanel key={card.title} card={card} />
               ))}
