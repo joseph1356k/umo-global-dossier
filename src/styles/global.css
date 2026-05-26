@@ -5229,6 +5229,8 @@ main {
   display: grid;
   align-content: center;
   gap: 16px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .presentation-slide-index,
@@ -5263,9 +5265,10 @@ main {
 }
 
 .presentation-slide-copy h2 {
-  max-width: 600px;
+  max-width: 100%;
   font-size: clamp(2rem, 3.25vw, 4.15rem);
   line-height: 0.98;
+  overflow-wrap: break-word;
 }
 
 .presentation-slide-copy p,
@@ -5294,8 +5297,9 @@ main {
 }
 
 .presentation-slide-copy p {
-  max-width: 560px;
+  max-width: 100%;
   font-size: 1rem;
+  overflow-wrap: break-word;
 }
 
 .presentation-slide-body {
@@ -5771,6 +5775,8 @@ main {
   font-family: var(--font-display);
   font-size: clamp(1.7rem, 2.3vw, 2.65rem);
   line-height: 0.96;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .presentation-panel-grid {
@@ -5802,8 +5808,20 @@ main {
 }
 
 .presentation-panel h3 {
-  font-size: clamp(1.45rem, 1.65vw, 2.05rem);
+  font-size: clamp(1.35rem, 1.45vw, 1.82rem);
   line-height: 1.02;
+}
+
+.presentation-risk-grid h3,
+.presentation-canvas-strip h3,
+.presentation-roadmap-rail h3,
+.presentation-final-grid h3,
+.presentation-strategy-flow h3,
+.presentation-compatibility-strip h3,
+.presentation-channel-plan h3 {
+  font-size: clamp(1.35rem, 1.45vw, 1.82rem);
+  line-height: 1.02;
+  overflow-wrap: break-word;
 }
 
 .presentation-stat-layout {
@@ -6686,12 +6704,12 @@ main {
 }
 
 .presentation-visual-gallery.is-decision .presentation-trend-card {
-  min-height: 248px;
+  min-height: 254px;
   padding: 16px;
 }
 
 .presentation-visual-gallery.is-decision .presentation-trend-card svg {
-  min-height: 124px;
+  min-height: 116px;
 }
 
 .presentation-trend-card {
@@ -6821,14 +6839,14 @@ main {
 
 .presentation-map-slide-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
-  gap: 14px;
+  grid-template-columns: minmax(0, 1.58fr) minmax(240px, 0.42fr);
+  gap: 18px;
   align-items: stretch;
 }
 
 .presentation-map-card {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   padding: 20px;
 }
 
@@ -6840,11 +6858,11 @@ main {
 
 .presentation-florida-map {
   position: relative;
-  min-height: 440px;
+  min-height: 520px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 14px;
   padding: 14px;
   border: 1px solid rgba(245, 242, 232, 0.12);
   border-radius: 8px;
@@ -6854,13 +6872,13 @@ main {
 }
 
 .presentation-map-card.is-expanded .presentation-florida-map {
-  min-height: min(58vh, 620px);
+  min-height: min(68vh, 760px);
   grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
 }
 
 .presentation-florida-map-frame {
   position: relative;
-  min-height: 382px;
+  min-height: 490px;
   overflow: hidden;
   border: 1px solid rgba(245, 242, 232, 0.13);
   border-radius: 7px;
@@ -6904,6 +6922,97 @@ main {
   right: 7%;
   top: 38%;
   writing-mode: vertical-rl;
+}
+
+.presentation-market-density-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.presentation-market-zone {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(240, 78, 54, 0.24), rgba(240, 78, 54, 0.08) 42%, transparent 72%);
+  filter: blur(1px);
+  mix-blend-mode: screen;
+}
+
+.presentation-opportunity-dot {
+  position: absolute;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(255, 224, 205, 0.8);
+  border-radius: 999px;
+  background: #f04438;
+  box-shadow:
+    0 0 0 4px rgba(240, 68, 56, 0.12),
+    0 0 18px rgba(240, 68, 56, 0.72);
+  animation: presentation-dot-rise 3.8s ease-in-out infinite;
+}
+
+.presentation-opportunity-dot.is-campus {
+  background: #f97316;
+}
+
+.presentation-opportunity-dot.is-golf {
+  background: #ef2f25;
+}
+
+.presentation-opportunity-dot.is-park {
+  background: #ff5a3d;
+}
+
+.presentation-opportunity-dot.is-residential {
+  background: #c81e1e;
+}
+
+.presentation-opportunity-dot.is-dealer {
+  width: 10px;
+  height: 10px;
+  background: #ffb020;
+}
+
+@keyframes presentation-dot-rise {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 6px rgba(240, 68, 56, 0.16),
+      0 0 22px rgba(240, 68, 56, 0.84);
+  }
+}
+
+.presentation-map-city-anchor {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transform: translate(-12%, -125%);
+  color: rgba(245, 242, 232, 0.86);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.92);
+  white-space: nowrap;
+}
+
+.presentation-map-city-anchor i {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #f04438;
+  box-shadow: 0 0 14px rgba(240, 68, 56, 0.9);
 }
 
 .presentation-map-pin {
@@ -6960,18 +7069,25 @@ main {
 
 .presentation-map-cluster-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
   gap: 8px;
   align-content: start;
 }
 
 .presentation-map-cluster-list article {
   display: grid;
-  gap: 4px;
-  padding: 8px 9px;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 4px 8px;
+  padding: 11px 12px;
   border: 1px solid rgba(245, 242, 232, 0.11);
   border-radius: 7px;
   background: rgba(255, 255, 255, 0.035);
+}
+
+.presentation-map-cluster-list article svg {
+  grid-row: 1 / 3;
+  margin-top: 2px;
+  color: var(--red);
 }
 
 .presentation-map-cluster-list strong {
@@ -6987,6 +7103,10 @@ main {
   color: rgba(245, 242, 232, 0.66);
   font-size: 0.68rem;
   line-height: 1.3;
+}
+
+.presentation-map-cluster-list p {
+  grid-column: 2;
 }
 
 .presentation-map-card.is-expanded .presentation-map-cluster-list {
@@ -7017,6 +7137,22 @@ main {
   font-size: 0.66rem;
 }
 
+.presentation-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f04438;
+  box-shadow: 0 0 14px rgba(240, 68, 56, 0.58);
+}
+
+.presentation-legend-dot.is-campus {
+  background: #f97316;
+}
+
+.presentation-legend-dot.is-park {
+  background: #ff5a3d;
+}
+
 .presentation-map-note {
   margin: 0;
   color: rgba(245, 242, 232, 0.62);
@@ -7033,6 +7169,35 @@ main {
   align-content: start;
   gap: 10px;
   padding: 18px;
+}
+
+.presentation-map-insights article:first-child {
+  border-color: rgba(240, 78, 54, 0.32);
+  background:
+    linear-gradient(145deg, rgba(240, 78, 54, 0.12), transparent 48%),
+    rgba(255, 255, 255, 0.036);
+}
+
+.presentation-map-insights strong {
+  font-size: clamp(1.45rem, 1.55vw, 2.05rem);
+  line-height: 1.02;
+}
+
+#mapa-florida .presentation-slide-shell {
+  grid-template-columns: minmax(230px, 320px) minmax(0, 1fr);
+}
+
+#mapa-florida .presentation-slide-copy p {
+  max-width: 100%;
+}
+
+#indicadores .presentation-slide-copy h2 {
+  max-width: 100%;
+  font-size: clamp(2.9rem, 3vw, 3.65rem);
+}
+
+#indicadores .presentation-slide-copy p {
+  max-width: 100%;
 }
 
 .presentation-visual-modal {
@@ -7312,6 +7477,10 @@ main {
     min-height: 430px;
   }
 
+  .presentation-map-city-anchor {
+    font-size: 0.52rem;
+  }
+
   .presentation-map-pin {
     width: 118px;
   }
@@ -7366,6 +7535,15 @@ main {
 
   .presentation-florida-map-frame {
     min-height: 390px;
+  }
+
+  .presentation-map-city-anchor b {
+    display: none;
+  }
+
+  .presentation-opportunity-dot {
+    width: 7px;
+    height: 7px;
   }
 
   .presentation-map-pin {
@@ -7503,8 +7681,8 @@ body {
 
 .presentation-slide-shell {
   min-height: min(790px, calc(100svh - 124px));
-  grid-template-columns: minmax(270px, 0.42fr) minmax(0, 1.58fr);
-  gap: 36px;
+  grid-template-columns: minmax(250px, 360px) minmax(0, 1fr);
+  gap: clamp(30px, 3vw, 54px);
   padding: 46px;
 }
 
@@ -7563,9 +7741,10 @@ body {
 }
 
 .presentation-slide-copy h2 {
-  max-width: 660px;
-  font-size: 3.8rem;
-  line-height: 0.98;
+  max-width: 100%;
+  font-size: clamp(2.75rem, 2.9vw, 3.45rem);
+  line-height: 0.97;
+  overflow-wrap: break-word;
 }
 
 .presentation-slide-copy p,
@@ -7595,8 +7774,9 @@ body {
 }
 
 .presentation-slide-copy p {
-  max-width: 560px;
+  max-width: 100%;
   font-size: 1.08rem;
+  overflow-wrap: break-word;
 }
 
 .presentation-side-rail {
@@ -7942,13 +8122,15 @@ body {
 .presentation-map-head h3 {
   color: var(--umo-cream);
   line-height: 1;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .presentation-panel h3,
 .presentation-benchmark-head h3,
 .presentation-trend-head h3,
 .presentation-map-head h3 {
-  font-size: 1.82rem;
+  font-size: clamp(1.35rem, 1.38vw, 1.72rem);
 }
 
 .presentation-panel svg,
@@ -8127,19 +8309,30 @@ body {
 }
 
 .presentation-florida-base-map {
-  opacity: 0.78;
-  filter: grayscale(0.72) sepia(0.2) saturate(0.72) brightness(0.7) contrast(1.22);
+  opacity: 0.58;
+  filter: grayscale(0.72) sepia(0.2) saturate(0.72) brightness(0.62) contrast(1.28);
 }
 
-.presentation-map-pin {
-  border-color: rgba(246, 239, 228, 0.14);
-  border-radius: 7px;
-  background: rgba(5, 5, 5, 0.66);
+.presentation-market-zone {
+  background:
+    radial-gradient(circle, rgba(var(--umo-red-rgb), 0.28), rgba(var(--umo-red-rgb), 0.09) 44%, transparent 74%);
 }
 
-.presentation-map-pin i {
+.presentation-opportunity-dot {
+  border-color: rgba(246, 239, 228, 0.72);
+  background: var(--umo-red);
+  box-shadow:
+    0 0 0 4px rgba(var(--umo-red-rgb), 0.14),
+    0 0 18px rgba(var(--umo-red-rgb), 0.72);
+}
+
+.presentation-opportunity-dot.is-campus,
+.presentation-opportunity-dot.is-dealer {
   background: var(--umo-amber);
-  box-shadow: 0 0 0 4px rgba(var(--umo-amber-rgb), 0.18);
+}
+
+.presentation-map-city-anchor {
+  color: var(--umo-cream);
 }
 
 .presentation-map-cluster-list article,
@@ -8165,6 +8358,19 @@ body {
   background:
     linear-gradient(135deg, rgba(246, 239, 228, 0.06), transparent 32%),
     rgba(12, 12, 11, 0.98);
+}
+
+.presentation-panel h3,
+.presentation-scorecard h3,
+.presentation-compatibility-strip h3,
+.presentation-channel-tool h3,
+.presentation-channel-plan h3,
+.presentation-marketing-persona-grid h3,
+.presentation-marketing-proof-grid h3,
+.presentation-marketing-route h3 {
+  font-size: clamp(1.18rem, 1.18vw, 1.48rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 1440px) {

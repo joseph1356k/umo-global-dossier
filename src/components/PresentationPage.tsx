@@ -406,7 +406,7 @@ const trendCharts: TrendChartConfig[] = [
   {
     id: "turfgrass",
     indicatorId: "turfgrass",
-    title: "Turfgrass",
+    title: "Turfgrass 2021-2025",
     unit: "USD B",
     focus: "Florida lidera",
     note: "Muestra por qué Florida es el foco: césped profesional, golf, landscaping y mantenimiento continuo.",
@@ -414,7 +414,7 @@ const trendCharts: TrendChartConfig[] = [
   {
     id: "agricultura",
     indicatorId: "agricultura",
-    title: "Agricultura",
+    title: "Agricultura 2021-2025",
     unit: "USD B",
     focus: "Texas escala",
     note: "Texas explica la segunda etapa por volumen agrícola, ranchos y maquinaria pesada.",
@@ -1176,44 +1176,155 @@ const floridaOpportunityPins = [
   {
     name: "Miami / Fort Lauderdale",
     label: "condominios, golf, residencias premium y jardinería profesional",
-    x: 72,
-    y: 83,
+    x: 78,
+    y: 84,
     type: "Golf + residencias",
   },
   {
     name: "Orlando",
     label: "resorts, parques, golf, turismo y mantenimiento de zonas verdes",
-    x: 55,
-    y: 55,
+    x: 66,
+    y: 56,
     type: "Parques + turismo",
   },
   {
     name: "Tampa Bay",
     label: "distribuidores, suburbios, landscaping y maquinaria de jardín",
-    x: 43,
-    y: 63,
+    x: 58,
+    y: 66,
     type: "Distribución",
   },
   {
     name: "Gainesville / UF",
     label: "campus, zonas verdes y flotas de mantenimiento universitario",
-    x: 44,
-    y: 40,
+    x: 55,
+    y: 43,
     type: "Universidad",
   },
   {
     name: "Tallahassee / FSU",
     label: "campus, operación pública y zonas verdes institucionales",
-    x: 23,
-    y: 29,
+    x: 22,
+    y: 33,
     type: "Universidad",
   },
   {
     name: "Jacksonville",
     label: "logística, parques, contratistas y compradores institucionales",
-    x: 58,
-    y: 33,
+    x: 66,
+    y: 36,
     type: "Logística",
+  },
+];
+
+type FloridaOpportunityDot = {
+  x: number;
+  y: number;
+  kind: "golf" | "campus" | "park" | "residential" | "dealer";
+  scale?: number;
+};
+
+const floridaOpportunityDots: FloridaOpportunityDot[] = [
+  { x: 19, y: 32, kind: "campus", scale: 1.2 },
+  { x: 23, y: 34, kind: "campus" },
+  { x: 27, y: 35, kind: "park" },
+  { x: 31, y: 36, kind: "dealer", scale: 0.9 },
+  { x: 36, y: 38, kind: "park", scale: 0.9 },
+  { x: 42, y: 39, kind: "golf" },
+  { x: 49, y: 41, kind: "campus", scale: 1.15 },
+  { x: 54, y: 43, kind: "campus", scale: 1.25 },
+  { x: 58, y: 45, kind: "golf" },
+  { x: 61, y: 47, kind: "park" },
+  { x: 64, y: 35, kind: "dealer", scale: 1.2 },
+  { x: 67, y: 37, kind: "park" },
+  { x: 69, y: 40, kind: "golf" },
+  { x: 65, y: 42, kind: "residential" },
+  { x: 61, y: 41, kind: "park" },
+  { x: 56, y: 50, kind: "golf", scale: 0.95 },
+  { x: 59, y: 52, kind: "park" },
+  { x: 63, y: 51, kind: "campus" },
+  { x: 64, y: 54, kind: "golf", scale: 1.15 },
+  { x: 67, y: 56, kind: "park", scale: 1.25 },
+  { x: 70, y: 58, kind: "residential" },
+  { x: 62, y: 58, kind: "golf" },
+  { x: 66, y: 60, kind: "park", scale: 0.9 },
+  { x: 69, y: 62, kind: "residential" },
+  { x: 73, y: 61, kind: "golf" },
+  { x: 55, y: 61, kind: "dealer", scale: 1.15 },
+  { x: 58, y: 63, kind: "residential" },
+  { x: 61, y: 65, kind: "golf", scale: 1.1 },
+  { x: 58, y: 68, kind: "park" },
+  { x: 62, y: 70, kind: "residential" },
+  { x: 65, y: 72, kind: "golf" },
+  { x: 57, y: 72, kind: "park", scale: 0.95 },
+  { x: 61, y: 74, kind: "residential" },
+  { x: 64, y: 76, kind: "golf", scale: 1.15 },
+  { x: 67, y: 78, kind: "park" },
+  { x: 69, y: 81, kind: "residential" },
+  { x: 66, y: 83, kind: "golf" },
+  { x: 71, y: 84, kind: "park" },
+  { x: 74, y: 50, kind: "golf", scale: 0.9 },
+  { x: 76, y: 55, kind: "residential" },
+  { x: 78, y: 60, kind: "park" },
+  { x: 79, y: 65, kind: "golf" },
+  { x: 78, y: 70, kind: "residential" },
+  { x: 76, y: 74, kind: "golf" },
+  { x: 78, y: 77, kind: "park" },
+  { x: 79, y: 80, kind: "residential" },
+  { x: 80, y: 83, kind: "golf", scale: 1.2 },
+  { x: 78, y: 86, kind: "residential", scale: 1.2 },
+  { x: 75, y: 88, kind: "park" },
+  { x: 73, y: 90, kind: "golf", scale: 1.25 },
+  { x: 81, y: 87, kind: "dealer", scale: 0.9 },
+  { x: 72, y: 64, kind: "golf" },
+  { x: 74, y: 67, kind: "park" },
+  { x: 75, y: 70, kind: "residential" },
+  { x: 70, y: 67, kind: "dealer" },
+  { x: 68, y: 70, kind: "campus" },
+  { x: 71, y: 73, kind: "golf" },
+  { x: 69, y: 76, kind: "park" },
+  { x: 72, y: 79, kind: "residential" },
+  { x: 75, y: 82, kind: "golf" },
+];
+
+const floridaOpportunityZones = [
+  { name: "Tallahassee", x: 24, y: 34, size: 18 },
+  { name: "Jacksonville", x: 66, y: 38, size: 18 },
+  { name: "Orlando", x: 67, y: 58, size: 24 },
+  { name: "Tampa Bay", x: 59, y: 68, size: 23 },
+  { name: "South Florida", x: 78, y: 82, size: 27 },
+];
+
+const floridaOpportunitySegments = [
+  {
+    label: "Golf + turfgrass",
+    value: "1,290 campos",
+    text: "Cesped profesional, flotas de mantenimiento y jornadas largas de operacion.",
+    icon: Flag,
+  },
+  {
+    label: "Campus",
+    value: "UF, FSU, UCF, UM",
+    text: "Universidades con zonas verdes, mantenimiento interno y compras institucionales.",
+    icon: Landmark,
+  },
+  {
+    label: "Parques y resorts",
+    value: "Orlando + costa",
+    text: "Turismo, parques, hoteles y operacion recurrente de paisajismo.",
+    icon: Sprout,
+  },
+  {
+    label: "Comunidades",
+    value: "HOA + condominios",
+    text: "Urbanizaciones y residencias premium con mantenimiento frecuente.",
+    icon: Building2,
+  },
+  {
+    label: "Canal local",
+    value: "Dealers OPE",
+    text: "Tiendas y distribuidores de maquinaria de jardin para validar venta B2B.",
+    icon: Truck,
   },
 ];
 
@@ -1227,9 +1338,9 @@ function FloridaOpportunityMap({ onExpand, expanded = false }: { onExpand?: () =
             <Maximize2 size={15} />
           </button>
         ) : null}
-        <h3>{expanded ? "Clusters Florida" : "Mapa de compradores potenciales"}</h3>
+        <h3>{expanded ? "Densidad comercial en Florida" : "Mapa de demanda visible"}</h3>
       </div>
-      <div className="presentation-florida-map" aria-label="Mapa real de Florida con clusters de oportunidad">
+      <div className="presentation-florida-map" aria-label="Mapa real de Florida con puntos rojos de oportunidad comercial">
         <div className="presentation-florida-map-frame">
           <img
             src="/assets/content/florida-location-map.svg"
@@ -1238,43 +1349,72 @@ function FloridaOpportunityMap({ onExpand, expanded = false }: { onExpand?: () =
             loading="lazy"
           />
           <span className="presentation-map-water is-gulf">Golfo de México</span>
-          <span className="presentation-map-water is-atlantic">Océano Atlántico</span>
-          {floridaOpportunityPins.map((pin, index) => (
-            <div
-              key={pin.name}
-              className="presentation-map-pin"
-              style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
-              data-pin={(index + 1).toString().padStart(2, "0")}
-            >
-              <i />
-              <strong>{pin.name}</strong>
-              <span>{pin.type}</span>
-            </div>
-          ))}
+          <span className="presentation-map-water is-atlantic">Atlántico</span>
+          <div className="presentation-market-density-layer" aria-hidden="true">
+            {floridaOpportunityZones.map((zone) => (
+              <span
+                key={zone.name}
+                className="presentation-market-zone"
+                style={{
+                  left: `${zone.x}%`,
+                  top: `${zone.y}%`,
+                  width: `${zone.size}%`,
+                  height: `${zone.size}%`,
+                }}
+              />
+            ))}
+            {floridaOpportunityDots.map((dot, index) => (
+              <span
+                key={`${dot.kind}-${index}`}
+                className={`presentation-opportunity-dot is-${dot.kind}`}
+                style={{
+                  left: `${dot.x}%`,
+                  top: `${dot.y}%`,
+                  transform: `translate(-50%, -50%) scale(${dot.scale ?? 1})`,
+                  animationDelay: `${index * 45}ms`,
+                }}
+              />
+            ))}
+            {floridaOpportunityPins.map((pin) => (
+              <span
+                key={`${pin.name}-anchor`}
+                className="presentation-map-city-anchor"
+                style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
+              >
+                <i />
+                <b>{pin.name}</b>
+              </span>
+            ))}
+          </div>
         </div>
         <div className="presentation-map-cluster-list">
-          {floridaOpportunityPins.map((pin) => (
-            <article key={`${pin.name}-cluster`}>
-              <strong>{pin.name}</strong>
-              <span>{pin.type}</span>
-              {expanded ? <p>{pin.label}</p> : null}
-            </article>
-          ))}
+          {floridaOpportunitySegments.map((segment) => {
+            const Icon = segment.icon;
+
+            return (
+              <article key={segment.label}>
+                <Icon size={16} />
+                <strong>{segment.label}</strong>
+                <span>{segment.value}</span>
+                {expanded ? <p>{segment.text}</p> : null}
+              </article>
+            );
+          })}
         </div>
       </div>
       <div className="presentation-map-legend">
         <span>
-          <Landmark size={15} /> Universidades y campus
+          <span className="presentation-legend-dot is-campus" /> Campus
         </span>
         <span>
-          <Flag size={15} /> Campos de golf
+          <span className="presentation-legend-dot is-golf" /> Golf y turfgrass
         </span>
         <span>
-          <Sprout size={15} /> Parques, condominios y landscaping
+          <span className="presentation-legend-dot is-park" /> Parques, resorts y comunidades
         </span>
       </div>
       <p className="presentation-map-note">
-        Lectura de prospección: son clusters de compradores potenciales, no clientes confirmados.
+        Lectura de prospección: densidad comercial estimada para priorizar llamadas, no clientes confirmados.
       </p>
     </article>
   );
@@ -1686,7 +1826,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
           }}
         >
           <div className="presentation-visual-gallery is-decision">
-            {trendCharts.slice(0, 2).map((chart) => (
+            {trendCharts.map((chart) => (
               <TrendChart
                 key={chart.id}
                 config={chart}
@@ -1818,20 +1958,22 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             <FloridaOpportunityMap onExpand={() => setExpandedVisual({ type: "map", id: "florida" })} />
             <div className="presentation-map-insights">
               <article>
+                <MapPinned size={20} />
+                <span>Cómo leerlo</span>
+                <strong>Muchos puntos, una lista de prospección.</strong>
+                <p>Cada punto representa un tipo de comprador probable: golf, campus, parques, comunidades o canal local.</p>
+              </article>
+              <article>
                 <Flag size={20} />
-                <span>Golf y turfgrass</span>
-                <strong>1,290 campos</strong>
-                <p>Florida lidera el país en campos de golf, reforzando la demanda de mantenimiento de césped y comodidad operativa.</p>
+                <span>Mayor señal</span>
+                <strong>Golf + turfgrass</strong>
+                <p>Florida lidera el país en campos de golf; eso vuelve el césped profesional una puerta de entrada defendible.</p>
               </article>
               <article>
-                <Landmark size={20} />
-                <span>Universidades y campus</span>
-                <p>UF, FSU, UCF y University of Miami representan ejemplos de campus con operación continua de zonas verdes.</p>
-              </article>
-              <article>
-                <Sprout size={20} />
-                <span>Parques y comunidades</span>
-                <p>Orlando, Tampa, Miami y Jacksonville concentran turismo, condominios, parques, resorts y contratistas de landscaping.</p>
+                <Route size={20} />
+                <span>Movimiento comercial</span>
+                <strong>Primero densidad, luego contacto.</strong>
+                <p>Priorizar Orlando, Tampa Bay, Jacksonville y South Florida para llamadas a mantenimiento, dealers y landscaping.</p>
               </article>
             </div>
           </div>
