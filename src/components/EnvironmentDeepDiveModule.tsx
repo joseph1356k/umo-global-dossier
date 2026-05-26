@@ -368,7 +368,7 @@ function EnvironmentIndicatorCard({
           <p>{indicator.analysis.keyData[locale]}</p>
         </article>
         <article className="analysis-block">
-          <span>{locale === "es" ? "Que significa" : "What it means"}</span>
+          <span>{locale === "es" ? "Qué significa" : "What it means"}</span>
           <p>{indicator.analysis.meaning[locale]}</p>
         </article>
         <article className="analysis-block">
@@ -442,7 +442,7 @@ function EnvironmentSummaryMatrix({
         <h3>{locale === "es" ? "Matriz de lectura del entorno" : "Environment reading matrix"}</h3>
         <p>
           {locale === "es"
-            ? "La matriz resume que entorno favorece mas a cada estado y como debe explicarse esa diferencia frente al contexto general del pais."
+            ? "La matriz resume qué entorno favorece más a cada estado y cómo debe explicarse esa diferencia frente al contexto general del país."
             : "The matrix summarizes which signals favor each state and how that difference should be explained against the broader country context."}
         </p>
       </div>
@@ -475,10 +475,10 @@ function EnvironmentSummaryMatrix({
               <td>
                 {summary.texasAverage > summary.floridaAverage
                   ? locale === "es"
-                    ? "Texas queda levemente mas fuerte en este entorno, pero la lectura sigue siendo complementaria frente al pais."
+                    ? "Texas queda levemente más fuerte en este entorno, pero la lectura sigue siendo complementaria frente al país."
                     : "Texas ends slightly stronger in this environment, though the reading remains complementary against the broader country context."
                   : locale === "es"
-                    ? "Florida queda levemente mas fuerte en este entorno, pero la lectura sigue siendo complementaria frente al pais."
+                    ? "Florida queda levemente más fuerte en este entorno, pero la lectura sigue siendo complementaria frente al país."
                     : "Florida ends slightly stronger in this environment, though the reading remains complementary against the broader country context."}
               </td>
             </tr>
@@ -547,16 +547,16 @@ export function EnvironmentDeepDiveModule({
 
       <section className="macro-methodology-card">
         <div className="macro-summary-head">
-          <span>{locale === "es" ? "Como leer la puntuacion" : "How to read the score"}</span>
+          <span>{locale === "es" ? "Cómo leer la puntuación" : "How to read the score"}</span>
           <h3>{locale === "es" ? "Escala simple para exponer" : "Simple scale for presentation"}</h3>
           <p>
             {locale === "es"
-              ? "La puntuacion va de 1 a 5 y sirve para explicar que tan favorable es cada indicador para UMO. No busca poner a Texas y Florida a pelear entre si, sino mostrar por que ambos sobresalen frente al pais y que rol aporta cada uno."
+              ? "La puntuación va de 1 a 5 y sirve para explicar qué tan favorable es cada indicador para UMO. No busca poner a Texas y Florida a pelear entre sí, sino mostrar por qué ambos sobresalen frente al país y qué rol aporta cada uno."
               : "The score runs from 1 to 5 and explains how favorable each indicator is for UMO. It does not try to make Texas and Florida fight each other; it shows why both stand out against the country and what role each one contributes."}
           </p>
         </div>
         <div className="method-scale">
-          <div className="method-scale-chip">1 = {locale === "es" ? "Debil" : "Weak"}</div>
+          <div className="method-scale-chip">1 = {locale === "es" ? "Débil" : "Weak"}</div>
           <div className="method-scale-chip">2 = {locale === "es" ? "Bajo" : "Low"}</div>
           <div className="method-scale-chip">3 = {locale === "es" ? "Aceptable" : "Acceptable"}</div>
           <div className="method-scale-chip">4 = {locale === "es" ? "Fuerte" : "Strong"}</div>

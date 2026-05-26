@@ -1,4 +1,5 @@
 import type { Localized } from "./content";
+import { normalizeSpanishContent } from "../i18n/spanish";
 
 export type EnvironmentStatus = "available" | "pending";
 
@@ -35,7 +36,7 @@ export type EnvironmentEntry = {
   signals?: EnvironmentSignal[];
 };
 
-export const environmentIntro = {
+export const environmentIntro = normalizeSpanishContent({
   title: {
     es: "Analisis de Entornos",
     en: "Environment Analysis",
@@ -52,9 +53,9 @@ export const environmentIntro = {
     es: "La lectura no se divide en archivos aislados. Cada entorno responde una pregunta distinta sobre demanda, operacion, acceso y escalabilidad para UMO.",
     en: "The reading is not split into isolated files. Each environment answers a different question about demand, operations, access and scalability for UMO.",
   },
-};
+});
 
-export const environmentEntries: EnvironmentEntry[] = [
+export const environmentEntries: EnvironmentEntry[] = normalizeSpanishContent<EnvironmentEntry[]>([
   {
     id: "entorno-cultural-social",
     title: {
@@ -514,18 +515,18 @@ export const environmentEntries: EnvironmentEntry[] = [
       },
       {
         title: {
-          es: "Ruta logistica y capacidad portuaria",
+          es: "Ruta logística en días",
           en: "Logistics route and port capacity",
         },
-        florida: "4.9 / 5",
-        texas: "5.0 / 5",
-        national: "Florida = entrada / Texas = escala",
+        florida: "5.0 / 5",
+        texas: "3.1 / 5",
+        national: "Ruta más corta = mejor arranque",
         referenceLabel: {
           es: "Lectura USA",
           en: "U.S. reading",
         },
         reading: {
-          es: "Florida ofrece entrada mas rapida desde Colombia; Texas gana cuando la meta es escalar distribucion B2B con puertos mas grandes y mejor red interna.",
+          es: "Aquí la lectura se hace por tiempo de ruta, no por contenedores. Florida ofrece la entrada más rápida desde Colombia; Texas queda como fase posterior cuando la prioridad pase a cobertura y distribución.",
           en: "Florida offers a faster entry from Colombia; Texas wins when the goal is to scale B2B distribution with larger ports and a stronger internal network.",
         },
       },
@@ -652,7 +653,7 @@ export const environmentEntries: EnvironmentEntry[] = [
       },
     ],
   },
-];
+]);
 
 export function getEnvironmentEntry(id: string) {
   return environmentEntries.find((entry) => entry.id === id);

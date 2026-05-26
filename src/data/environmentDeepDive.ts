@@ -1,4 +1,5 @@
 import type { Localized } from "./content";
+import { normalizeSpanishContent } from "../i18n/spanish";
 
 export type EnvironmentDetailMetric = {
   label: Localized;
@@ -52,7 +53,7 @@ export type EnvironmentDeepDive = {
   indicators: EnvironmentIndicatorDetail[];
 };
 
-export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
+export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = normalizeSpanishContent<Record<string, EnvironmentDeepDive>>({
   "entorno-cultural-social": {
     id: "entorno-cultural-social",
     heroEyebrow: {
@@ -969,64 +970,61 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
       {
         id: "ruta-logistica-colombia",
         eyebrow: { es: "Indicador 03", en: "Indicator 03" },
-        title: { es: "Ruta logistica Colombia - Florida / Texas", en: "Colombia - Florida / Texas logistics route" },
+        title: { es: "Ruta logística Colombia - Florida / Texas", en: "Colombia - Florida / Texas logistics route" },
         summary: {
-          es: "Florida ofrece entrada mas corta; Texas ofrece mas capacidad portuaria y mejor plataforma para crecer despues hacia distribuidores y clientes de escala.",
-          en: "Florida offers a shorter entry; Texas offers greater port capacity and a better platform to grow later toward distributors and scale customers.",
+          es: "En este punto la lectura se hace por días de ruta, no por volumen de contenedores. Florida queda mejor para la entrada inicial porque llega más rápido desde Colombia; Texas tarda más, aunque sigue sirviendo cuando la meta pasa a distribución interna y expansión posterior.",
+          en: "For this indicator the reading is based on route days, not container volume. Florida performs better for the initial entry because it reaches faster from Colombia; Texas takes longer, although it remains useful when the goal shifts to inland distribution and later expansion.",
         },
-        texas: { label: { es: "Texas", en: "Texas" }, display: "5 / 5", chartValue: 5, score: 5 },
-        florida: { label: { es: "Florida", en: "Florida" }, display: "4.9 / 5", chartValue: 4.9, score: 4.9 },
-        chartMax: 4500000,
-        latestLabel: { es: "TEUs 2025", en: "2025 TEUs" },
+        texas: { label: { es: "Texas", en: "Texas" }, display: "9 d 15 h", chartValue: 3.12, score: 3.12 },
+        florida: { label: { es: "Florida", en: "Florida" }, display: "6 d", chartValue: 5, score: 5 },
+        reference: {
+          label: { es: "Lectura UMO", en: "UMO reading" },
+          display: "Menos días = mejor entrada",
+        },
+        chartMax: 5,
+        latestLabel: { es: "Ruta estimada 2025", en: "Estimated 2025 route" },
         tableRows: [
-          { label: { es: "2021", en: "2021" }, texas: "3,453,226 TEUs", florida: "1,038,179 TEUs", reference: "Capacidad portuaria base" },
-          { label: { es: "2022", en: "2022" }, texas: "3,974,900 TEUs", florida: "1,107,546 TEUs", reference: "Escala en crecimiento" },
-          { label: { es: "2023", en: "2023" }, texas: "3,826,157 TEUs", florida: "1,013,159 TEUs", reference: "Texas mantiene mayor volumen" },
-          { label: { es: "2024", en: "2024" }, texas: "4,139,991 TEUs", florida: "1,087,112 TEUs", reference: "Ambos puertos siguen activos" },
-          { label: { es: "2025", en: "2025" }, texas: "4,303,345 TEUs", florida: "1,167,552 TEUs", reference: "Ruta FL ~6 dias / TX ~9d 15h" },
+          { label: { es: "Salida desde Colombia", en: "Departure from Colombia" }, texas: "Cartagena / Barranquilla", florida: "Cartagena / Barranquilla", reference: "Mismo origen posible" },
+          { label: { es: "Llegada principal", en: "Main arrival" }, texas: "Houston", florida: "Port Everglades", reference: "Dos puertas válidas" },
+          { label: { es: "Tiempo estimado de ruta", en: "Estimated route time" }, texas: "9 d 15 h", florida: "6 d", reference: "Florida llega primero" },
+          { label: { es: "Uso recomendado", en: "Recommended use" }, texas: "Distribución y escala posterior", florida: "Entrada inicial más rápida", reference: "Decisión por fase" },
+          { label: { es: "Base de evaluación", en: "Evaluation basis" }, texas: "Más días", florida: "Menos días", reference: "Aquí manda el tiempo" },
         ],
         bullets: [
           {
-            es: "Florida ayuda a entrar mas rapido desde Cartagena o Barranquilla hacia el sureste.",
+            es: "Florida ayuda a entrar más rápido desde Cartagena o Barranquilla hacia el sureste.",
             en: "Florida helps UMO enter faster from Cartagena or Barranquilla into the Southeast.",
           },
           {
-            es: "Texas sirve mejor cuando la meta es cubrir Houston, Dallas, San Antonio y zonas agroindustriales.",
-            en: "Texas works better when the goal is to cover Houston, Dallas, San Antonio and agro-industrial areas.",
+            es: "Texas sigue sirviendo cuando la meta es cubrir Houston, Dallas, San Antonio y zonas agroindustriales después de entrar.",
+            en: "Texas still helps when the goal is to cover Houston, Dallas, San Antonio and agro-industrial areas after entry.",
           },
           {
-            es: "No es una pelea de puertos: es una decision de fase de entrada frente a fase de expansion.",
-            en: "This is not a port fight: it is a decision between entry phase and expansion phase.",
+            es: "Aquí no estamos premiando TEUs; estamos premiando la ruta más corta para arrancar mejor.",
+            en: "Here we are not rewarding TEUs; we are rewarding the shorter route for a better start.",
           },
         ],
         analysis: {
           keyData: {
-            es: "Port Houston cierra 2025 con 4.30M TEUs y Port Everglades con 1.17M TEUs, mientras Florida conserva una ruta maritima mas corta desde Colombia.",
-            en: "Port Houston closes 2025 with 4.30M TEUs and Port Everglades with 1.17M TEUs, while Florida keeps a shorter maritime route from Colombia.",
+            es: "La ruta hacia Florida se estima en 6 días, mientras la ruta hacia Texas se mueve alrededor de 9 días y 15 horas.",
+            en: "The route to Florida is estimated at 6 days, while the route to Texas is around 9 days and 15 hours.",
           },
           meaning: {
-            es: "Florida favorece la velocidad inicial; Texas favorece la distribucion interna y el crecimiento de mayor volumen.",
-            en: "Florida favors initial speed; Texas favors internal distribution and higher-volume growth.",
+            es: "Si el criterio principal es entrar rápido y probar mercado, Florida tiene ventaja clara. Texas entra después cuando ya importa más la distribución que la velocidad inicial.",
+            en: "If the main criterion is entering fast and testing the market, Florida has a clear advantage. Texas comes later when distribution matters more than initial speed.",
           },
           impact: {
-            es: "UMO puede usar Florida para validar entrada y Texas para consolidar dealers, distribuidores y clientes mas grandes.",
-            en: "UMO can use Florida to validate entry and Texas to consolidate dealers, distributors and larger customers.",
+            es: "UMO puede usar Florida para abrir más rápido, bajar fricción logística al inicio y después evaluar Texas como segunda fase de cobertura y escala.",
+            en: "UMO can use Florida to open faster, reduce logistics friction at the start and then evaluate Texas as a second phase for coverage and scale.",
           },
           score: {
-            es: "Texas recibe 5/5 por capacidad y escala logistica. Florida queda en 4.9/5 porque sigue siendo una gran opcion de entrada por cercania y tiempos mas cortos.",
-            en: "Texas receives 5/5 for capacity and logistics scale. Florida remains at 4.9/5 because it is still a great entry option due to proximity and shorter transit times.",
+            es: "Florida recibe 5/5 porque, en este indicador, la nota se basa en días de ruta y no en volumen portuario. Texas queda en 3.12/5 porque tarda más en llegar desde Colombia.",
+            en: "Florida receives 5/5 because, in this indicator, the score is based on route days rather than port volume. Texas lands at 3.12/5 because it takes longer to reach from Colombia.",
           },
         },
-        series: [
-          { year: "2021", texas: 3453226, florida: 1038179, note: { es: "Texas parte con mas escala portuaria.", en: "Texas starts with larger port scale." } },
-          { year: "2022", texas: 3974900, florida: 1107546, note: { es: "Suben ambos puertos, pero Houston abre mas distancia.", en: "Both ports rise, but Houston opens more distance." } },
-          { year: "2023", texas: 3826157, florida: 1013159, note: { es: "La diferencia de volumen sigue clara.", en: "The volume gap remains clear." } },
-          { year: "2024", texas: 4139991, florida: 1087112, note: { es: "Texas refuerza la lectura de escala.", en: "Texas reinforces the scale reading." } },
-          { year: "2025", texas: 4303345, florida: 1167552, note: { es: "Florida sigue siendo la ruta mas corta; Texas la mas grande.", en: "Florida remains the shorter route; Texas the larger one." } },
-        ],
         strategicReading: {
-          es: "Florida abre mas rapido. Texas distribuye mejor a gran escala. Juntos forman una ruta de entrada y crecimiento mas solida para UMO.",
-          en: "Florida opens faster. Texas distributes better at scale. Together they create a stronger entry-and-growth route for UMO.",
+          es: "Florida abre más rápido por días de ruta. Texas se reserva para la fase donde importe más cubrir volumen y red interna.",
+          en: "Florida opens faster in route days. Texas is better reserved for the phase where volume and inland network matter more.",
         },
         sources: [
           { label: "Port Everglades Cargo Statistics", href: "https://www.porteverglades.net/about-us/statistics/cargo-statistics/" },
@@ -1268,7 +1266,7 @@ export const environmentDeepDiveMap: Record<string, EnvironmentDeepDive> = {
       },
     ],
   },
-};
+});
 
 export function getEnvironmentDeepDive(id: string) {
   return environmentDeepDiveMap[id];

@@ -1,6 +1,7 @@
+import { normalizeSpanishContent } from "./spanish";
 export type Locale = "es" | "en";
 
-export const copy = {
+export const copy = normalizeSpanishContent({
   es: {
     nav: {
       archive: "Entregas",
@@ -15,17 +16,17 @@ export const copy = {
       kicker: "International dossier // UMO to USA",
       title: "UMO Global Dossier",
       subtitle:
-        "Un centro visual para ordenar evidencias, entregas y decisiones del proceso de internacionalizacion hacia Estados Unidos.",
+        "Un centro visual para ordenar evidencias, entregas y decisiones del proceso de internacionalización hacia Estados Unidos.",
       primary: "Explorar entregas",
-      secondary: "Ver diagnostico",
+      secondary: "Ver diagnóstico",
       status: "Caso activo",
       market: "Mercado objetivo",
-      route: "Medellin, Antioquia / ESIC -> Estados Unidos",
+      route: "Medellín, Antioquia / ESIC -> Estados Unidos",
     },
     archive: {
       title: "Evidence Board",
       subtitle:
-        "Cada entrega funciona como un expediente vivo: documentos completos, imagenes, hallazgos, matrices y decisiones listas para crecer.",
+        "Cada entrega funciona como un expediente vivo: documentos completos, imágenes, hallazgos, matrices y decisiones listas para crecer.",
       all: "Todo",
       open: "Abrir expediente",
       docs: "documentos",
@@ -33,34 +34,34 @@ export const copy = {
       download: "Descargar",
     },
     diagnostic: {
-      title: "Radar de preparacion internacional",
+      title: "Radar de preparación internacional",
       subtitle:
-        "Lectura inicial del diagnostico P-I: un mapa de capacidades, brechas y rutas de entrada para priorizar el avance.",
+        "Lectura inicial del diagnóstico P-I: un mapa de capacidades, brechas y rutas de entrada para priorizar el avance.",
       total: "Puntaje total",
-      strongest: "Senales fuertes",
-      risk: "Brechas criticas",
+      strongest: "Señales fuertes",
+      risk: "Brechas críticas",
       insight:
         "La empresa muestra direccionamiento y alianzas con buen potencial, pero debe reforzar talento internacional, servicios exportables y mecanismos formales de entrada.",
     },
     canvas: {
       title: "Modelos y matrices",
       subtitle:
-        "Canvas, DOFA y piezas visuales se presentan como material de analisis, no como anexos escondidos.",
+        "Canvas, DOFA y piezas visuales se presentan como material de análisis, no como anexos escondidos.",
       canvas: "Business Model Canvas",
       dofa: "Matriz DOFA",
     },
     team: {
       title: "Unidad de trabajo",
       subtitle:
-        "El equipo se organiza como celula de investigacion: roles flexibles, feedback constante y foco en convertir entregas en decisiones.",
+        "El equipo se organiza como célula de investigación: roles flexibles, feedback constante y foco en convertir entregas en decisiones.",
       purpose: "Proposito comun",
       purposeText:
         "Transformar habilidades individuales en una ventaja estrategica para liderar el desarrollo del nucleo con compromiso, respeto y aprendizaje compartido.",
     },
     goals: {
-      title: "Que queremos lograr",
+      title: "Qué queremos lograr",
       subtitle:
-        "Convertir documentos dispersos en una narrativa clara de internacionalizacion: diagnosticar, priorizar, construir y presentar.",
+        "Convertir documentos dispersos en una narrativa clara de internacionalización: diagnosticar, priorizar, construir y presentar.",
     },
     detail: {
       evidence: "Evidencia",
@@ -88,7 +89,7 @@ export const copy = {
       secondary: "View diagnostic",
       status: "Active case",
       market: "Target market",
-      route: "Medellin, Antioquia / ESIC -> United States",
+      route: "Medellín, Antioquia / ESIC -> United States",
     },
     archive: {
       title: "Evidence Board",
@@ -137,4 +138,4 @@ export const copy = {
       related: "Related material",
     },
   },
-} satisfies Record<Locale, Record<string, Record<string, string>>>;
+}) satisfies Record<Locale, Record<string, Record<string, string>>>;

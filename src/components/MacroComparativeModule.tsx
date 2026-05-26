@@ -548,7 +548,7 @@ function SummaryMatrix({ locale }: { locale: Locale }) {
               <th>{locale === "es" ? "Indicador" : "Indicator"}</th>
               <th>{texasLabel[locale]}</th>
               <th>{floridaLabel[locale]}</th>
-              <th>{locale === "es" ? "Estado mas fuerte" : "Stronger state"}</th>
+              <th>{locale === "es" ? "Estado más fuerte" : "Stronger state"}</th>
               <th>{locale === "es" ? "Lectura estrategica" : "Strategic reading"}</th>
             </tr>
           </thead>
@@ -677,7 +677,7 @@ export default function MacroComparativeModule({ locale }: { locale: Locale }) {
           <h3>{locale === "es" ? "Fuentes consolidadas" : "Consolidated references"}</h3>
           <p>
             {locale === "es"
-              ? "Se mantienen visibles para exposicion, sustento academico y validacion empresarial."
+              ? "Se mantienen visibles para exposición, sustento académico y validación empresarial."
               : "They remain visible for presentation, academic support and business validation."}
           </p>
         </div>

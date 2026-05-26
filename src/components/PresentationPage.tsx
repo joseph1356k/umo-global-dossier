@@ -108,9 +108,9 @@ const deckSlides: DeckSlide[] = [
     label: "Tesis ejecutiva",
     shortLabel: "Tesis",
     eyebrow: "Presentación ejecutiva",
-    title: "Florida primero. Texas escala.",
+    title: "UMO hacia Estados Unidos.",
     summary:
-      "La decisión ejecutiva es escoger el estado que valida demanda más rápido y deja preparada la expansión de mayor volumen.",
+      "Florida primero. Texas escala. La decisión ejecutiva es validar demanda rápido y dejar lista la expansión de mayor volumen.",
     variant: "hero",
   },
   {
@@ -268,16 +268,56 @@ const deckSlides: DeckSlide[] = [
   {
     id: "marketing",
     number: "17",
-    label: "Marketing y canales",
-    shortLabel: "Go-to-market",
-    eyebrow: "Captura de demanda",
-    title: "Digital mide. Local convierte.",
+    label: "Plan de marketing",
+    shortLabel: "Marketing",
+    eyebrow: "Thermo Seats by UMO",
+    title: "Adaptar para vender.",
     summary:
-      "Amazon, ecommerce, landing enfocada en Florida y contacto B2B deben trabajar con distribuidores, empresas de landscaping, campos de golf y tiendas de maquinaria.",
+      "El plan cambia el foco de vender cojines genericos a lanzar una linea compatible, tecnica y preparada para maquinaria de landscaping en Florida.",
+  },
+  {
+    id: "marketing-ecosistema",
+    number: "18",
+    label: "Ecosistema Florida",
+    shortLabel: "Ecosistema",
+    eyebrow: "Demanda recurrente",
+    title: "Florida convierte desgaste en demanda.",
+    summary:
+      "El clima, el uso exterior y el tamano del sector de turfgrass hacen que los asientos resistentes no sean un lujo, sino una necesidad operativa.",
+  },
+  {
+    id: "marketing-segmentacion",
+    number: "19",
+    label: "Segmentacion",
+    shortLabel: "Segmento",
+    eyebrow: "Comprador objetivo",
+    title: "El comprador exige compatibilidad.",
+    summary:
+      "El cliente B2B compara rapido, busca referencias por modelo y espera soporte tecnico antes de comprar repuestos para maquinaria comercial.",
+  },
+  {
+    id: "marketing-operacion",
+    number: "20",
+    label: "Plaza y precio",
+    shortLabel: "Plaza/precio",
+    eyebrow: "Entrada operativa",
+    title: "Exportar, cumplir y competir.",
+    summary:
+      "Exportacion directa desde Colombia, fulfillment localizado y precio digital competitivo reducen riesgo sin abrir estructura propia desde el inicio.",
+  },
+  {
+    id: "marketing-canales",
+    number: "21",
+    label: "Canales y promocion",
+    shortLabel: "Canales",
+    eyebrow: "Captura de demanda",
+    title: "La web debe cerrar la venta.",
+    summary:
+      "Amazon, landing regional, distribuidores online, SEO/SEM y contacto B2B deben conectarse con una herramienta de compatibilidad clara.",
   },
   {
     id: "riesgos",
-    number: "18",
+    number: "22",
     label: "Riesgos y control",
     shortLabel: "Riesgos",
     eyebrow: "Gestión ejecutiva",
@@ -287,7 +327,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "ruta",
-    number: "19",
+    number: "23",
     label: "Ruta de acción",
     shortLabel: "Ruta",
     eyebrow: "Cierre ejecutivo",
@@ -537,6 +577,119 @@ const channelCards: InsightCard[] = [
     text: "Comparativos, instalación, videos y pruebas de desgaste responden dudas antes del contacto.",
     meta: "Confianza",
     icon: Video,
+  },
+];
+
+const marketingProductCards: InsightCard[] = [
+  {
+    title: "Producto modificado",
+    text: "Mantener calidad industrial colombiana, pero adaptar dimensiones, materiales, catalogos digitales y referencias por modelo.",
+    meta: "Estrategia de modificacion",
+    icon: PackageCheck,
+  },
+  {
+    title: "Thermo Seats by UMO",
+    text: "Posicionar la linea como asiento ergonomico y termico para operadores de maquinaria que trabajan jornadas largas al exterior.",
+    meta: "Linea internacional",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Compatibilidad exacta",
+    text: "Priorizar tractores pequenos, podadoras comerciales y equipos dominantes en landscaping para reducir devoluciones.",
+    meta: "Menos friccion",
+    icon: FileText,
+  },
+];
+
+const marketingEcosystemCards: InsightCard[] = [
+  {
+    title: "USD 44.1B",
+    text: "El sector turfgrass y landscaping en Florida sostiene demanda recurrente para repuestos de uso exterior.",
+    meta: "Mercado sectorial",
+    icon: Sprout,
+  },
+  {
+    title: "2.10% inflacion",
+    text: "Un entorno de precios mas predecible ayuda a planear inventario, margen y presupuesto de adquisicion B2B.",
+    meta: "Q1 2026",
+    icon: LineChart,
+  },
+  {
+    title: "#4 fiscal",
+    text: "El atractivo tributario refuerza a Florida como plataforma de entrada frente a estados mas costosos.",
+    meta: "Tax competitiveness",
+    icon: Landmark,
+  },
+  {
+    title: "UV + humedad",
+    text: "Radiacion, humedad extrema y polvo aceleran desgaste; UMO debe vender resistencia como argumento central.",
+    meta: "Necesidad tecnica",
+    icon: ShieldCheck,
+  },
+];
+
+const marketingSegmentCards: InsightCard[] = [
+  {
+    title: "Duenos de landscaping",
+    text: "Buscan disponibilidad, compatibilidad rapida, durabilidad y menor tiempo muerto de la maquinaria comercial.",
+    meta: "Buyer B2B 01",
+    icon: UsersRound,
+  },
+  {
+    title: "Compras B2B",
+    text: "Gerentes de mantenimiento y procurement comparan especificaciones, precio, soporte y condiciones de entrega.",
+    meta: "Buyer B2B 02",
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: "93.0% urbano",
+    text: "La alta urbanizacion concentra comunidades planeadas, propiedades comerciales, campus y clubes con zonas verdes.",
+    meta: "Florida 2025",
+    icon: Building2,
+  },
+];
+
+const marketingOperationCards: InsightCard[] = [
+  {
+    title: "Exportacion directa",
+    text: "UMO conserva control de calidad y evita costos fijos altos de una sede propia durante la validacion.",
+    meta: "Modo de entrada",
+    icon: Truck,
+  },
+  {
+    title: "6 dias maritimos",
+    text: "La ruta Colombia-Florida permite ciclos cortos de reposicion, menor inventario y mejor flujo de caja.",
+    meta: "Logistica",
+    icon: Route,
+  },
+  {
+    title: "USD 100K nexus",
+    text: "Planear cumplimiento fiscal desde temprano evita fricciones cuando las ventas digitales empiecen a escalar.",
+    meta: "Florida economic nexus",
+    icon: CircleDollarSign,
+  },
+];
+
+const marketingChannelPlan = [
+  {
+    label: "Amazon USA",
+    text: "Prueba B2C medible con busquedas, conversion, reviews, preguntas y sensibilidad de precio.",
+  },
+  {
+    label: "Landing Florida",
+    text: "Pagina regional con compatibilidad por modelo, fichas tecnicas, soporte y formulario B2B.",
+  },
+  {
+    label: "Distribuidores online",
+    text: "Alianzas con ecommerce industrial y plataformas de repuestos para ampliar alcance sin estructura propia.",
+  },
+  {
+    label: "SEO/SEM",
+    text: "Capturar busquedas de alta intencion como replacement seats y parts for commercial lawn mowers Florida.",
+  },
+  {
+    label: "Email B2B",
+    text: "Prospeccion a directores de mantenimiento, campos de golf, clubes privados y empresas de landscaping.",
   },
 ];
 
@@ -1209,6 +1362,31 @@ function SourceNote() {
   );
 }
 
+function HeroRouteCanvas() {
+  return (
+    <div className="presentation-route-canvas" aria-hidden="true">
+      <span className="presentation-route-grid" />
+      <span className="presentation-route-line-v2" />
+      <span className="presentation-route-line-v2 is-secondary" />
+      <div className="presentation-route-node is-colombia">
+        <small>Origen</small>
+        <strong>Colombia</strong>
+        <em>Manufactura y control de calidad</em>
+      </div>
+      <div className="presentation-route-node is-florida">
+        <small>Entrada prioritaria</small>
+        <strong>Florida</strong>
+        <em>Turfgrass, golf y mantenimiento residencial</em>
+      </div>
+      <div className="presentation-route-node is-texas">
+        <small>Escala posterior</small>
+        <strong>Texas</strong>
+        <em>Agro, ranchos y distribuidores B2B</em>
+      </div>
+    </div>
+  );
+}
+
 export default function PresentationPage({ locale }: { locale: Locale }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [expandedVisual, setExpandedVisual] = useState<ExpandedVisual | null>(null);
@@ -1323,10 +1501,15 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
           transition={{ duration: 0.55, ease: "easeOut" }}
         >
           <div className="presentation-hero-stage">
+            <HeroRouteCanvas />
             <div className="presentation-hero-copy-v2">
               <span>{deckSlides[0].eyebrow}</span>
               <h1>{deckSlides[0].title}</h1>
-              <p>{deckSlides[0].summary}</p>
+              <strong className="presentation-hero-thesis">Florida primero. Texas escala.</strong>
+              <p>
+                Estrategia de internacionalización para convertir la experiencia industrial de UMO en una entrada
+                medible al mercado estadounidense de comodidad, maquinaria ligera y mantenimiento exterior.
+              </p>
               <div className="presentation-hero-actions-v2">
                 <button type="button" onClick={() => goToElement("decision")}>
                   Ver decisión <ArrowUpRight size={16} />
@@ -1340,16 +1523,16 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             <div className="presentation-hero-photo">
               <img src="/assets/content/florida-turf-hero.jpg" alt="Campo de golf y césped profesional en Florida" />
               <div>
-                <span>Florida / turfgrass</span>
+                <span>Florida / turfgrass / landscaping</span>
                 <strong>1,290 campos</strong>
-                <p>La señal visual del mercado: césped, golf, landscaping y mantenimiento recurrente.</p>
+                <p>La señal visual del mercado: césped, golf, comunidades, resorts y mantenimiento recurrente.</p>
               </div>
             </div>
 
             <div className="presentation-hero-proofline">
-              <span>Entrada inicial: Florida</span>
-              <span>Escala posterior: Texas</span>
-              <span>Modelo: exportar + aliar</span>
+              <span>Entrada inicial / Florida</span>
+              <span>Escala B2B / Texas</span>
+              <span>Modelo / exportación directa + aliados locales</span>
             </div>
           </div>
         </motion.section>
@@ -1766,26 +1949,120 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             slideRefs.current.marketing = node;
           }}
         >
-          <div className="presentation-channel-layout">
-            <div className="presentation-channel-funnel">
-              {channelCards.map((card) => (
+          <div className="presentation-marketing-core">
+            <article className="presentation-marketing-hero">
+              <PackageCheck size={26} />
+              <span>Producto internacional</span>
+              <h3>Thermo Seats by UMO</h3>
+              <p>
+                Una linea de asientos y soluciones de comodidad para operadores de podadoras comerciales, tractores
+                pequenos y maquinaria de mantenimiento de cesped en Florida.
+              </p>
+            </article>
+            <div className="presentation-panel-grid is-three">
+              {marketingProductCards.map((card) => (
                 <InsightPanel key={card.title} card={card} />
               ))}
             </div>
-            <div className="presentation-channel-map">
-              {[
-                "Amazon",
-                "Ecommerce propio",
-                "Landing Florida",
-                "Marketplace",
-                "Distribuidores locales",
-                "Empresas de landscaping",
-                "Tiendas de maquinaria",
-                "Campos de golf",
-                "Ventas B2B",
-                "Ventas B2C",
-              ].map((channel) => (
-                <span key={channel}>{channel}</span>
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById["marketing-ecosistema"]}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current["marketing-ecosistema"] = node;
+          }}
+        >
+          <div className="presentation-marketing-proof-grid">
+            {marketingEcosystemCards.map((card) => (
+              <InsightPanel key={card.title} card={card} accent="florida" />
+            ))}
+          </div>
+          <MetricRibbon
+            items={[
+              {
+                label: "Lectura ejecutiva",
+                value: "Recurrente",
+                text: "El desgaste por uso exterior convierte la comodidad y durabilidad en compra de reposicion.",
+              },
+              {
+                label: "Ventaja Florida",
+                value: "Clima + golf",
+                text: "Uso anual, campos de golf, comunidades y contratistas sostienen demanda mas visible.",
+              },
+              {
+                label: "Implicacion UMO",
+                value: "Resistencia",
+                text: "Materiales, costuras, fichas y garantia deben hablar de calor, humedad y radiacion UV.",
+              },
+            ]}
+          />
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById["marketing-segmentacion"]}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current["marketing-segmentacion"] = node;
+          }}
+        >
+          <div className="presentation-marketing-persona-grid">
+            {marketingSegmentCards.map((card) => (
+              <InsightPanel key={card.title} card={card} />
+            ))}
+          </div>
+          <div className="presentation-compatibility-strip">
+            {["Modelo de maquina", "Medidas exactas", "Referencia compatible", "Entrega y soporte"].map((step, index) => (
+              <article key={step}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{step}</strong>
+              </article>
+            ))}
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById["marketing-operacion"]}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current["marketing-operacion"] = node;
+          }}
+        >
+          <div className="presentation-marketing-route">
+            {marketingOperationCards.map((card) => (
+              <InsightPanel key={card.title} card={card} />
+            ))}
+          </div>
+          <div className="presentation-pricing-callout">
+            <CircleDollarSign size={24} />
+            <span>Precio competitivo digital</span>
+            <p>
+              El precio debe poder compararse contra alternativas online, pero defenderse con mayor vida util,
+              ergonomia, soporte tecnico y menor riesgo de compra por compatibilidad.
+            </p>
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById["marketing-canales"]}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current["marketing-canales"] = node;
+          }}
+        >
+          <div className="presentation-marketing-channel-stack">
+            <article className="presentation-channel-tool">
+              <MonitorSmartphone size={26} />
+              <span>Ventaja digital</span>
+              <h3>Buscador de compatibilidad</h3>
+              <p>
+                La web debe permitir filtrar por maquina y encontrar la referencia exacta de Thermo Seats. Eso reduce
+                devoluciones y convierte dudas tecnicas en leads.
+              </p>
+            </article>
+            <div className="presentation-channel-plan">
+              {marketingChannelPlan.map((channel) => (
+                <article key={channel.label}>
+                  <strong>{channel.label}</strong>
+                  <p>{channel.text}</p>
+                </article>
               ))}
             </div>
           </div>

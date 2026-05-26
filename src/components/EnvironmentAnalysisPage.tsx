@@ -133,7 +133,7 @@ export function EnvironmentSectionCard({
             {isAvailable
               ? entry.file?.description[locale]
               : locale === "es"
-                ? "El modulo ya esta creado. Cuando subas el archivo, aqui quedaran el acceso, la lectura y los soportes visuales sin tocar la estructura general."
+                ? "El módulo ya está creado. Cuando subas el archivo, aquí quedarán el acceso, la lectura y los soportes visuales sin tocar la estructura general."
                 : "The module is already created. When the file is uploaded, this is where access, reading and visual support will live without changing the overall structure."}
           </p>
           {entry.file ? (
@@ -173,7 +173,7 @@ export function EnvironmentSectionCard({
           </ul>
         </article>
         <article className="environment-indicator-card">
-          <span>{locale === "es" ? "Enfoque de exposicion" : "Presentation focus"}</span>
+          <span>{locale === "es" ? "Enfoque de exposición" : "Presentation focus"}</span>
           <p>{entry.focus[locale]}</p>
           {entry.notes?.map((note) => <p key={note[locale]}>{note[locale]}</p>)}
         </article>
@@ -385,11 +385,11 @@ export function EnvironmentIntegratedContent({ locale }: { locale: Locale }) {
 
       <section className="environment-conclusion-card">
         <div className="environment-overview-copy">
-          <span>{locale === "es" ? "Conclusion de la entrega" : "Delivery conclusion"}</span>
-          <h2>{locale === "es" ? "Conclusion del analisis de entornos" : "Environment analysis conclusion"}</h2>
+          <span>{locale === "es" ? "Conclusión de la entrega" : "Delivery conclusion"}</span>
+          <h2>{locale === "es" ? "Conclusión del análisis de entornos" : "Environment analysis conclusion"}</h2>
           <p>
             {locale === "es"
-              ? "La lectura conjunta deja dos roles claros. Texas se fortalece como mercado principal por escala operativa, sectores industriales, incentivos y capacidad logistica. Florida se fortalece como puerta de entrada por relacion comercial con Colombia, afinidad cultural, mercado residencial y ruta maritima mas rapida."
+              ? "La lectura conjunta deja dos roles claros. Texas se fortalece como mercado principal por escala operativa, sectores industriales, incentivos y capacidad logística. Florida se fortalece como puerta de entrada por relación comercial con Colombia, afinidad cultural, mercado residencial y ruta marítima más rápida."
               : "The combined reading leaves two clear roles. Texas becomes stronger as the main market because of operating scale, industrial sectors, incentives and logistics capacity. Florida becomes stronger as the entry gateway because of its trade relationship with Colombia, cultural fit, residential market and faster sea route."}
           </p>
         </div>
@@ -400,16 +400,16 @@ export function EnvironmentIntegratedContent({ locale }: { locale: Locale }) {
             <ul>
               <li>{locale === "es" ? "Mayor escala para maquinaria, agro, distribuidores y B2B." : "Greater scale for machinery, agriculture, distributors and B2B."}</li>
               <li>{locale === "es" ? "Mejor soporte para crecer despues de la entrada inicial." : "Better support to grow after the initial entry."}</li>
-              <li>{locale === "es" ? "Sobresale en logistica, sectores receptores e incentivos." : "Stands out in logistics, receiving sectors and incentives."}</li>
+              <li>{locale === "es" ? "Sobresale en logística, sectores receptores e incentivos." : "Stands out in logistics, receiving sectors and incentives."}</li>
             </ul>
           </article>
           <article className="environment-state-card">
             <span>Florida</span>
             <h3>{locale === "es" ? "Puerta de entrada / mercado complementario" : "Entry gateway / complementary market"}</h3>
             <ul>
-              <li>{locale === "es" ? "Relacion comercial mas visible con Colombia." : "More visible trade relationship with Colombia."}</li>
+              <li>{locale === "es" ? "Relación comercial más visible con Colombia." : "More visible trade relationship with Colombia."}</li>
               <li>{locale === "es" ? "Mejor lectura residencial, verde y de mantenimiento continuo." : "Stronger residential, green and continuous-maintenance reading."}</li>
-              <li>{locale === "es" ? "Entrada mas rapida por cercania maritima y afinidad latina." : "Faster entry through maritime proximity and Latin affinity."}</li>
+              <li>{locale === "es" ? "Entrada más rápida por cercanía marítima y afinidad latina." : "Faster entry through maritime proximity and Latin affinity."}</li>
             </ul>
           </article>
         </div>

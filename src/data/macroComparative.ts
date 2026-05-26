@@ -1,4 +1,5 @@
 import type { Locale } from "../i18n/copy";
+import { normalizeSpanishContent } from "../i18n/spanish";
 
 type Localized = Record<Locale, string>;
 
@@ -47,7 +48,7 @@ export type MacroIndicator = {
   fiscalRows?: FiscalMetricRow[];
 };
 
-export const macroHero = {
+export const macroHero = normalizeSpanishContent({
   title: {
     es: "Texas y Florida: dos rutas viables para la internacionalización de UMO",
     en: "Texas and Florida: two viable routes for UMO's internationalization",
@@ -60,9 +61,9 @@ export const macroHero = {
     es: "Este análisis compara Texas y Florida como posibles mercados para la entrada de UMO en Estados Unidos. Usamos seis indicadores para mostrar por qué estos dos estados resaltan frente al país en general y cómo le sirven a UMO para vender sillines, cojines y asientos para podadoras, tractores y maquinaria similar.",
     en: "This analysis compares Texas and Florida as possible markets for UMO's entry into the United States, using six macroeconomic and sector indicators. The goal is to identify which economic conditions favor the commercialization of seats, cushions and saddle components for mowers, tractors and similar machinery.",
   },
-};
+});
 
-export const macroExecutiveCards = [
+export const macroExecutiveCards = normalizeSpanishContent([
   {
     title: { es: "Mercado de escala", en: "Scale market" },
     state: { es: "Texas", en: "Texas" },
@@ -99,9 +100,9 @@ export const macroExecutiveCards = [
       en: "Texas = volume, machinery and scale / Florida = turf, landscaping and value",
     },
   },
-];
+]);
 
-export const macroPresentationCards = [
+export const macroPresentationCards = normalizeSpanishContent([
   {
     title: { es: "Qué analizamos", en: "What we analyzed" },
     text: {
@@ -123,9 +124,9 @@ export const macroPresentationCards = [
       en: "Texas is justified by scale, agriculture and industrial base; Florida by turfgrass, professional gardening, residential maintenance and steady consumption.",
     },
   },
-];
+]);
 
-export const macroMethodology = {
+export const macroMethodology = normalizeSpanishContent({
   title: { es: "Metodología de calificación", en: "Scoring methodology" },
   text: {
     es: "La calificación se lleva a una escala de 1 a 5. En cada indicador, el estado que sale mejor recibe 5 y el otro se calcula en proporción. La idea no es poner a Texas y Florida a pelear, sino mostrar por qué estos dos estados destacan dentro del país y qué papel cumple cada uno para UMO. El Excel del equipo es la base principal; el desempleo se completó con datos de BLS porque no venía en la hoja original.",
@@ -138,7 +139,7 @@ export const macroMethodology = {
     { label: { es: "4 = Favorable", en: "4 = Favorable" } },
     { label: { es: "5 = Muy favorable", en: "5 = Very favorable" } },
   ],
-};
+});
 
 const workbookSource: MacroSource = {
   label: { es: "Archivo base del equipo (Excel)", en: "Team base file (Excel)" },
@@ -150,7 +151,7 @@ const strategyMemoSource: MacroSource = {
   href: "/assets/content/macro-texas-florida.docx",
 };
 
-export const macroIndicators: MacroIndicator[] = [
+export const macroIndicators: MacroIndicator[] = normalizeSpanishContent<MacroIndicator[]>([
   {
     id: "inflacion",
     title: { es: "Inflación regional y estabilidad de precios", en: "Regional inflation and price stability" },
@@ -617,9 +618,9 @@ export const macroIndicators: MacroIndicator[] = [
       },
     ],
   },
-];
+]);
 
-export const macroConclusion = {
+export const macroConclusion = normalizeSpanishContent({
   title: {
     es: "Conclusión estratégica: dos mercados, dos oportunidades",
     en: "Strategic conclusion: two markets, two opportunities",
@@ -644,9 +645,9 @@ export const macroConclusion = {
       },
     },
   ],
-};
+});
 
-export const macroSupportingSources = [workbookSource, strategyMemoSource];
+export const macroSupportingSources = normalizeSpanishContent([workbookSource, strategyMemoSource]);
 
 export const macroReferenceList = Array.from(
   new Set(macroIndicators.flatMap((indicator) => indicator.apa)),

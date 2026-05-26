@@ -1,4 +1,5 @@
 import type { Locale } from "../i18n/copy";
+import { normalizeSpanishContent } from "../i18n/spanish";
 
 export type Localized = Record<Locale, string>;
 
@@ -80,7 +81,7 @@ export type BulletGroup = {
   items: Localized[];
 };
 
-export const companyProfile = {
+export const companyProfile = normalizeSpanishContent({
   name: "UMO S.A.",
   founded: "1968-10-18",
   origin: { es: "Nace en Medellin", en: "Founded in Medellin" },
@@ -140,9 +141,9 @@ export const companyProfile = {
     },
   ],
   certifications: ["IATF 16949", "ASES B", "BIQS", "DIAN", "CTPAT"],
-};
+});
 
-export const documents: DocumentItem[] = [
+export const documents: DocumentItem[] = normalizeSpanishContent<DocumentItem[]>([
   {
     id: "team-pdf",
     type: "pdf",
@@ -338,9 +339,9 @@ export const documents: DocumentItem[] = [
     category: { es: "Entornos", en: "Environments" },
     actionLabel: { es: "Abrir Excel", en: "Open spreadsheet" },
   },
-];
+]);
 
-export const diagnosticMetrics = [
+export const diagnosticMetrics = normalizeSpanishContent([
   { label: "Direccionamiento estrategico", value: 100, tone: "strong" },
   { label: "Alianzas estrategicas", value: 100, tone: "strong" },
   { label: "Exportacion e importacion bienes", value: 70, tone: "mid" },
@@ -353,9 +354,9 @@ export const diagnosticMetrics = [
   { label: "Exportacion de servicios", value: 4, tone: "risk" },
   { label: "Talento humano", value: 0, tone: "risk" },
   { label: "Licencias y franquicias", value: 0, tone: "risk" },
-];
+]);
 
-export const canvasBlocks = [
+export const canvasBlocks = normalizeSpanishContent([
   {
     title: { es: "Socios clave", en: "Key partners" },
     text: {
@@ -419,9 +420,9 @@ export const canvasBlocks = [
       en: "B2B sales to distributors and spare-parts stores, aftermarket sales, wholesale orders, stable commercial agreements and customization.",
     },
   },
-];
+]);
 
-export const swotBlocks = [
+export const swotBlocks = normalizeSpanishContent([
   {
     title: { es: "Fortalezas", en: "Strengths" },
     text: {
@@ -450,9 +451,9 @@ export const swotBlocks = [
       en: "Marketing asymmetry against competitors, talent leakage, channel vulnerability from referral dependence and sector saturation.",
     },
   },
-];
+]);
 
-export const team: TeamMember[] = [
+export const team: TeamMember[] = normalizeSpanishContent<TeamMember[]>([
   {
     name: "Thomas Ochoa",
     role: { es: "Investigacion y criterio", en: "Research and judgment" },
@@ -504,9 +505,9 @@ export const team: TeamMember[] = [
       en: "Time management, focus and distraction reduction.",
     },
   },
-];
+]);
 
-export const agreementPillars: InsightCard[] = [
+export const agreementPillars: InsightCard[] = normalizeSpanishContent<InsightCard[]>([
   {
     title: { es: "Proposito comun", en: "Shared purpose" },
     text: {
@@ -535,9 +536,9 @@ export const agreementPillars: InsightCard[] = [
       en: "Each member is responsible for their part, but also supports the collective finish so final quality does not depend on a single person.",
     },
   },
-];
+]);
 
-export const agreementRules: Localized[] = [
+export const agreementRules: Localized[] = normalizeSpanishContent<Localized[]>([
   {
     es: "Cumplir las tareas en los tiempos acordados y avisar con anticipacion si aparece un bloqueo.",
     en: "Complete tasks on agreed deadlines and warn early if a blocker appears.",
@@ -554,9 +555,9 @@ export const agreementRules: Localized[] = [
     es: "Sostener puntualidad, responsabilidad individual y apoyo entre integrantes.",
     en: "Maintain punctuality, individual ownership and support among members.",
   },
-];
+]);
 
-export const agreementConsequences: Localized[] = [
+export const agreementConsequences: Localized[] = normalizeSpanishContent<Localized[]>([
   {
     es: "Llamado de atencion inicial con oportunidad de corregir antes de la siguiente revision.",
     en: "Initial warning with a chance to correct before the next review.",
@@ -569,9 +570,9 @@ export const agreementConsequences: Localized[] = [
     es: "Registro del caso e informe al docente cuando la falta compromete una entrega o el trabajo del grupo.",
     en: "Record and teacher notification when the fault compromises a delivery or the group's work.",
   },
-];
+]);
 
-export const entryTestProfiles: EntryProfile[] = [
+export const entryTestProfiles: EntryProfile[] = normalizeSpanishContent<EntryProfile[]>([
   {
     name: "Thomas Ochoa",
     score: "89.8%",
@@ -596,9 +597,9 @@ export const entryTestProfiles: EntryProfile[] = [
       en: "Good operational potential and practical judgment; needs to strengthen analytical pause and rigor in diagnosis and planning.",
     },
   },
-];
+]);
 
-export const weeklyCadence: WeeklyCadenceRow[] = [
+export const weeklyCadence: WeeklyCadenceRow[] = normalizeSpanishContent<WeeklyCadenceRow[]>([
   {
     day: { es: "Lunes", en: "Monday" },
     time: { es: "1 hora", en: "1 hour" },
@@ -644,9 +645,9 @@ export const weeklyCadence: WeeklyCadenceRow[] = [
     },
     outcome: { es: "Version final mejorada", en: "Improved final version" },
   },
-];
+]);
 
-export const diagnosticSnapshots: DiagnosticSnapshot[] = [
+export const diagnosticSnapshots: DiagnosticSnapshot[] = normalizeSpanishContent<DiagnosticSnapshot[]>([
   { label: "Talento Humano", obtained: "0,01%", maximum: "12,50%" },
   { label: "Direccionamiento estrategico", obtained: "7,50%", maximum: "7,50%" },
   { label: "Tecnologia e innovacion", obtained: "4,38%", maximum: "15,00%" },
@@ -659,9 +660,9 @@ export const diagnosticSnapshots: DiagnosticSnapshot[] = [
   { label: "Licencias y Franquicias", obtained: "0,00%", maximum: "7,00%" },
   { label: "Alianzas Estrategicas", obtained: "3,00%", maximum: "3,00%" },
   { label: "Producto / Servicio", obtained: "12,19%", maximum: "20,00%" },
-];
+]);
 
-export const diagnosticRadarSets: RadarDataset[] = [
+export const diagnosticRadarSets: RadarDataset[] = normalizeSpanishContent<RadarDataset[]>([
   {
     title: { es: "Diagnostico completo", en: "Full diagnostic" },
     labels: [
@@ -684,9 +685,9 @@ export const diagnosticRadarSets: RadarDataset[] = [
     ],
     values: [70, 13, 0, 100, 61],
   },
-];
+]);
 
-export const diagnosticFactors: BulletGroup[] = [
+export const diagnosticFactors: BulletGroup[] = normalizeSpanishContent<BulletGroup[]>([
   {
     title: { es: "Factores Macro", en: "Macro factors" },
     items: [
@@ -721,9 +722,9 @@ export const diagnosticFactors: BulletGroup[] = [
       },
     ],
   },
-];
+]);
 
-export const canvasHighlights: InsightCard[] = [
+export const canvasHighlights: InsightCard[] = normalizeSpanishContent<InsightCard[]>([
   {
     title: { es: "Rendimiento termico y mecanico", en: "Thermal and mechanical performance" },
     text: {
@@ -745,9 +746,9 @@ export const canvasHighlights: InsightCard[] = [
       en: "Validation starts with marketplaces and specialized distributors before scaling stronger agreements in the U.S.",
     },
   },
-];
+]);
 
-export const swotDetailedBlocks: BulletGroup[] = [
+export const swotDetailedBlocks: BulletGroup[] = normalizeSpanishContent<BulletGroup[]>([
   {
     title: { es: "Fortalezas", en: "Strengths" },
     items: [
@@ -816,14 +817,14 @@ export const swotDetailedBlocks: BulletGroup[] = [
       },
     ],
   },
-];
+]);
 
-export const smartObjective = {
+export const smartObjective = normalizeSpanishContent({
   es: "UMO buscara ingresar de manera gradual y sostenible al mercado de Estados Unidos durante los proximos 12 meses, mediante la exportacion de sillas aftermarket para tractores y podadoras profesionales, priorizando los estados de Texas y Georgia, con una estrategia de entrada basada en marketplaces y en la vinculacion progresiva de distribuidores, talleres o concesionarios especializados. Como meta inicial, la empresa pretende comercializar entre 50 y 70 unidades en esta primera fase, manteniendo un rango de precio de entre USD 180 y USD 220 por silla, validando asi la aceptacion comercial del producto, su competitividad frente a marcas existentes y la viabilidad operativa de su oferta internacional. Este objetivo es especifico porque define con claridad el producto, el mercado, los estados objetivo, el canal y el volumen inicial esperado; es medible porque establece metas concretas de unidades vendidas, precio y plazo; es alcanzable y realista porque se ajusta a la capacidad actual de produccion de UMO, a su experiencia previa en exportacion de bienes y a su nivel actual de preparacion internacional; y es retador porque exige pasar del analisis y desarrollo del producto a una primera insercion comercial real en Estados Unidos. Ademas, este objetivo se relaciona directamente con el diagnostico de potencialidades de internacionalizacion, ya que la empresa presenta fortalezas en direccionamiento estrategico, capacidad productiva, adaptabilidad del producto y posibilidad de exportacion de bienes, pero aun debe fortalecer aspectos como el talento humano con competencias internacionales, el dominio del ingles y la consolidacion de una estructura comercial externa mas robusta.",
   en: "UMO will seek a gradual and sustainable entry into the United States market during the next 12 months through the export of aftermarket seats for tractors and professional mowers, prioritizing Texas and Georgia, with an entry strategy based on marketplaces and the progressive linkage of distributors, workshops or specialized dealerships. As an initial target, the company aims to commercialize between 50 and 70 units in this first phase, keeping a price range between USD 180 and USD 220 per seat, thereby validating product acceptance, competitiveness against existing brands and the operating viability of its international offer. This goal is specific because it clearly defines the product, market, target states, channel and expected initial volume; measurable because it sets concrete targets for units sold, price and timing; achievable and realistic because it fits UMO's current production capacity, prior experience exporting goods and current level of international readiness; and challenging because it requires moving from analysis and product development to a first real commercial insertion in the United States. It is also directly linked to the diagnosis of internationalization potential, since the company shows strengths in strategic direction, production capacity, product adaptability and export potential, but still needs to strengthen international talent, English proficiency and a more robust external commercial structure.",
-};
+});
 
-export const smartCriteria: InsightCard[] = [
+export const smartCriteria: InsightCard[] = normalizeSpanishContent<InsightCard[]>([
   {
     title: { es: "Especifico", en: "Specific" },
     text: {
@@ -852,9 +853,9 @@ export const smartCriteria: InsightCard[] = [
       en: "It forces a move from analysis to real commercial entry, aligned with the strengths and gaps found in the diagnostic.",
     },
   },
-];
+]);
 
-export const viabilityPillars: InsightCard[] = [
+export const viabilityPillars: InsightCard[] = normalizeSpanishContent<InsightCard[]>([
   {
     title: { es: "Dimension economica", en: "Economic dimension" },
     text: {
@@ -883,9 +884,9 @@ export const viabilityPillars: InsightCard[] = [
       en: "Texas concentrates volume demand; Georgia enables logistics, replenishment and access to the Port of Savannah.",
     },
   },
-];
+]);
 
-export const deliveries: Delivery[] = [
+export const deliveries: Delivery[] = normalizeSpanishContent<Delivery[]>([
   {
     id: "entrega-1",
     number: 1,
@@ -1323,9 +1324,9 @@ export const deliveries: Delivery[] = [
       },
     ],
   },
-];
+]);
 
-export const objectives = [
+export const objectives = normalizeSpanishContent([
   {
     id: "diagnose",
     label: { es: "Diagnosticar", en: "Diagnose" },
@@ -1358,4 +1359,4 @@ export const objectives = [
       en: "Present progress with a visual narrative that makes the case easy to understand.",
     },
   },
-];
+]);

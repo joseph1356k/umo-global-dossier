@@ -1,18 +1,35 @@
 :root {
-  --black: #2d2a29;
-  --black-2: #1f1d1c;
-  --panel: rgba(27, 25, 24, 0.9);
-  --line: rgba(122, 125, 129, 0.26);
-  --line-red: rgba(240, 78, 54, 0.45);
-  --paper: #f2efe9;
-  --muted: #9da0a4;
-  --red: #f04e36;
-  --red-deep: #5b271f;
-  --cyan: #7a7d81;
-  --brand-orange-rgb: 240, 78, 54;
+  --black: #070706;
+  --black-2: #10100f;
+  --panel: rgba(16, 16, 15, 0.86);
+  --line: rgba(232, 222, 208, 0.16);
+  --line-red: rgba(229, 64, 48, 0.42);
+  --paper: #f6efe4;
+  --muted: #aaa39a;
+  --red: #e54030;
+  --red-deep: #5d211b;
+  --cyan: #66839a;
+  --green: #9aaa69;
+  --umo-bg: #050505;
+  --umo-carbon: #0b0c0c;
+  --umo-graphite: #151514;
+  --umo-panel: rgba(22, 22, 20, 0.78);
+  --umo-panel-strong: rgba(29, 28, 26, 0.92);
+  --umo-line: rgba(246, 239, 228, 0.14);
+  --umo-line-strong: rgba(246, 239, 228, 0.24);
+  --umo-red: #e54030;
+  --umo-red-rgb: 229, 64, 48;
+  --umo-blue: #5d7f96;
+  --umo-blue-rgb: 93, 127, 150;
+  --umo-amber: #c99a46;
+  --umo-amber-rgb: 201, 154, 70;
+  --umo-turf: #9aaa69;
+  --umo-cream: #f6efe4;
+  --umo-muted: #aaa39a;
+  --umo-shadow: 0 30px 110px rgba(0, 0, 0, 0.42);
+  --brand-orange-rgb: 229, 64, 48;
   --brand-gray-rgb: 122, 125, 129;
-  --brand-black-rgb: 45, 42, 41;
-  --green: #b5ff65;
+  --brand-black-rgb: 7, 7, 6;
   --font-display: "Bodoni Moda", Georgia, serif;
   --font-body: "Rajdhani", "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", Consolas, monospace;
@@ -5684,6 +5701,11 @@ main {
 .presentation-decision-secondary,
 .presentation-strategy-flow article,
 .presentation-canvas-strip article,
+.presentation-marketing-hero,
+.presentation-compatibility-strip article,
+.presentation-pricing-callout,
+.presentation-channel-tool,
+.presentation-channel-plan article,
 .presentation-risk-grid article,
 .presentation-roadmap-rail article,
 .presentation-final-grid article {
@@ -5741,6 +5763,8 @@ main {
 .presentation-decision-primary h3,
 .presentation-decision-secondary h3,
 .presentation-strategy-flow h3,
+.presentation-marketing-hero h3,
+.presentation-channel-tool h3,
 .presentation-risk-grid h3,
 .presentation-roadmap-rail h3 {
   margin: 0;
@@ -6357,6 +6381,118 @@ main {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.presentation-marketing-core {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-marketing-hero,
+.presentation-channel-tool,
+.presentation-pricing-callout {
+  min-height: 100%;
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  padding: 24px;
+  border-color: var(--line-red);
+  background:
+    radial-gradient(circle at 82% 16%, rgba(240, 78, 54, 0.2), transparent 28%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-marketing-hero span,
+.presentation-channel-tool span,
+.presentation-pricing-callout span,
+.presentation-compatibility-strip span {
+  color: var(--red);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+}
+
+.presentation-marketing-hero p,
+.presentation-channel-tool p,
+.presentation-pricing-callout p,
+.presentation-channel-plan p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.78);
+  font-size: clamp(0.95rem, 1vw, 1.08rem);
+  line-height: 1.55;
+}
+
+.presentation-marketing-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.presentation-marketing-proof-grid .presentation-panel {
+  min-height: 240px;
+}
+
+.presentation-marketing-persona-grid,
+.presentation-marketing-route {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.presentation-compatibility-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-compatibility-strip article {
+  min-height: 120px;
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  padding: 18px;
+}
+
+.presentation-compatibility-strip strong {
+  color: rgba(245, 242, 232, 0.9);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.5vw, 1.8rem);
+  line-height: 1;
+}
+
+.presentation-pricing-callout {
+  min-height: 150px;
+  align-content: center;
+}
+
+.presentation-marketing-channel-stack {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.68fr) minmax(0, 1.32fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-channel-plan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.presentation-channel-plan article {
+  min-height: 158px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 18px;
+}
+
+.presentation-channel-plan strong {
+  color: var(--red);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0;
 }
 
 .presentation-risk-grid {
@@ -7033,6 +7169,8 @@ main {
   .presentation-state-story,
   .presentation-decision-layout,
   .presentation-channel-layout,
+  .presentation-marketing-core,
+  .presentation-marketing-channel-stack,
   .presentation-map-slide-layout {
     grid-template-columns: 1fr;
   }
@@ -7055,6 +7193,7 @@ main {
 
   .presentation-benchmark-grid-v2,
   .presentation-tax-grid-v2,
+  .presentation-marketing-proof-grid,
   .presentation-risk-grid,
   .presentation-roadmap-rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -7062,6 +7201,9 @@ main {
 
   .presentation-scorecard,
   .presentation-canvas-strip,
+  .presentation-marketing-persona-grid,
+  .presentation-marketing-route,
+  .presentation-channel-plan,
   .presentation-visual-gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -7123,6 +7265,11 @@ main {
   .presentation-visual-gallery,
   .presentation-diagnostic-layout,
   .presentation-map-slide-layout,
+  .presentation-marketing-proof-grid,
+  .presentation-marketing-persona-grid,
+  .presentation-marketing-route,
+  .presentation-compatibility-strip,
+  .presentation-channel-plan,
   .presentation-risk-grid,
   .presentation-roadmap-rail,
   .presentation-final-grid,
@@ -7259,4 +7406,913 @@ main {
   }
 }
 
+/* UMO executive presentation refresh */
+body {
+  background:
+    linear-gradient(rgba(var(--umo-red-rgb), 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--umo-blue-rgb), 0.035) 1px, transparent 1px),
+    linear-gradient(135deg, #050505 0%, #0d0d0c 42%, #130d0b 78%, #050505 100%);
+  background-size: 52px 52px, 52px 52px, auto;
+}
+
+.site-header {
+  border-bottom-color: rgba(246, 239, 228, 0.1);
+  background: rgba(5, 5, 5, 0.78);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.28);
+}
+
+.brand span {
+  color: var(--umo-cream);
+}
+
+.brand small,
+.desktop-nav a {
+  color: rgba(246, 239, 228, 0.68);
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+  color: var(--umo-cream);
+}
+
+.presentation-page.presentation-deck-page {
+  position: relative;
+  min-height: 100svh;
+  padding-top: 74px;
+  color: var(--umo-cream);
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.94), rgba(10, 10, 9, 0.96) 44%, rgba(7, 7, 6, 0.98)),
+    linear-gradient(120deg, rgba(var(--umo-red-rgb), 0.11), transparent 32%),
+    linear-gradient(305deg, rgba(var(--umo-blue-rgb), 0.12), transparent 36%);
+  overflow-x: clip;
+  isolation: isolate;
+}
+
+.presentation-page.presentation-deck-page::before,
+.presentation-page.presentation-deck-page::after {
+  position: fixed;
+  inset: 74px 0 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+}
+
+.presentation-page.presentation-deck-page::before {
+  opacity: 0.32;
+  background:
+    linear-gradient(rgba(246, 239, 228, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 239, 228, 0.035) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 82%);
+}
+
+.presentation-page.presentation-deck-page::after {
+  opacity: 0.48;
+  background:
+    linear-gradient(118deg, transparent 0 19%, rgba(var(--umo-red-rgb), 0.16) 19.15%, transparent 19.5% 100%),
+    linear-gradient(63deg, transparent 0 70%, rgba(var(--umo-blue-rgb), 0.14) 70.15%, transparent 70.5% 100%);
+}
+
+.presentation-deck-shell {
+  width: min(1500px, calc(100% - 72px));
+  margin: 0 auto;
+  padding-bottom: 36px;
+}
+
+.presentation-slide {
+  min-height: calc(100svh - 74px);
+  padding: 30px 0;
+  scroll-margin-top: 74px;
+}
+
+.presentation-slide.is-hero {
+  padding: 22px 0 34px;
+}
+
+.presentation-slide-shell,
+.presentation-hero-stage {
+  border: 1px solid var(--umo-line);
+  border-radius: 8px;
+  background:
+    linear-gradient(125deg, rgba(246, 239, 228, 0.07), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.018)),
+    var(--umo-panel);
+  box-shadow: var(--umo-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.presentation-slide-shell {
+  min-height: min(790px, calc(100svh - 124px));
+  grid-template-columns: minmax(270px, 0.42fr) minmax(0, 1.58fr);
+  gap: 36px;
+  padding: 46px;
+}
+
+.presentation-slide-shell::before,
+.presentation-hero-stage::before {
+  opacity: 0.16;
+  background:
+    linear-gradient(rgba(246, 239, 228, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 239, 228, 0.08) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(90deg, #000 0%, transparent 68%);
+}
+
+.presentation-slide-shell::after,
+.presentation-hero-stage::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(var(--umo-red-rgb), 0.78), rgba(var(--umo-amber-rgb), 0.58), transparent);
+}
+
+.presentation-slide-index,
+.presentation-hero-copy-v2 > span,
+.presentation-panel span,
+.presentation-metric-ribbon span,
+.presentation-timeline span,
+.presentation-evidence-stack span,
+.presentation-benchmark-head span,
+.presentation-tax-card-v2 span,
+.presentation-state-hero span,
+.presentation-decision-primary span,
+.presentation-decision-secondary span,
+.presentation-roadmap-rail span,
+.presentation-final-grid span,
+.presentation-source-note-v2,
+.presentation-company-lead span,
+.presentation-canvas-strip span,
+.presentation-risk-grid span,
+.presentation-marketing-hero span,
+.presentation-channel-tool span,
+.presentation-pricing-callout span,
+.presentation-compatibility-strip span {
+  color: rgba(var(--umo-amber-rgb), 0.92);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.presentation-slide-copy h2,
+.presentation-hero-copy-v2 h1 {
+  color: var(--umo-cream);
+  text-wrap: balance;
+}
+
+.presentation-slide-copy h2 {
+  max-width: 660px;
+  font-size: 3.8rem;
+  line-height: 0.98;
+}
+
+.presentation-slide-copy p,
+.presentation-hero-copy-v2 p,
+.presentation-panel p,
+.presentation-metric-ribbon p,
+.presentation-timeline p,
+.presentation-evidence-stack p,
+.presentation-benchmark-card p,
+.presentation-tax-card-v2 p,
+.presentation-tax-card-v2 li,
+.presentation-state-hero p,
+.presentation-score-row p,
+.presentation-decision-primary p,
+.presentation-decision-secondary p,
+.presentation-strategy-flow p,
+.presentation-canvas-strip p,
+.presentation-risk-grid p,
+.presentation-roadmap-rail p,
+.presentation-final-grid p,
+.presentation-stat-bars p,
+.presentation-national-card p {
+  color: rgba(246, 239, 228, 0.72);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.56;
+}
+
+.presentation-slide-copy p {
+  max-width: 560px;
+  font-size: 1.08rem;
+}
+
+.presentation-side-rail {
+  left: 18px;
+  width: 142px;
+  padding: 10px 8px;
+  border: 1px solid rgba(246, 239, 228, 0.1);
+  border-radius: 8px;
+  background: rgba(5, 5, 5, 0.52);
+  backdrop-filter: blur(16px);
+}
+
+.presentation-rail-track {
+  left: 17px;
+  top: 18px;
+  bottom: 18px;
+  background: rgba(246, 239, 228, 0.12);
+}
+
+.presentation-rail-track span,
+.presentation-deck-status b {
+  background: linear-gradient(180deg, var(--umo-red), var(--umo-amber));
+}
+
+.presentation-rail-item {
+  min-height: 33px;
+  color: rgba(246, 239, 228, 0.54);
+}
+
+.presentation-rail-item strong {
+  font-size: 0.64rem;
+}
+
+.presentation-rail-item.is-active span {
+  border-color: rgba(var(--umo-amber-rgb), 0.72);
+  background: var(--umo-red);
+  box-shadow: 0 0 0 5px rgba(var(--umo-red-rgb), 0.14);
+}
+
+.presentation-deck-status {
+  top: 88px;
+  right: 24px;
+  border-color: rgba(246, 239, 228, 0.12);
+  border-radius: 8px;
+  background: rgba(5, 5, 5, 0.7);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+}
+
+.presentation-deck-status span {
+  color: var(--umo-amber);
+}
+
+.presentation-deck-controls {
+  top: 90px;
+}
+
+.presentation-deck-controls button,
+.presentation-hero-actions-v2 button,
+.presentation-trend-head button,
+.presentation-benchmark-head button,
+.presentation-map-head button,
+.presentation-modal-close {
+  border-color: rgba(246, 239, 228, 0.14);
+  border-radius: 7px;
+  background: rgba(5, 5, 5, 0.64);
+}
+
+.presentation-deck-controls button:hover,
+.presentation-hero-actions-v2 button:hover,
+.presentation-trend-head button:hover,
+.presentation-benchmark-head button:hover,
+.presentation-map-head button:hover,
+.presentation-modal-close:hover {
+  border-color: rgba(var(--umo-amber-rgb), 0.62);
+  background: rgba(var(--umo-red-rgb), 0.13);
+}
+
+.presentation-hero-stage {
+  min-height: min(760px, calc(100svh - 124px));
+  grid-template-columns: minmax(0, 0.9fr) minmax(390px, 0.72fr);
+  gap: 30px;
+  padding: 56px;
+  background:
+    linear-gradient(128deg, rgba(246, 239, 228, 0.075), transparent 25%),
+    linear-gradient(43deg, rgba(var(--umo-blue-rgb), 0.2), transparent 50%),
+    linear-gradient(180deg, rgba(21, 21, 20, 0.92), rgba(9, 9, 8, 0.95));
+}
+
+.presentation-route-canvas {
+  z-index: 1;
+  overflow: hidden;
+}
+
+.presentation-route-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background:
+    linear-gradient(rgba(246, 239, 228, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 239, 228, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(90deg, #000, transparent 82%);
+}
+
+.presentation-route-line-v2 {
+  left: 15%;
+  top: 58%;
+  width: 70%;
+  height: 1px;
+  transform: rotate(-12deg);
+  background: linear-gradient(90deg, transparent, rgba(var(--umo-red-rgb), 0.72), rgba(var(--umo-amber-rgb), 0.82), transparent);
+  box-shadow: 0 0 26px rgba(var(--umo-red-rgb), 0.26);
+}
+
+.presentation-route-line-v2.is-secondary {
+  left: 24%;
+  top: 42%;
+  width: 52%;
+  transform: rotate(13deg);
+  background: linear-gradient(90deg, transparent, rgba(var(--umo-blue-rgb), 0.58), rgba(246, 239, 228, 0.38), transparent);
+}
+
+.presentation-route-node {
+  min-width: 174px;
+  display: none;
+  gap: 5px;
+  padding: 14px 16px;
+  border-color: rgba(246, 239, 228, 0.14);
+  border-radius: 8px;
+  color: var(--umo-cream);
+  background: rgba(5, 5, 5, 0.58);
+  backdrop-filter: blur(12px);
+}
+
+.presentation-route-node small {
+  color: var(--umo-amber);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+}
+
+.presentation-route-node strong {
+  font-size: 1.7rem;
+}
+
+.presentation-route-node em {
+  max-width: 190px;
+  color: rgba(246, 239, 228, 0.62);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-style: normal;
+  line-height: 1.22;
+}
+
+.presentation-route-node.is-colombia {
+  left: 7%;
+  bottom: 15%;
+  opacity: 0.8;
+}
+
+.presentation-route-node.is-florida {
+  right: 9%;
+  top: 18%;
+  border-color: rgba(var(--umo-red-rgb), 0.46);
+  background: rgba(64, 22, 17, 0.66);
+}
+
+.presentation-route-node.is-texas {
+  right: 23%;
+  bottom: 17%;
+  border-color: rgba(var(--umo-blue-rgb), 0.42);
+}
+
+.presentation-hero-copy-v2 {
+  z-index: 3;
+  max-width: 780px;
+  gap: 18px;
+}
+
+.presentation-hero-copy-v2 h1 {
+  font-size: 6.25rem;
+  line-height: 0.9;
+}
+
+.presentation-hero-thesis {
+  display: block;
+  max-width: 700px;
+  color: var(--umo-amber);
+  font-family: var(--font-display);
+  font-size: 3.1rem;
+  font-weight: 600;
+  line-height: 0.98;
+}
+
+.presentation-hero-copy-v2 p {
+  max-width: 690px;
+  color: rgba(246, 239, 228, 0.76);
+  font-size: 1.18rem;
+}
+
+.presentation-hero-actions-v2 {
+  margin-top: 12px;
+}
+
+.presentation-hero-actions-v2 button {
+  min-height: 46px;
+  padding: 0 18px;
+  color: rgba(246, 239, 228, 0.88);
+  font-size: 0.76rem;
+}
+
+.presentation-hero-actions-v2 button:first-child {
+  border-color: rgba(var(--umo-amber-rgb), 0.84);
+  color: #100806;
+  background: linear-gradient(135deg, var(--umo-amber), var(--umo-red));
+}
+
+.presentation-hero-photo {
+  z-index: 3;
+  height: min(62svh, 570px);
+  min-height: 420px;
+  border-color: rgba(246, 239, 228, 0.14);
+  border-radius: 8px;
+  background: #070706;
+  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.46);
+}
+
+.presentation-hero-photo img {
+  filter: saturate(0.82) contrast(1.13) brightness(0.68);
+}
+
+.presentation-hero-photo::after {
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.04), rgba(5, 5, 5, 0.86)),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.2), transparent 52%);
+}
+
+.presentation-hero-photo div {
+  gap: 9px;
+  bottom: 24px;
+}
+
+.presentation-hero-photo strong {
+  font-size: 4rem;
+  line-height: 0.9;
+}
+
+.presentation-hero-photo p {
+  display: block;
+  max-width: 360px;
+  color: rgba(246, 239, 228, 0.72);
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+.presentation-hero-proofline {
+  display: flex;
+  gap: 12px;
+}
+
+.presentation-hero-proofline span {
+  min-height: 40px;
+  border-radius: 7px;
+  border-color: rgba(246, 239, 228, 0.13);
+  color: rgba(246, 239, 228, 0.78);
+  background: rgba(5, 5, 5, 0.38);
+  backdrop-filter: blur(12px);
+}
+
+.presentation-metric-ribbon article,
+.presentation-panel,
+.presentation-company-lead,
+.presentation-evidence-stack article,
+.presentation-benchmark-card,
+.presentation-national-card,
+.presentation-tax-card-v2,
+.presentation-scorecard article,
+.presentation-state-hero,
+.presentation-decision-primary,
+.presentation-decision-secondary,
+.presentation-strategy-flow article,
+.presentation-canvas-strip article,
+.presentation-marketing-hero,
+.presentation-compatibility-strip article,
+.presentation-pricing-callout,
+.presentation-channel-tool,
+.presentation-channel-plan article,
+.presentation-risk-grid article,
+.presentation-roadmap-rail article,
+.presentation-final-grid article,
+.presentation-process-summary,
+.presentation-evidence-hero,
+.presentation-diagnostic-bars,
+.presentation-map-card,
+.presentation-map-insights article,
+.presentation-trend-card {
+  border-color: var(--umo-line);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(246, 239, 228, 0.055), transparent 44%),
+    rgba(255, 255, 255, 0.028);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+}
+
+.presentation-panel:hover,
+.presentation-benchmark-card:hover,
+.presentation-risk-grid article:hover,
+.presentation-roadmap-rail article:hover,
+.presentation-scorecard article:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--umo-amber-rgb), 0.44);
+  background:
+    linear-gradient(145deg, rgba(var(--umo-red-rgb), 0.085), transparent 48%),
+    rgba(255, 255, 255, 0.036);
+}
+
+.presentation-company-lead,
+.presentation-stat-hero,
+.presentation-evidence-hero,
+.presentation-process-summary,
+.presentation-decision-primary,
+.presentation-marketing-hero,
+.presentation-channel-tool,
+.presentation-pricing-callout {
+  border-color: rgba(var(--umo-red-rgb), 0.36);
+}
+
+.presentation-panel h3,
+.presentation-company-lead h3,
+.presentation-timeline h3,
+.presentation-benchmark-head h3,
+.presentation-tax-card-v2 h3,
+.presentation-state-hero h3,
+.presentation-scorecard h3,
+.presentation-decision-primary h3,
+.presentation-decision-secondary h3,
+.presentation-strategy-flow h3,
+.presentation-marketing-hero h3,
+.presentation-channel-tool h3,
+.presentation-risk-grid h3,
+.presentation-roadmap-rail h3,
+.presentation-stat-hero h3,
+.presentation-trend-head h3,
+.presentation-map-head h3 {
+  color: var(--umo-cream);
+  line-height: 1;
+}
+
+.presentation-panel h3,
+.presentation-benchmark-head h3,
+.presentation-trend-head h3,
+.presentation-map-head h3 {
+  font-size: 1.82rem;
+}
+
+.presentation-panel svg,
+.presentation-company-lead svg,
+.presentation-stat-hero svg,
+.presentation-evidence-hero svg,
+.presentation-process-summary svg,
+.presentation-state-hero svg,
+.presentation-decision-primary svg,
+.presentation-decision-secondary svg,
+.presentation-risk-grid svg,
+.presentation-final-grid svg,
+.presentation-marketing-hero svg,
+.presentation-channel-tool svg,
+.presentation-pricing-callout svg {
+  color: var(--umo-amber);
+  stroke-width: 1.8;
+}
+
+.presentation-panel.is-florida,
+.presentation-state-story.is-florida .presentation-state-hero {
+  border-color: rgba(154, 170, 105, 0.34);
+}
+
+.presentation-panel.is-texas,
+.presentation-state-story.is-texas .presentation-state-hero {
+  border-color: rgba(var(--umo-blue-rgb), 0.36);
+}
+
+.presentation-state-story.is-florida .presentation-state-hero,
+.presentation-state-story.is-texas .presentation-state-hero,
+.presentation-company-lead,
+.presentation-stat-hero,
+.presentation-decision-primary,
+.presentation-decision-secondary {
+  background:
+    linear-gradient(145deg, rgba(246, 239, 228, 0.065), transparent 42%),
+    linear-gradient(180deg, rgba(var(--umo-red-rgb), 0.055), transparent 64%),
+    rgba(255, 255, 255, 0.028);
+}
+
+.presentation-stat-hero,
+.presentation-stat-bars {
+  border-color: var(--umo-line);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(246, 239, 228, 0.06), transparent 46%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.presentation-stat-hero strong,
+.presentation-metric-ribbon strong,
+.presentation-evidence-stack strong,
+.presentation-map-insights strong {
+  color: var(--umo-cream);
+}
+
+.presentation-stat-row > span,
+.presentation-benchmark-row > span,
+.presentation-score-row > span,
+.presentation-national-row i,
+.presentation-mini-bar-list span {
+  background: rgba(246, 239, 228, 0.09);
+}
+
+.presentation-stat-row i,
+.presentation-benchmark-row.is-florida i,
+.presentation-national-row.is-florida b,
+.presentation-mini-bar-list .is-strong i {
+  background: linear-gradient(90deg, rgba(154, 170, 105, 0.48), var(--umo-amber));
+}
+
+.presentation-benchmark-row.is-texas i,
+.presentation-national-row.is-texas b {
+  background: linear-gradient(90deg, rgba(var(--umo-blue-rgb), 0.38), rgba(246, 239, 228, 0.78));
+}
+
+.presentation-benchmark-row.is-usa i,
+.presentation-benchmark-row.is-california i,
+.presentation-benchmark-row.is-newyork i,
+.presentation-national-row.is-usa b {
+  background: linear-gradient(90deg, rgba(246, 239, 228, 0.18), rgba(170, 163, 154, 0.7));
+}
+
+.presentation-trend-line.is-florida {
+  stroke: var(--umo-amber);
+}
+
+.presentation-trend-line.is-texas {
+  stroke: var(--umo-blue);
+}
+
+.presentation-trend-line.is-national {
+  stroke: rgba(246, 239, 228, 0.46);
+}
+
+.presentation-trend-dot.is-florida {
+  fill: var(--umo-amber);
+}
+
+.presentation-trend-dot.is-texas {
+  fill: var(--umo-blue);
+}
+
+.presentation-trend-card text {
+  fill: rgba(246, 239, 228, 0.56);
+}
+
+.presentation-tax-card-v2 strong {
+  color: #090807;
+}
+
+.presentation-tax-card-v2.is-florida strong {
+  background: linear-gradient(135deg, var(--umo-amber), var(--umo-red));
+}
+
+.presentation-tax-card-v2.is-texas strong {
+  background: linear-gradient(135deg, rgba(246, 239, 228, 0.86), var(--umo-blue));
+}
+
+.presentation-scorecard article {
+  min-height: 292px;
+}
+
+.presentation-score-row em,
+.presentation-score-row strong,
+.presentation-benchmark-row strong,
+.presentation-benchmark-row em,
+.presentation-stat-row strong,
+.presentation-stat-row em,
+.presentation-roadmap-rail strong,
+.presentation-national-row span,
+.presentation-national-row em,
+.presentation-mini-bar-list strong,
+.presentation-mini-bar-list em {
+  color: rgba(246, 239, 228, 0.82);
+}
+
+.presentation-decision-primary h3,
+.presentation-decision-secondary h3 {
+  font-size: 4.6rem;
+  line-height: 0.92;
+}
+
+.presentation-strategy-flow article::before,
+.presentation-roadmap-rail article::before {
+  border-color: rgba(var(--umo-amber-rgb), 0.54);
+  color: var(--umo-amber);
+  background: rgba(5, 5, 5, 0.4);
+}
+
+.presentation-canvas-strip article,
+.presentation-compatibility-strip article,
+.presentation-channel-plan article {
+  min-height: 154px;
+}
+
+.presentation-florida-map {
+  border-color: var(--umo-line);
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(246, 239, 228, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 239, 228, 0.045) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(14, 27, 29, 0.82), rgba(7, 7, 6, 0.96));
+  background-size: 54px 54px, 54px 54px, auto;
+}
+
+.presentation-florida-map-frame {
+  border-color: rgba(246, 239, 228, 0.12);
+  border-radius: 7px;
+  background:
+    linear-gradient(rgba(var(--umo-blue-rgb), 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--umo-blue-rgb), 0.08) 1px, transparent 1px),
+    rgba(3, 9, 10, 0.72);
+  background-size: 46px 46px, 46px 46px, auto;
+}
+
+.presentation-florida-base-map {
+  opacity: 0.78;
+  filter: grayscale(0.72) sepia(0.2) saturate(0.72) brightness(0.7) contrast(1.22);
+}
+
+.presentation-map-pin {
+  border-color: rgba(246, 239, 228, 0.14);
+  border-radius: 7px;
+  background: rgba(5, 5, 5, 0.66);
+}
+
+.presentation-map-pin i {
+  background: var(--umo-amber);
+  box-shadow: 0 0 0 4px rgba(var(--umo-amber-rgb), 0.18);
+}
+
+.presentation-map-cluster-list article,
+.presentation-map-legend span,
+.presentation-trend-legend span,
+.cert-strip span {
+  border-color: rgba(246, 239, 228, 0.12);
+  color: rgba(246, 239, 228, 0.78);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.presentation-visual-modal {
+  background: transparent;
+}
+
+.presentation-modal-backdrop {
+  background: rgba(5, 5, 5, 0.84);
+}
+
+.presentation-modal-panel {
+  border-color: rgba(var(--umo-amber-rgb), 0.42);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(246, 239, 228, 0.06), transparent 32%),
+    rgba(12, 12, 11, 0.98);
+}
+
+@media (max-width: 1440px) {
+  .presentation-deck-shell {
+    width: min(1320px, calc(100% - 36px));
+  }
+
+  .presentation-hero-copy-v2 h1 {
+    font-size: 5.35rem;
+  }
+
+  .presentation-hero-thesis {
+    font-size: 2.65rem;
+  }
+}
+
+@media (max-width: 1180px) {
+  .presentation-slide-shell,
+  .presentation-hero-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-slide-shell {
+    min-height: auto;
+    padding: 34px;
+  }
+
+  .presentation-hero-stage {
+    min-height: auto;
+    padding: 36px;
+  }
+
+  .presentation-hero-copy-v2 h1 {
+    font-size: 4.8rem;
+  }
+
+  .presentation-slide-copy h2 {
+    font-size: 3.2rem;
+  }
+
+  .presentation-route-canvas {
+    opacity: 0.42;
+  }
+
+  .presentation-route-node {
+    display: none;
+  }
+
+  .presentation-hero-photo {
+    height: auto;
+    min-height: 360px;
+  }
+
+  .presentation-decision-primary h3,
+  .presentation-decision-secondary h3 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .presentation-page.presentation-deck-page {
+    padding-top: 68px;
+  }
+
+  .presentation-deck-shell {
+    width: min(100% - 24px, 760px);
+  }
+
+  .presentation-slide {
+    min-height: auto;
+    padding: 16px 0;
+  }
+
+  .presentation-slide-shell,
+  .presentation-hero-stage {
+    padding: 24px;
+  }
+
+  .presentation-hero-copy-v2 h1 {
+    font-size: 3.9rem;
+  }
+
+  .presentation-hero-thesis,
+  .presentation-slide-copy h2 {
+    font-size: 2.65rem;
+  }
+
+  .presentation-hero-copy-v2 p,
+  .presentation-slide-copy p {
+    font-size: 1rem;
+  }
+
+  .presentation-hero-proofline {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-deck-status {
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .presentation-slide-shell,
+  .presentation-hero-stage {
+    padding: 18px;
+  }
+
+  .presentation-hero-copy-v2 h1 {
+    font-size: 3.05rem;
+  }
+
+  .presentation-hero-thesis,
+  .presentation-slide-copy h2 {
+    font-size: 2.2rem;
+  }
+
+  .presentation-hero-photo {
+    min-height: 270px;
+  }
+
+  .presentation-hero-photo strong {
+    font-size: 2.75rem;
+  }
+}
+
+@media (max-width: 1600px) {
+  .presentation-route-node.is-colombia {
+    display: none;
+  }
+
+  .presentation-route-line-v2 {
+    opacity: 0.68;
+  }
+}
+
+@media (min-width: 1181px) {
+  .presentation-decision-primary h3,
+  .presentation-decision-secondary h3 {
+    font-size: 3.85rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .presentation-deck-status {
+    display: none;
+  }
+}
 
