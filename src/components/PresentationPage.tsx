@@ -1340,81 +1340,17 @@ function FloridaOpportunityMap({ onExpand, expanded = false }: { onExpand?: () =
         ) : null}
         <h3>{expanded ? "Densidad comercial en Florida" : "Mapa de demanda visible"}</h3>
       </div>
-      <div className="presentation-florida-map" aria-label="Mapa real de Florida con puntos rojos de oportunidad comercial">
-        <div className="presentation-florida-map-frame">
+      <div className="presentation-florida-map is-image-map" aria-label="Mapa de Florida con alta concentración de zonas con necesidad de podadoras">
+        <figure className="presentation-florida-map-image">
           <img
-            src="/assets/content/florida-location-map.svg"
-            alt="Mapa de Florida"
-            className="presentation-florida-base-map"
+            src="/assets/content/florida-demand-map.png"
+            alt="Florida: alta concentración de zonas con necesidad de podadoras, parques, universidades, canchas y áreas de turfgrass"
             loading="lazy"
           />
-          <span className="presentation-map-water is-gulf">Golfo de México</span>
-          <span className="presentation-map-water is-atlantic">Atlántico</span>
-          <div className="presentation-market-density-layer" aria-hidden="true">
-            {floridaOpportunityZones.map((zone) => (
-              <span
-                key={zone.name}
-                className="presentation-market-zone"
-                style={{
-                  left: `${zone.x}%`,
-                  top: `${zone.y}%`,
-                  width: `${zone.size}%`,
-                  height: `${zone.size}%`,
-                }}
-              />
-            ))}
-            {floridaOpportunityDots.map((dot, index) => (
-              <span
-                key={`${dot.kind}-${index}`}
-                className={`presentation-opportunity-dot is-${dot.kind}`}
-                style={{
-                  left: `${dot.x}%`,
-                  top: `${dot.y}%`,
-                  transform: `translate(-50%, -50%) scale(${dot.scale ?? 1})`,
-                  animationDelay: `${index * 45}ms`,
-                }}
-              />
-            ))}
-            {floridaOpportunityPins.map((pin) => (
-              <span
-                key={`${pin.name}-anchor`}
-                className="presentation-map-city-anchor"
-                style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
-              >
-                <i />
-                <b>{pin.name}</b>
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="presentation-map-cluster-list">
-          {floridaOpportunitySegments.map((segment) => {
-            const Icon = segment.icon;
-
-            return (
-              <article key={segment.label}>
-                <Icon size={16} />
-                <strong>{segment.label}</strong>
-                <span>{segment.value}</span>
-                {expanded ? <p>{segment.text}</p> : null}
-              </article>
-            );
-          })}
-        </div>
-      </div>
-      <div className="presentation-map-legend">
-        <span>
-          <span className="presentation-legend-dot is-campus" /> Campus
-        </span>
-        <span>
-          <span className="presentation-legend-dot is-golf" /> Golf y turfgrass
-        </span>
-        <span>
-          <span className="presentation-legend-dot is-park" /> Parques, resorts y comunidades
-        </span>
+        </figure>
       </div>
       <p className="presentation-map-note">
-        Lectura de prospección: densidad comercial estimada para priorizar llamadas, no clientes confirmados.
+        Lectura de prospección: el mapa sintetiza zonas con posible necesidad de podadoras, mantenimiento de césped y soluciones de comodidad para operación exterior.
       </p>
     </article>
   );
@@ -1954,28 +1890,8 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             slideRefs.current["mapa-florida"] = node;
           }}
         >
-          <div className="presentation-map-slide-layout">
+          <div className="presentation-map-slide-layout is-image-only">
             <FloridaOpportunityMap onExpand={() => setExpandedVisual({ type: "map", id: "florida" })} />
-            <div className="presentation-map-insights">
-              <article>
-                <MapPinned size={20} />
-                <span>Cómo leerlo</span>
-                <strong>Muchos puntos, una lista de prospección.</strong>
-                <p>Cada punto representa un tipo de comprador probable: golf, campus, parques, comunidades o canal local.</p>
-              </article>
-              <article>
-                <Flag size={20} />
-                <span>Mayor señal</span>
-                <strong>Golf + turfgrass</strong>
-                <p>Florida lidera el país en campos de golf; eso vuelve el césped profesional una puerta de entrada defendible.</p>
-              </article>
-              <article>
-                <Route size={20} />
-                <span>Movimiento comercial</span>
-                <strong>Primero densidad, luego contacto.</strong>
-                <p>Priorizar Orlando, Tampa Bay, Jacksonville y South Florida para llamadas a mantenimiento, dealers y landscaping.</p>
-              </article>
-            </div>
           </div>
         </PresentationSlide>
 

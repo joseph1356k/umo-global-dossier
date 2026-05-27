@@ -5732,8 +5732,10 @@ main {
 .presentation-metric-ribbon strong,
 .presentation-evidence-stack strong {
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 3.2vw, 3.3rem);
-  line-height: 0.92;
+  font-size: clamp(1.75rem, 2.45vw, 2.65rem);
+  line-height: 0.96;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .presentation-company-story,
@@ -6444,12 +6446,12 @@ main {
 
 .presentation-marketing-proof-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
 .presentation-marketing-proof-grid .presentation-panel {
-  min-height: 240px;
+  min-height: 218px;
 }
 
 .presentation-marketing-persona-grid,
@@ -6603,7 +6605,7 @@ main {
 
 .presentation-diagnostic-layout {
   display: grid;
-  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1fr) minmax(230px, 0.82fr);
+  grid-template-columns: minmax(210px, 0.68fr) minmax(300px, 0.92fr) minmax(240px, 0.9fr);
   gap: 14px;
   align-items: stretch;
 }
@@ -6614,6 +6616,7 @@ main {
   align-content: start;
   gap: 14px;
   padding: 22px;
+  min-width: 0;
 }
 
 .presentation-evidence-hero {
@@ -6636,9 +6639,10 @@ main {
 
 .presentation-mini-bar-list div {
   display: grid;
-  grid-template-columns: minmax(92px, 0.72fr) minmax(125px, 1fr) 44px;
+  grid-template-columns: minmax(86px, 0.76fr) minmax(0, 1fr) 42px;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 
 .presentation-mini-bar-list strong,
@@ -6653,6 +6657,13 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
+}
+
+.presentation-mini-bar-list em {
+  justify-self: end;
+  min-width: 0;
+  text-align: right;
 }
 
 .presentation-mini-bar-list span {
@@ -6844,10 +6855,18 @@ main {
   align-items: stretch;
 }
 
+.presentation-map-slide-layout.is-image-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .presentation-map-card {
   display: grid;
   gap: 14px;
   padding: 20px;
+}
+
+.presentation-map-slide-layout.is-image-only .presentation-map-card {
+  min-height: 100%;
 }
 
 .presentation-map-card.is-expanded {
@@ -6871,9 +6890,47 @@ main {
     linear-gradient(135deg, rgba(11, 21, 20, 0.7), rgba(12, 12, 12, 0.96));
 }
 
+.presentation-florida-map.is-image-map {
+  min-height: 0;
+  display: block;
+  padding: 12px;
+}
+
+.presentation-florida-map-image {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background: #f6f7f1;
+}
+
+.presentation-florida-map-image img {
+  width: 100%;
+  height: min(58vh, 680px);
+  min-height: 520px;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  background: #f6f7f1;
+}
+
+.presentation-map-slide-layout.is-image-only .presentation-florida-map-image img {
+  height: min(66vh, 760px);
+  min-height: 620px;
+}
+
 .presentation-map-card.is-expanded .presentation-florida-map {
   min-height: min(68vh, 760px);
   grid-template-columns: minmax(0, 1fr) minmax(260px, 0.34fr);
+}
+
+.presentation-map-card.is-expanded .presentation-florida-map.is-image-map {
+  min-height: 0;
+  display: block;
+}
+
+.presentation-map-card.is-expanded .presentation-florida-map-image img {
+  height: min(76vh, 860px);
 }
 
 .presentation-florida-map-frame {
