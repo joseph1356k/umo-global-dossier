@@ -2178,7 +2178,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
               <article>
                 <CircleDollarSign size={22} />
                 <span>Presupuesto solicitado</span>
-                <strong>USD 180–240K</strong>
+                <strong>USD 160–200K</strong>
                 <p>Inventario inicial, landing + Amazon, fichas técnicas, logística primer trimestre y soporte legal/fiscal.</p>
               </article>
               <article>
