@@ -5452,14 +5452,36 @@ main {
   display: none !important;
 }
 
+[data-presentation-mode="on"] {
+  background: rgb(15, 12, 10);
+}
+
+[data-presentation-mode="on"].presentation-deck-page,
+[data-presentation-mode="on"] .presentation-deck-shell {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  max-width: 100vw;
+}
+
+[data-presentation-mode="on"] .presentation-deck-shell {
+  position: fixed;
+  inset: 0;
+  scroll-snap-type: none;
+}
+
 [data-presentation-mode="on"] .presentation-deck-controls {
   right: 24px;
   top: 24px;
+  z-index: 30;
 }
 
 [data-presentation-mode="on"] .presentation-deck-controls button {
   background: rgba(8, 8, 8, 0.55);
-  opacity: 0.5;
+  opacity: 0.35;
   transition: opacity 200ms ease;
 }
 
@@ -5467,22 +5489,78 @@ main {
   opacity: 1;
 }
 
-[data-presentation-mode="on"] .presentation-deck-shell {
-  width: min(1500px, calc(100% - 80px));
-  scroll-snap-type: y mandatory;
-}
-
+/* Cada slide ocupa todo el viewport, está apilado y se controla con opacity/transform.
+   Solo el slide con data-active es visible. !important porque framer-motion mete estilos inline. */
 [data-presentation-mode="on"] .presentation-slide {
-  min-height: 100vh;
-  min-height: 100svh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  scroll-margin-top: 0;
-  padding: clamp(24px, 4vh, 56px) 0;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 0 !important;
+  max-height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  scroll-snap-align: none !important;
+  scroll-margin-top: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  transform: translateY(24px) !important;
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease,
+    visibility 0s linear 360ms !important;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-[data-presentation-mode="on"] {
-  background: rgb(15, 12, 10);
+[data-presentation-mode="on"] .presentation-slide[data-active="true"] {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translateY(0) !important;
+  z-index: 5;
+  pointer-events: auto;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease,
+    visibility 0s linear 0s !important;
+}
+
+/* Slide-shell escala al viewport, con scroll interno si el contenido excede. */
+[data-presentation-mode="on"] .presentation-slide-shell {
+  width: min(1500px, calc(100vw - 96px));
+  max-width: calc(100vw - 96px);
+  height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: clamp(32px, 5vh, 72px) clamp(20px, 2.4vw, 40px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 242, 232, 0.18) transparent;
+}
+
+[data-presentation-mode="on"] .presentation-slide-shell::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-presentation-mode="on"] .presentation-slide-shell::-webkit-scrollbar-thumb {
+  background: rgba(245, 242, 232, 0.18);
+  border-radius: 999px;
+}
+
+/* Indicador de progreso fijo abajo en modo presentación */
+[data-presentation-mode="on"] .presentation-deck-shell::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: var(--presentation-progress, 0%);
+  background: linear-gradient(90deg, rgba(240, 78, 54, 0.85), rgba(181, 255, 101, 0.78));
+  z-index: 20;
+  transition: width 320ms ease;
 }
 
 .presentation-mode-hint {

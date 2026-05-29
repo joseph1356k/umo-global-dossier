@@ -802,7 +802,7 @@ function DeckChrome({
 
       {presentationMode ? (
         <div className="presentation-mode-hint" aria-hidden="true">
-          ← → para navegar · Esc para salir
+          ← → para navegar · F pantalla · Esc para salir
         </div>
       ) : null}
     </>
@@ -1437,6 +1437,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
   }, [expandedVisual]);
 
   useEffect(() => {
+    if (presentationMode) return; // en presentación el activo se controla por teclas/botón, no por scroll.
     let frame = 0;
 
     const updateActiveSlide = () => {
@@ -1461,12 +1462,19 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
       window.removeEventListener("scroll", updateActiveSlide);
       window.removeEventListener("resize", updateActiveSlide);
     };
-  }, []);
+  }, [presentationMode]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       if (target?.closest("input, textarea, select, button, a")) return;
+
+      // F → toggle modo presentación + fullscreen
+      if (event.key === "f" || event.key === "F") {
+        event.preventDefault();
+        togglePresentationMode();
+        return;
+      }
 
       if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
         event.preventDefault();
@@ -1491,10 +1499,15 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [activeIndex]);
+  }, [activeIndex, presentationMode]);
 
   function goToSlide(index: number) {
     const nextIndex = Math.min(Math.max(index, 0), deckSlides.length - 1);
+    if (presentationMode) {
+      // En modo presentación sólo cambiamos el slide activo (CSS lo anima).
+      setActiveIndex(nextIndex);
+      return;
+    }
     const slide = deckSlides[nextIndex];
     const node = slideRefs.current[slide.id] ?? document.getElementById(slide.id);
     node?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1524,11 +1537,25 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
     return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
   }, []);
 
+  // Marca el slide activo con data-active para que CSS muestre solo ese en modo presentación.
+  useEffect(() => {
+    const activeId = deckSlides[activeIndex]?.id;
+    document.querySelectorAll("[data-presentation-slide]").forEach((el) => {
+      el.removeAttribute("data-active");
+    });
+    if (activeId) {
+      document.getElementById(activeId)?.setAttribute("data-active", "true");
+    }
+  }, [activeIndex]);
+
+  const progressPercent = ((activeIndex + 1) / deckSlides.length) * 100;
+
   return (
     <main
       ref={mainRef}
       className="presentation-page presentation-deck-page"
       data-presentation-mode={presentationMode ? "on" : "off"}
+      style={{ ["--presentation-progress" as string]: `${progressPercent}%` }}
       lang={locale === "es" ? "es" : "es"}
     >
       <DeckChrome
