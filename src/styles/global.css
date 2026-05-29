@@ -5872,6 +5872,42 @@ main {
   padding: 26px;
 }
 
+.presentation-stat-bars.is-compact {
+  align-content: start;
+  gap: 12px;
+  padding: 20px 22px;
+  font-size: 0.92em;
+  opacity: 0.92;
+}
+
+.presentation-stat-bars.is-compact .presentation-stat-row > span {
+  height: 12px;
+}
+
+.presentation-stat-bars-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 4px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(245, 242, 232, 0.1);
+}
+
+.presentation-stat-bars-head span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.55);
+}
+
+.presentation-stat-bars-head h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.1vw, 1.25rem);
+  color: rgba(245, 242, 232, 0.88);
+  line-height: 1.1;
+}
+
 .presentation-stat-row {
   display: grid;
   gap: 8px;
@@ -6317,6 +6353,395 @@ main {
 .presentation-decision-primary h3,
 .presentation-decision-secondary h3 {
   font-size: clamp(2.6rem, 4.6vw, 5.8rem);
+}
+
+.presentation-decision-primary:has(.presentation-role-list) h3,
+.presentation-decision-secondary:has(.presentation-role-list) h3 {
+  font-size: clamp(1.7rem, 2.2vw, 2.6rem);
+}
+
+.presentation-decision-primary:has(.presentation-role-list),
+.presentation-decision-secondary:has(.presentation-role-list) {
+  align-content: start;
+  gap: 14px;
+}
+
+.presentation-role-list {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid rgba(245, 242, 232, 0.1);
+  padding-top: 14px;
+}
+
+.presentation-role-list li {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(245, 242, 232, 0.78);
+}
+
+.presentation-role-list strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: rgba(245, 242, 232, 0.96);
+  margin-right: 4px;
+}
+
+.presentation-role-sequence {
+  margin-top: 14px;
+  display: grid;
+  gap: 6px;
+  padding: 18px 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(240, 78, 54, 0.12), rgba(181, 255, 101, 0.08));
+}
+
+.presentation-role-sequence span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.6);
+}
+
+.presentation-role-sequence strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.4vw, 1.55rem);
+  line-height: 1.2;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+}
+
+/* ─── Pitch slide ──────────────────────────────────────── */
+.presentation-pitch-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "hero pillars"
+    "tone tone";
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-pitch-hero {
+  grid-area: hero;
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid var(--line-red, rgba(240, 78, 54, 0.32));
+  border-radius: 8px;
+  min-height: 360px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(240, 78, 54, 0.2), transparent 30%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.presentation-pitch-hero span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.6);
+}
+
+.presentation-pitch-hero h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 2.8vw, 3.4rem);
+  line-height: 1.02;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+}
+
+.presentation-pitch-hero p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.76);
+  line-height: 1.55;
+}
+
+.presentation-pitch-pillars {
+  grid-area: pillars;
+  display: grid;
+  gap: 12px;
+}
+
+.presentation-pitch-pillars article {
+  display: grid;
+  gap: 6px;
+  padding: 18px 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.presentation-pitch-pillars span {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.5);
+}
+
+.presentation-pitch-pillars h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.4vw, 1.6rem);
+  line-height: 1.1;
+  color: rgba(245, 242, 232, 0.96);
+}
+
+.presentation-pitch-pillars p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.74);
+  line-height: 1.48;
+  font-size: 0.92rem;
+}
+
+.presentation-pitch-tone {
+  grid-area: tone;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(240, 78, 54, 0.1), rgba(181, 255, 101, 0.06));
+}
+
+.presentation-pitch-tone span {
+  grid-row: 1 / 3;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.6);
+  white-space: nowrap;
+}
+
+.presentation-pitch-tone strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.4vw, 1.55rem);
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+  line-height: 1.1;
+}
+
+.presentation-pitch-tone p {
+  grid-column: 2;
+  margin: 4px 0 0;
+  color: rgba(245, 242, 232, 0.72);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* ─── Roadmap visual slide ─────────────────────────────── */
+.presentation-roadmap-visual {
+  display: grid;
+  gap: 24px;
+  padding: 14px 4px 0;
+}
+
+.presentation-roadmap-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: 72px;
+}
+
+.presentation-roadmap-line {
+  position: absolute;
+  top: 96px;
+  left: 8%;
+  right: 8%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    rgba(240, 78, 54, 0.85) 0%,
+    rgba(240, 78, 54, 0.85) 70%,
+    rgba(181, 255, 101, 0.75) 100%);
+}
+
+.presentation-roadmap-node {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+
+.presentation-roadmap-marker {
+  position: absolute;
+  top: -52px;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 2px solid rgba(245, 242, 232, 0.96);
+  background: rgba(15, 12, 10, 0.95);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+  z-index: 2;
+  box-shadow: 0 0 0 6px rgba(15, 12, 10, 0.95);
+}
+
+.presentation-roadmap-node.is-florida .presentation-roadmap-marker {
+  border-color: var(--red, rgba(240, 78, 54, 0.95));
+  color: var(--red, rgba(240, 78, 54, 0.95));
+}
+
+.presentation-roadmap-node.is-texas .presentation-roadmap-marker {
+  border-color: rgba(181, 255, 101, 0.85);
+  color: rgba(181, 255, 101, 0.95);
+}
+
+.presentation-roadmap-marker span {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.presentation-roadmap-card {
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 20px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+  width: 100%;
+  min-height: 180px;
+  align-content: start;
+}
+
+.presentation-roadmap-node.is-florida .presentation-roadmap-card {
+  border-color: rgba(240, 78, 54, 0.3);
+  background:
+    linear-gradient(180deg, rgba(240, 78, 54, 0.08), transparent 60%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-roadmap-node.is-texas .presentation-roadmap-card {
+  border-color: rgba(181, 255, 101, 0.28);
+  background:
+    linear-gradient(180deg, rgba(181, 255, 101, 0.08), transparent 60%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.presentation-roadmap-card em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.55);
+}
+
+.presentation-roadmap-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.3vw, 1.55rem);
+  line-height: 1.1;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+}
+
+.presentation-roadmap-card p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.72);
+  font-size: 0.86rem;
+  line-height: 1.48;
+}
+
+.presentation-roadmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.presentation-roadmap-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.presentation-roadmap-legend .is-florida {
+  color: var(--red, rgba(240, 78, 54, 0.95));
+  border-color: rgba(240, 78, 54, 0.35);
+}
+
+.presentation-roadmap-legend .is-texas {
+  color: rgba(181, 255, 101, 0.95);
+  border-color: rgba(181, 255, 101, 0.32);
+}
+
+.presentation-roadmap-closer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 24px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(240, 78, 54, 0.12), rgba(181, 255, 101, 0.08));
+}
+
+.presentation-roadmap-closer svg {
+  color: var(--umo-amber, rgba(245, 192, 90, 0.95));
+}
+
+.presentation-roadmap-closer strong {
+  grid-column: 2;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.5vw, 1.7rem);
+  line-height: 1.15;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+}
+
+.presentation-roadmap-closer p {
+  grid-column: 2;
+  margin: 0;
+  color: rgba(245, 242, 232, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .presentation-pitch-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "hero"
+      "pillars"
+      "tone";
+  }
+
+  .presentation-roadmap-track {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+    gap: 24px;
+  }
+
+  .presentation-roadmap-line {
+    display: none;
+  }
+
+  .presentation-roadmap-marker {
+    position: static;
+  }
 }
 
 .presentation-strategy-flow {
@@ -6811,6 +7236,10 @@ main {
 
 .presentation-trend-dot.is-texas {
   fill: rgba(245, 242, 232, 0.84);
+}
+
+.presentation-trend-dot.is-national {
+  fill: rgba(157, 160, 164, 0.9);
 }
 
 .presentation-trend-card text {
