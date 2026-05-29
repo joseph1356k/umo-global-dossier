@@ -135,28 +135,18 @@ const deckSlides: DeckSlide[] = [
       "Florida gana foco en turfgrass y uso continuo; Texas mantiene fuerza en escala agrícola y volumen B2B.",
   },
   {
-    id: "vs-eeuu",
-    number: "04",
-    label: "Comparación nacional",
-    shortLabel: "Vs EE. UU.",
-    eyebrow: "Nuestros estados frente al promedio",
-    title: "Florida y Texas sobresalen.",
-    summary:
-      "La selección se refuerza cuando ambos estados se comparan con el promedio nacional en uso digital, clima, desgaste ambiental y dinamismo pyme.",
-  },
-  {
     id: "benchmarks",
-    number: "05",
-    label: "Benchmark estatal",
+    number: "04",
+    label: "Benchmark macro y estatal",
     shortLabel: "Benchmarks",
-    eyebrow: "Florida y Texas frente al resto",
-    title: "Nuestros estados superan el promedio.",
+    eyebrow: "Florida y Texas frente al promedio y al resto",
+    title: "Por encima del promedio nacional.",
     summary:
-      "Los datos usados en la web muestran que Florida y Texas no fueron elegidos por intuición: superan el promedio en variables que importan para UMO.",
+      "Tanto contra el promedio nacional como contra los estados grandes, Florida y Texas sobresalen en uso digital, clima, desgaste ambiental y dinamismo pyme.",
   },
   {
     id: "fiscal",
-    number: "06",
+    number: "05",
     label: "Impuestos y entrada legal",
     shortLabel: "Fiscal",
     eyebrow: "Facilidad fiscal y formalización",
@@ -165,18 +155,18 @@ const deckSlides: DeckSlide[] = [
       "La ventaja fiscal no decide sola la entrada, pero ayuda a defender por qué estos estados son mejores puntos de arranque que mercados más costosos o complejos.",
   },
   {
-    id: "comparativo",
-    number: "07",
-    label: "Florida vs Texas",
-    shortLabel: "Roles",
-    eyebrow: "Comparativo ejecutivo",
-    title: "Dos estados, dos roles.",
+    id: "competencia",
+    number: "06",
+    label: "Posicionamiento competitivo",
+    shortLabel: "Competencia",
+    eyebrow: "Mapa 2×2 — precio vs especialización",
+    title: "UMO juega en cuadrante propio.",
     summary:
-      "Florida concentra la validación comercial inicial. Texas conserva el rol de escala productiva y expansión B2B para la segunda etapa.",
+      "El mercado se divide entre OEM caro, aftermarket genérico y nichos premium. UMO ocupa el espacio de comodidad técnica accesible para operadores comerciales.",
   },
   {
     id: "roles",
-    number: "08",
+    number: "07",
     label: "Dos roles, una secuencia",
     shortLabel: "Roles",
     eyebrow: "Decisión geográfica",
@@ -187,7 +177,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "mapa-florida",
-    number: "09",
+    number: "08",
     label: "Mapa de oportunidad",
     shortLabel: "Mapa FL",
     eyebrow: "Compradores potenciales",
@@ -197,7 +187,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "entrada",
-    number: "10",
+    number: "09",
     label: "Modo de entrada",
     shortLabel: "Entrada",
     eyebrow: "Estrategia de internacionalización",
@@ -207,7 +197,7 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "producto",
-    number: "11",
+    number: "10",
     label: "Producto y propuesta",
     shortLabel: "Producto",
     eyebrow: "Adaptación y valor",
@@ -216,48 +206,28 @@ const deckSlides: DeckSlide[] = [
       "UMO debe presentarse como una solución de comodidad para operadores que pasan horas en podadoras, tractores pequeños, vehículos utilitarios y maquinaria agrícola.",
   },
   {
-    id: "marketing",
+    id: "propuesta",
+    number: "11",
+    label: "Propuesta + segmento",
+    shortLabel: "Propuesta",
+    eyebrow: "Thermo Seats by UMO + buyer B2B",
+    title: "Thermo Seats para operadores B2B.",
+    summary:
+      "Asiento ergonómico y térmico para operadores de podadoras y tractores pequeños. El comprador B2B no compra accesorios — compra continuidad operativa.",
+  },
+  {
+    id: "gtm",
     number: "12",
-    label: "Plan de marketing",
-    shortLabel: "Marketing",
-    eyebrow: "Thermo Seats by UMO",
-    title: "Adaptar para vender.",
+    label: "Go-to-market",
+    shortLabel: "GTM",
+    eyebrow: "Operación, precio y canales",
+    title: "Precio digital. Distribución dual.",
     summary:
-      "El plan cambia el foco de vender cojines genericos a lanzar una linea compatible, tecnica y preparada para maquinaria de landscaping en Florida.",
-  },
-  {
-    id: "marketing-segmentacion",
-    number: "13",
-    label: "Segmentacion",
-    shortLabel: "Segmento",
-    eyebrow: "Comprador objetivo",
-    title: "El comprador exige compatibilidad.",
-    summary:
-      "El cliente B2B compara rapido, busca referencias por modelo y espera soporte tecnico antes de comprar repuestos para maquinaria comercial.",
-  },
-  {
-    id: "marketing-operacion",
-    number: "14",
-    label: "Plaza y precio",
-    shortLabel: "Plaza/precio",
-    eyebrow: "Entrada operativa",
-    title: "Exportar, cumplir y competir.",
-    summary:
-      "Exportacion directa desde Colombia, fulfillment localizado y precio digital competitivo reducen riesgo sin abrir estructura propia desde el inicio.",
-  },
-  {
-    id: "marketing-canales",
-    number: "15",
-    label: "Canales y promocion",
-    shortLabel: "Canales",
-    eyebrow: "Captura de demanda",
-    title: "La web debe cerrar la venta.",
-    summary:
-      "Amazon, landing regional, distribuidores online, SEO/SEM y contacto B2B deben conectarse con una herramienta de compatibilidad clara.",
+      "Precio comparable en Amazon y landing; defensa en valor, soporte y compatibilidad. Distribución combinada B2C digital + B2B local en Florida.",
   },
   {
     id: "pitch",
-    number: "16",
+    number: "13",
     label: "Pitch y promesa",
     shortLabel: "Pitch",
     eyebrow: "Mensaje de marca",
@@ -267,13 +237,23 @@ const deckSlides: DeckSlide[] = [
   },
   {
     id: "ruta",
-    number: "17",
+    number: "14",
     label: "Ruta de acción",
     shortLabel: "Ruta",
     eyebrow: "Cierre ejecutivo",
     title: "Aprender, probar y escalar.",
     summary:
       "Florida es el laboratorio comercial. Texas es la plataforma de volumen cuando el producto, el precio, el canal y la operación ya estén validados.",
+  },
+  {
+    id: "ask",
+    number: "15",
+    label: "Decisión ejecutiva",
+    shortLabel: "Ask",
+    eyebrow: "Compromiso y siguientes pasos",
+    title: "Decisión: aprobar piloto Florida.",
+    summary:
+      "Lo que necesitamos del comité para arrancar: aprobación del piloto, presupuesto, criterios de éxito y fecha de revisión para decidir Texas.",
     variant: "final",
   },
 ];
@@ -571,43 +551,51 @@ const marketingEcosystemCards: InsightCard[] = [
 const marketingSegmentCards: InsightCard[] = [
   {
     title: "Duenos de landscaping",
-    text: "Buscan disponibilidad, compatibilidad rapida, durabilidad y menor tiempo muerto de la maquinaria comercial.",
+    text: "Necesitan repuestos rapidos para podadoras comerciales, tractores pequenos y equipos que no pueden quedar quietos.",
     meta: "Buyer B2B 01",
     icon: UsersRound,
   },
   {
     title: "Compras B2B",
-    text: "Gerentes de mantenimiento y procurement comparan especificaciones, precio, soporte y condiciones de entrega.",
+    text: "Procurement valida precio, ficha tecnica, compatibilidad, garantia, soporte y condiciones de entrega.",
     meta: "Buyer B2B 02",
     icon: BriefcaseBusiness,
   },
   {
     title: "93.0% urbano",
-    text: "La alta urbanizacion concentra comunidades planeadas, propiedades comerciales, campus y clubes con zonas verdes.",
-    meta: "Florida 2025",
+    text: "Florida concentra comunidades planeadas, propiedades comerciales, campus, clubes y zonas verdes recurrentes.",
+    meta: "Entorno Florida",
     icon: Building2,
   },
 ];
 
 const marketingOperationCards: InsightCard[] = [
   {
-    title: "Exportacion directa",
-    text: "UMO conserva control de calidad y evita costos fijos altos de una sede propia durante la validacion.",
-    meta: "Modo de entrada",
-    icon: Truck,
+    title: "Precio competitivo",
+    text: "Alinear el precio con alternativas digitales visibles para reducir friccion de compra inicial.",
+    meta: "Estrategia",
+    icon: CircleDollarSign,
   },
   {
-    title: "6 dias maritimos",
-    text: "La ruta Colombia-Florida permite ciclos cortos de reposicion, menor inventario y mejor flujo de caja.",
-    meta: "Logistica",
-    icon: Route,
+    title: "Valor defendible",
+    text: "Justificar el precio por mayor vida util, ergonomia, resistencia climatica y menor tiempo muerto.",
+    meta: "Diferenciacion",
+    icon: ShieldCheck,
   },
   {
     title: "USD 100K nexus",
-    text: "Planear cumplimiento fiscal desde temprano evita fricciones cuando las ventas digitales empiecen a escalar.",
-    meta: "Florida economic nexus",
-    icon: CircleDollarSign,
+    text: "Planear cumplimiento fiscal temprano cuando las ventas digitales empiecen a escalar en Florida.",
+    meta: "Cumplimiento",
+    icon: Landmark,
   },
+];
+
+const distributionChannelBullets = [
+  "Amazon Marketplace USA",
+  "Landing regional de Florida",
+  "Distribuidores online de repuestos",
+  "Dealers de outdoor power equipment",
+  "Prospeccion B2B a landscaping, golf y campus",
 ];
 
 const marketingChannelPlan = [
@@ -1618,36 +1606,30 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
         </PresentationSlide>
 
         <PresentationSlide
-          slide={slidesById["vs-eeuu"]}
-          refSetter={(node: HTMLElement | null) => {
-            slideRefs.current["vs-eeuu"] = node;
-          }}
-        >
-          <NationalComparisonChart onExpand={() => setExpandedVisual({ type: "national", id: "benchmarks" })} />
-        </PresentationSlide>
-
-        <PresentationSlide
           slide={slidesById.benchmarks}
           refSetter={(node: HTMLElement | null) => {
             slideRefs.current.benchmarks = node;
           }}
         >
-          <div className="presentation-benchmark-grid-v2">
-            {benchmarkGroups.map((group) => (
-              <BenchmarkChart
-                key={group.title}
-                group={group}
-                onExpand={() => setExpandedVisual({ type: "benchmark", id: group.id })}
-              />
-            ))}
-          </div>
-          <div className="presentation-benchmark-argument">
-            <BarChart3 size={22} />
-            <p>
-              La comparación con el promedio nacional refuerza la selección: ambos estados muestran más uso potencial,
-              mayor dinamismo comercial y condiciones ambientales que hacen más urgente la comodidad y durabilidad del
-              producto.
-            </p>
+          <div className="presentation-benchmark-unified">
+            <div className="presentation-benchmark-national">
+              <NationalComparisonChart onExpand={() => setExpandedVisual({ type: "national", id: "benchmarks" })} />
+            </div>
+            <div className="presentation-benchmark-state">
+              <header>
+                <BarChart3 size={20} />
+                <span>Benchmark estatal — Florida y Texas vs el resto</span>
+              </header>
+              <div className="presentation-benchmark-grid-v2 is-compact">
+                {benchmarkGroups.map((group) => (
+                  <BenchmarkChart
+                    key={group.title}
+                    group={group}
+                    onExpand={() => setExpandedVisual({ type: "benchmark", id: group.id })}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </PresentationSlide>
 
@@ -1678,12 +1660,59 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
         </PresentationSlide>
 
         <PresentationSlide
-          slide={slidesById.comparativo}
+          slide={slidesById.competencia}
           refSetter={(node: HTMLElement | null) => {
-            slideRefs.current.comparativo = node;
+            slideRefs.current.competencia = node;
           }}
         >
-          <StateScorecard rows={scorecardRows} />
+          <div className="presentation-competencia-layout">
+            <div className="presentation-quadrant">
+              <div className="presentation-quadrant-axis-y">Especialización técnica ↑</div>
+              <div className="presentation-quadrant-axis-x">Precio →</div>
+              <div className="presentation-quadrant-grid" aria-hidden="true">
+                <span className="q-label q-tl">Técnico · accesible</span>
+                <span className="q-label q-tr">Técnico · premium</span>
+                <span className="q-label q-bl">Genérico · accesible</span>
+                <span className="q-label q-br">Genérico · premium</span>
+              </div>
+              <div className="presentation-quadrant-point is-umo" style={{ left: "30%", top: "22%" }}>
+                <span>UMO</span>
+                <em>Thermo Seats</em>
+              </div>
+              <div className="presentation-quadrant-point is-oem" style={{ left: "78%", top: "18%" }}>
+                <span>OEM</span>
+                <em>John Deere, Kubota</em>
+              </div>
+              <div className="presentation-quadrant-point is-premium" style={{ left: "70%", top: "38%" }}>
+                <span>Premium nicho</span>
+                <em>Milsco, Grammer</em>
+              </div>
+              <div className="presentation-quadrant-point is-generic" style={{ left: "22%", top: "78%" }}>
+                <span>Aftermarket genérico</span>
+                <em>Amazon cojines</em>
+              </div>
+            </div>
+            <aside className="presentation-competencia-side">
+              <article>
+                <Target size={20} />
+                <span>Espacio UMO</span>
+                <h4>Comodidad técnica accesible</h4>
+                <p>Ergonomía, materiales y compatibilidad de gama media — sin el precio del OEM ni la incertidumbre del cojín genérico.</p>
+              </article>
+              <article>
+                <ShieldCheck size={20} />
+                <span>Defensa de valor</span>
+                <h4>Compatibilidad + vida útil</h4>
+                <p>El argumento técnico (modelo exacto, resistencia UV, soporte lumbar) bloquea al aftermarket genérico sin competir con OEM en precio.</p>
+              </article>
+              <article>
+                <LineChart size={20} />
+                <span>Ventana competitiva</span>
+                <h4>Mid-market desatendido</h4>
+                <p>Operadores B2B de podadoras comerciales no quieren pagar OEM, pero el cojín de USD 35 no aguanta una temporada. Ese es el hueco.</p>
+              </article>
+            </aside>
+          </div>
         </PresentationSlide>
 
         <PresentationSlide
@@ -1775,88 +1804,80 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
         </PresentationSlide>
 
         <PresentationSlide
-          slide={slidesById.marketing}
+          slide={slidesById.propuesta}
           refSetter={(node: HTMLElement | null) => {
-            slideRefs.current.marketing = node;
+            slideRefs.current.propuesta = node;
           }}
         >
-          <div className="presentation-marketing-core">
-            <article className="presentation-marketing-hero">
+          <div className="presentation-propuesta-layout">
+            <article className="presentation-propuesta-hero">
               <PackageCheck size={26} />
               <span>Producto internacional</span>
               <h3>Thermo Seats by UMO</h3>
               <p>
-                Una linea de asientos y soluciones de comodidad para operadores de podadoras comerciales, tractores
-                pequenos y maquinaria de mantenimiento de cesped en Florida.
+                Línea de asientos ergonómicos y térmicos para operadores de podadoras comerciales, tractores pequeños y
+                maquinaria de mantenimiento. Misma calidad industrial colombiana, adaptada por modelo.
               </p>
+              <ul className="presentation-propuesta-bullets">
+                <li><strong>Producto modificado.</strong> Dimensiones, materiales y catálogos por modelo.</li>
+                <li><strong>Compatibilidad exacta.</strong> Tractores pequeños y podadoras dominantes en landscaping.</li>
+                <li><strong>Promesa comercial.</strong> Comodidad, soporte lumbar y mejor relación valor-precio.</li>
+              </ul>
             </article>
-            <div className="presentation-panel-grid is-three">
-              {marketingProductCards.map((card) => (
-                <InsightPanel key={card.title} card={card} />
-              ))}
+            <div className="presentation-propuesta-segment">
+              <header>
+                <UsersRound size={20} />
+                <span>Buyer B2B — qué compra realmente</span>
+              </header>
+              <article>
+                <strong>Dueños de landscaping</strong>
+                <p>Necesitan repuestos rápidos para equipos que no pueden quedar quietos.</p>
+              </article>
+              <article>
+                <strong>Procurement B2B</strong>
+                <p>Valida precio, ficha técnica, compatibilidad, garantía, soporte y entrega.</p>
+              </article>
+              <article>
+                <strong>Mantenimiento institucional</strong>
+                <p>Universidades, parques y campos de golf con flotas y SLA recurrentes.</p>
+              </article>
+              <div className="presentation-propuesta-compat">
+                {["Modelo", "Medidas", "Referencia", "Soporte"].map((step, index) => (
+                  <span key={step}><em>{String(index + 1).padStart(2, "0")}</em>{step}</span>
+                ))}
+              </div>
             </div>
           </div>
         </PresentationSlide>
 
         <PresentationSlide
-          slide={slidesById["marketing-segmentacion"]}
+          slide={slidesById.gtm}
           refSetter={(node: HTMLElement | null) => {
-            slideRefs.current["marketing-segmentacion"] = node;
+            slideRefs.current.gtm = node;
           }}
         >
-          <div className="presentation-marketing-persona-grid">
-            {marketingSegmentCards.map((card) => (
-              <InsightPanel key={card.title} card={card} />
-            ))}
-          </div>
-          <div className="presentation-compatibility-strip">
-            {["Modelo de maquina", "Medidas exactas", "Referencia compatible", "Entrega y soporte"].map((step, index) => (
-              <article key={step}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{step}</strong>
-              </article>
-            ))}
-          </div>
-        </PresentationSlide>
-
-        <PresentationSlide
-          slide={slidesById["marketing-operacion"]}
-          refSetter={(node: HTMLElement | null) => {
-            slideRefs.current["marketing-operacion"] = node;
-          }}
-        >
-          <div className="presentation-marketing-route">
-            {marketingOperationCards.map((card) => (
-              <InsightPanel key={card.title} card={card} />
-            ))}
-          </div>
-          <div className="presentation-pricing-callout">
-            <CircleDollarSign size={24} />
-            <span>Precio competitivo digital</span>
-            <p>
-              El precio debe poder compararse contra alternativas online, pero defenderse con mayor vida util,
-              ergonomia, soporte tecnico y menor riesgo de compra por compatibilidad.
-            </p>
-          </div>
-        </PresentationSlide>
-
-        <PresentationSlide
-          slide={slidesById["marketing-canales"]}
-          refSetter={(node: HTMLElement | null) => {
-            slideRefs.current["marketing-canales"] = node;
-          }}
-        >
-          <div className="presentation-marketing-channel-stack">
-            <article className="presentation-channel-tool">
-              <MonitorSmartphone size={26} />
-              <span>Ventaja digital</span>
-              <h3>Buscador de compatibilidad</h3>
-              <p>
-                La web debe permitir filtrar por maquina y encontrar la referencia exacta de Thermo Seats. Eso reduce
-                devoluciones y convierte dudas tecnicas en leads.
-              </p>
+          <div className="presentation-gtm-layout">
+            <article className="presentation-gtm-price">
+              <CircleDollarSign size={22} />
+              <span>Precio y valor</span>
+              <h4>Comparable digital, defendido por valor.</h4>
+              <p>El precio se alinea con alternativas en Amazon para reducir fricción inicial. La defensa comercial está en vida útil, ergonomía, soporte y compatibilidad exacta.</p>
+              <ul>
+                <li><strong>Cumplimiento.</strong> USD 100K economic nexus en Florida — planear desde temprano.</li>
+                <li><strong>Operación.</strong> Exportación directa con fulfillment localizado.</li>
+              </ul>
             </article>
-            <div className="presentation-channel-plan">
+            <article className="presentation-gtm-tool">
+              <MonitorSmartphone size={22} />
+              <span>Ventaja digital</span>
+              <h4>Buscador de compatibilidad.</h4>
+              <p>Filtrar por máquina y encontrar la referencia exacta. Reduce devoluciones y convierte dudas técnicas en leads B2B.</p>
+            </article>
+            <div className="presentation-gtm-channels">
+              <header>
+                <Route size={18} />
+                <span>Canales de captura</span>
+              </header>
               {marketingChannelPlan.map((channel) => (
                 <article key={channel.label}>
                   <strong>{channel.label}</strong>
@@ -1951,6 +1972,56 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
                 Cuando producto, precio, canal y operación están validados, la transición es secuencial — no se descarta
                 Texas, se prepara.
               </p>
+            </div>
+          </div>
+        </PresentationSlide>
+
+        <PresentationSlide
+          slide={slidesById.ask}
+          refSetter={(node: HTMLElement | null) => {
+            slideRefs.current.ask = node;
+          }}
+        >
+          <div className="presentation-ask-layout">
+            <article className="presentation-ask-decision">
+              <CheckCircle2 size={26} />
+              <span>Decisión solicitada</span>
+              <h3>Aprobar piloto Florida — arrancar Q3 2026.</h3>
+              <p>
+                Luz verde para preparar producto, canales y soporte, con revisión ejecutiva a los 6 meses para activar (o
+                detener) la fase Texas.
+              </p>
+            </article>
+            <div className="presentation-ask-grid">
+              <article>
+                <CircleDollarSign size={22} />
+                <span>Presupuesto solicitado</span>
+                <strong>USD 180–240K</strong>
+                <p>Inventario inicial, landing + Amazon, fichas técnicas, logística primer trimestre y soporte legal/fiscal.</p>
+              </article>
+              <article>
+                <CalendarRange size={22} />
+                <span>Próximo milestone</span>
+                <strong>6 meses · piloto vivo</strong>
+                <p>Amazon + landing live, primeros B2B contactados, 50–70 unidades vendidas y reseñas iniciales medidas.</p>
+              </article>
+              <article>
+                <Target size={22} />
+                <span>Criterios go / no-go a Texas</span>
+                <strong>Margen ≥ 28% · Devoluciones ≤ 6%</strong>
+                <p>Reviews promedio ≥ 4.2/5 y al menos 2 alianzas B2B firmadas. Si se cumple, activar fase Texas en mes 12.</p>
+              </article>
+              <article>
+                <Handshake size={22} />
+                <span>Responsables clave</span>
+                <strong>Comercial · Producto · Legal</strong>
+                <p>Owner comercial para canal, owner técnico para compatibilidad, owner legal para nexus fiscal Florida.</p>
+              </article>
+            </div>
+            <div className="presentation-ask-closer">
+              <Flag size={20} />
+              <strong>Lo que necesitamos hoy:</strong>
+              <span>Aprobación del piloto, asignación del presupuesto y nombramiento de los 3 owners.</span>
             </div>
           </div>
         </PresentationSlide>
