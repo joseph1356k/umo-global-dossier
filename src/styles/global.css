@@ -6873,6 +6873,248 @@ main {
   line-height: 1.5;
 }
 
+/* ─── Entry pipeline (slide 09 Modo de entrada) ─────────── */
+.presentation-entry-pipeline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.presentation-entry-stage {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 24px 22px 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 70%),
+    rgba(255, 255, 255, 0.025);
+  min-height: 320px;
+}
+
+.presentation-entry-stage header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245, 242, 232, 0.1);
+}
+
+.presentation-entry-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: rgba(245, 242, 232, 0.85);
+}
+
+.presentation-entry-stage header em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.62);
+}
+
+.presentation-entry-stage > svg {
+  margin-top: 6px;
+  color: rgba(245, 242, 232, 0.86);
+}
+
+.presentation-entry-stage h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 1.8vw, 2rem);
+  line-height: 1.05;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.98));
+}
+
+.presentation-entry-stage p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.76);
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.presentation-entry-tag {
+  justify-self: start;
+  margin-top: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 242, 232, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.75);
+}
+
+/* Acentos por mercado */
+.presentation-entry-stage.is-colombia {
+  border-color: rgba(245, 192, 90, 0.32);
+  background:
+    radial-gradient(circle at 78% 14%, rgba(245, 192, 90, 0.12), transparent 35%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.presentation-entry-stage.is-colombia .presentation-entry-num,
+.presentation-entry-stage.is-colombia > svg {
+  color: var(--umo-amber, rgba(245, 192, 90, 0.95));
+}
+
+.presentation-entry-stage.is-colombia .presentation-entry-tag {
+  border-color: rgba(245, 192, 90, 0.35);
+  color: rgba(245, 192, 90, 0.95);
+}
+
+.presentation-entry-stage.is-florida {
+  border-color: rgba(240, 78, 54, 0.4);
+  background:
+    radial-gradient(circle at 78% 14%, rgba(240, 78, 54, 0.18), transparent 35%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.presentation-entry-stage.is-florida .presentation-entry-num,
+.presentation-entry-stage.is-florida > svg {
+  color: var(--red, rgba(240, 78, 54, 0.95));
+}
+
+.presentation-entry-stage.is-florida .presentation-entry-tag {
+  border-color: rgba(240, 78, 54, 0.45);
+  color: rgba(240, 78, 54, 0.98);
+  background: rgba(240, 78, 54, 0.08);
+}
+
+.presentation-entry-stage.is-texas {
+  border-color: rgba(181, 255, 101, 0.32);
+  background:
+    radial-gradient(circle at 78% 14%, rgba(181, 255, 101, 0.12), transparent 35%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.presentation-entry-stage.is-texas .presentation-entry-num,
+.presentation-entry-stage.is-texas > svg {
+  color: rgba(181, 255, 101, 0.95);
+}
+
+.presentation-entry-stage.is-texas .presentation-entry-tag {
+  border-color: rgba(181, 255, 101, 0.4);
+  color: rgba(181, 255, 101, 0.95);
+}
+
+/* Conectores entre etapas */
+.presentation-entry-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  min-width: 78px;
+  color: rgba(245, 242, 232, 0.7);
+}
+
+.presentation-entry-link-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(245, 242, 232, 0.06), rgba(245, 242, 232, 0.32), rgba(245, 242, 232, 0.06));
+  transform: translateY(-50%);
+}
+
+.presentation-entry-link svg {
+  position: relative;
+  z-index: 2;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgb(15, 12, 10);
+  border: 1px solid rgba(245, 242, 232, 0.3);
+  color: rgba(245, 242, 232, 0.92);
+  box-sizing: content-box;
+}
+
+.presentation-entry-link em {
+  position: relative;
+  z-index: 2;
+  font-style: normal;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgb(15, 12, 10);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.6);
+}
+
+/* Closer band */
+.presentation-entry-closer {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(245, 192, 90, 0.1), rgba(240, 78, 54, 0.1), rgba(181, 255, 101, 0.08));
+}
+
+.presentation-entry-closer svg {
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+}
+
+.presentation-entry-closer strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.4vw, 1.5rem);
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+  line-height: 1.1;
+}
+
+.presentation-entry-closer p {
+  margin: 0;
+  color: rgba(245, 242, 232, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .presentation-entry-pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .presentation-entry-link {
+    min-height: 50px;
+    min-width: 0;
+  }
+
+  .presentation-entry-link-line {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(245, 242, 232, 0.06), rgba(245, 242, 232, 0.32), rgba(245, 242, 232, 0.06));
+    transform: translateX(-50%);
+  }
+
+  .presentation-entry-link svg {
+    transform: rotate(90deg);
+  }
+
+  .presentation-entry-closer {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+}
+
 /* ─── Benchmarks unificado ─────────────────────────────── */
 .presentation-benchmark-unified {
   display: grid;

@@ -1845,11 +1845,69 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             slideRefs.current.entrada = node;
           }}
         >
-          <StrategyFlow />
-          <div className="presentation-panel-grid is-three">
-            {entryCards.map((card) => (
-              <InsightPanel key={card.title} card={card} />
-            ))}
+          <div className="presentation-entry-pipeline">
+            <article className="presentation-entry-stage is-colombia">
+              <header>
+                <span className="presentation-entry-num">01</span>
+                <em>Colombia</em>
+              </header>
+              <Factory size={28} />
+              <h3>Producción</h3>
+              <p>
+                UMO conserva control de producción, calidad, costos y aprendizaje sin abrir sede fija antes de validar
+                demanda en EE. UU.
+              </p>
+              <span className="presentation-entry-tag">Menor riesgo</span>
+            </article>
+
+            <div className="presentation-entry-link" aria-hidden="true">
+              <span className="presentation-entry-link-line" />
+              <ArrowUpRight size={22} />
+              <em>Exporta</em>
+            </div>
+
+            <article className="presentation-entry-stage is-florida">
+              <header>
+                <span className="presentation-entry-num">02</span>
+                <em>Florida</em>
+              </header>
+              <Sprout size={28} />
+              <h3>Piloto comercial</h3>
+              <p>
+                Distribuidores de outdoor power equipment, empresas de landscaping, tiendas de maquinaria y campos de
+                golf aceleran confianza local.
+              </p>
+              <span className="presentation-entry-tag">Entrada local · alianzas</span>
+            </article>
+
+            <div className="presentation-entry-link" aria-hidden="true">
+              <span className="presentation-entry-link-line" />
+              <ArrowUpRight size={22} />
+              <em>Escala</em>
+            </div>
+
+            <article className="presentation-entry-stage is-texas">
+              <header>
+                <span className="presentation-entry-num">03</span>
+                <em>Texas</em>
+              </header>
+              <Tractor size={28} />
+              <h3>Expansión B2B</h3>
+              <p>
+                Segundo movimiento: dealers agrícolas, talleres rurales, repuestos y clientes de mayor volumen sobre la
+                base validada en Florida.
+              </p>
+              <span className="presentation-entry-tag">Fase de escala</span>
+            </article>
+          </div>
+
+          <div className="presentation-entry-closer">
+            <Route size={20} />
+            <strong>Exportación directa + alianzas locales.</strong>
+            <p>
+              Sin sede propia, sin estructura fija. Cada fase desbloquea la siguiente solo cuando hay evidencia
+              comercial real.
+            </p>
           </div>
         </PresentationSlide>
 
