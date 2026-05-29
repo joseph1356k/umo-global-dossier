@@ -643,25 +643,25 @@ const riskControls = [
 const roadmap = [
   {
     phase: "0",
-    timing: "0-2 meses",
+    timing: "0-1 mes",
     title: "Preparación",
     text: "Compatibilidades, muestras, fichas técnicas, empaque, landing en inglés y política de soporte.",
   },
   {
     phase: "1",
-    timing: "3-6 meses",
+    timing: "2-4 meses",
     title: "Piloto Florida",
     text: "Amazon, ecommerce, empresas de landscaping, tiendas de jardín y primeros contactos con golf.",
   },
   {
     phase: "2",
-    timing: "7-12 meses",
+    timing: "5-8 meses",
     title: "Validación",
     text: "Medir margen, devoluciones, reseñas, leads B2B, costo logístico y ajustes de producto.",
   },
   {
     phase: "3",
-    timing: "12-18 meses",
+    timing: "9-12 meses",
     title: "Escala Texas",
     text: "Activar distribuidores agrícolas, talleres rurales y pilotos con maquinaria pesada.",
   },
@@ -2170,7 +2170,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
               <span>Decisión solicitada</span>
               <h3>Aprobar piloto Florida — arrancar Q3 2026.</h3>
               <p>
-                Luz verde para preparar producto, canales y soporte, con revisión ejecutiva a los 6 meses para activar (o
+                Luz verde para preparar producto, canales y soporte, con revisión ejecutiva a los 4 meses para activar (o
                 detener) la fase Texas.
               </p>
             </article>
@@ -2184,14 +2184,14 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
               <article>
                 <CalendarRange size={22} />
                 <span>Próximo milestone</span>
-                <strong>6 meses · piloto vivo</strong>
+                <strong>4 meses · piloto vivo</strong>
                 <p>Amazon + landing live, primeros B2B contactados, 50–70 unidades vendidas y reseñas iniciales medidas.</p>
               </article>
               <article>
                 <Target size={22} />
                 <span>Criterios go / no-go a Texas</span>
                 <strong>Margen ≥ 28% · Devoluciones ≤ 6%</strong>
-                <p>Reviews promedio ≥ 4.2/5 y al menos 2 alianzas B2B firmadas. Si se cumple, activar fase Texas en mes 12.</p>
+                <p>Reviews promedio ≥ 4.2/5 y al menos 2 alianzas B2B firmadas. Si se cumple, activar fase Texas en mes 9.</p>
               </article>
               <article>
                 <Handshake size={22} />
