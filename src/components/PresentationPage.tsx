@@ -1710,24 +1710,62 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
             slideRefs.current.fiscal = node;
           }}
         >
-          <div className="presentation-tax-grid-v2">
-            {fiscalCards.map((card) => (
-              <article key={card.state} className={`presentation-tax-card-v2 is-${card.tone}`}>
-                <div>
-                  <span>Tax Foundation 2026</span>
-                  <strong>{card.rank}</strong>
+          <div className="presentation-fiscal-layout">
+            <section className="presentation-fiscal-recommended">
+              <header>
+                <span>Recomendados</span>
+                <em>Top 10 Tax Foundation 2026</em>
+              </header>
+              <article className="presentation-fiscal-card is-florida">
+                <div className="presentation-fiscal-card-head">
+                  <strong>#5</strong>
+                  <h3>Florida</h3>
                 </div>
-                <h3>{card.state}</h3>
                 <ul>
-                  {card.lines.map((line) => (
-                    <li key={line}>{line}</li>
-                  ))}
+                  <li>Sin impuesto estatal personal</li>
+                  <li>Corporate income tax 5.5% · Sales 6.00%</li>
+                  <li>LLC filing online vía Sunbiz</li>
                 </ul>
-                <p>{card.reading}</p>
+                <p className="presentation-fiscal-card-reading"><strong>→</strong> Mejor para el piloto: menor fricción y velocidad de arranque.</p>
               </article>
-            ))}
+              <article className="presentation-fiscal-card is-texas">
+                <div className="presentation-fiscal-card-head">
+                  <strong>#7</strong>
+                  <h3>Texas</h3>
+                </div>
+                <ul>
+                  <li>Sin impuesto estatal personal</li>
+                  <li>Sin corporate income tax tradicional · Sales 6.25%</li>
+                  <li>SOSDirect con servicios expedited</li>
+                </ul>
+                <p className="presentation-fiscal-card-reading"><strong>→</strong> Mejor para la escala B2B con evidencia de Florida.</p>
+              </article>
+            </section>
+
+            <section className="presentation-fiscal-contrast">
+              <header>
+                <span>Contraste</span>
+                <em>Por qué no arrancar acá</em>
+              </header>
+              <article className="presentation-fiscal-mini">
+                <strong>#48</strong>
+                <div>
+                  <h4>California</h4>
+                  <p>Mayor presión tributaria y costos operativos altos.</p>
+                </div>
+              </article>
+              <article className="presentation-fiscal-mini">
+                <strong>#50</strong>
+                <div>
+                  <h4>New York</h4>
+                  <p>Ranking fiscal inferior y cumplimiento exigente.</p>
+                </div>
+              </article>
+              <p className="presentation-fiscal-contrast-note">
+                Mercados grandes, pero menos eficientes para validar con bajo riesgo.
+              </p>
+            </section>
           </div>
-          <SourceNote />
         </PresentationSlide>
 
         <PresentationSlide

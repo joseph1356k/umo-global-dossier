@@ -6873,6 +6873,196 @@ main {
   line-height: 1.5;
 }
 
+/* ─── Fiscal slide (05) — 2 columnas: recomendados / contraste ─── */
+.presentation-fiscal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.85fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.presentation-fiscal-recommended,
+.presentation-fiscal-contrast {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  align-content: start;
+}
+
+.presentation-fiscal-recommended header,
+.presentation-fiscal-contrast header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(245, 242, 232, 0.1);
+}
+
+.presentation-fiscal-recommended header span,
+.presentation-fiscal-contrast header span {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.4vw, 1.45rem);
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+  line-height: 1;
+}
+
+.presentation-fiscal-recommended header em,
+.presentation-fiscal-contrast header em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.55);
+}
+
+.presentation-fiscal-card {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px 18px;
+  border: 1px solid rgba(245, 242, 232, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.presentation-fiscal-card.is-florida {
+  border-color: rgba(240, 78, 54, 0.4);
+  background:
+    radial-gradient(circle at 92% 22%, rgba(240, 78, 54, 0.16), transparent 32%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.presentation-fiscal-card.is-texas {
+  border-color: rgba(181, 255, 101, 0.3);
+  background:
+    radial-gradient(circle at 92% 22%, rgba(181, 255, 101, 0.1), transparent 32%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.presentation-fiscal-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(245, 242, 232, 0.08);
+}
+
+.presentation-fiscal-card-head strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.9vw, 2.1rem);
+  line-height: 1;
+}
+
+.presentation-fiscal-card.is-florida .presentation-fiscal-card-head strong {
+  color: var(--red, rgba(240, 78, 54, 0.96));
+}
+
+.presentation-fiscal-card.is-texas .presentation-fiscal-card-head strong {
+  color: rgba(181, 255, 101, 0.95);
+}
+
+.presentation-fiscal-card-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.7vw, 1.9rem);
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
+  line-height: 1;
+}
+
+.presentation-fiscal-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.presentation-fiscal-card li {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.42;
+  color: rgba(245, 242, 232, 0.78);
+  padding-left: 12px;
+  position: relative;
+}
+
+.presentation-fiscal-card li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: rgba(245, 242, 232, 0.5);
+}
+
+.presentation-fiscal-card-reading {
+  margin: 6px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(245, 242, 232, 0.08);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: rgba(245, 242, 232, 0.82);
+}
+
+.presentation-fiscal-card-reading strong {
+  font-family: var(--font-display);
+  color: var(--umo-amber, rgba(245, 192, 90, 0.95));
+  margin-right: 6px;
+}
+
+.presentation-fiscal-mini {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(245, 242, 232, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.022);
+  opacity: 0.92;
+}
+
+.presentation-fiscal-mini strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.6vw, 1.75rem);
+  color: rgba(245, 242, 232, 0.6);
+  line-height: 1;
+}
+
+.presentation-fiscal-mini h4 {
+  margin: 0 0 2px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: rgba(245, 242, 232, 0.92);
+  line-height: 1.1;
+}
+
+.presentation-fiscal-mini p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: rgba(245, 242, 232, 0.62);
+}
+
+.presentation-fiscal-contrast-note {
+  margin: 4px 0 0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: rgba(245, 242, 232, 0.72);
+  font-style: italic;
+}
+
+@media (max-width: 960px) {
+  .presentation-fiscal-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ─── Entry pipeline (slide 09 Modo de entrada) ─────────── */
 .presentation-entry-pipeline {
   display: grid;
