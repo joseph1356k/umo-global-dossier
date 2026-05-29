@@ -5489,8 +5489,9 @@ main {
   opacity: 1;
 }
 
-/* Cada slide ocupa todo el viewport, está apilado y se controla con opacity/transform.
-   Solo el slide con data-active es visible. !important porque framer-motion mete estilos inline. */
+/* Cada slide ocupa todo el viewport, apilado. Solo el slide con data-active es visible.
+   La animación de entrada depende de data-direction en el main.
+   !important porque framer-motion mete estilos inline. */
 [data-presentation-mode="on"] .presentation-slide {
   position: fixed !important;
   inset: 0 !important;
@@ -5506,11 +5507,7 @@ main {
   scroll-margin-top: 0 !important;
   opacity: 0 !important;
   visibility: hidden;
-  transform: translateY(24px) !important;
-  transition:
-    opacity 360ms ease,
-    transform 360ms ease,
-    visibility 0s linear 360ms !important;
+  transform: translateX(0) !important;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -5519,13 +5516,84 @@ main {
 [data-presentation-mode="on"] .presentation-slide[data-active="true"] {
   opacity: 1 !important;
   visibility: visible;
-  transform: translateY(0) !important;
   z-index: 5;
   pointer-events: auto;
-  transition:
-    opacity 420ms ease,
-    transform 420ms ease,
-    visibility 0s linear 0s !important;
+}
+
+/* Animaciones direccionales — forward = entra desde la derecha */
+[data-presentation-mode="on"][data-direction="forward"] .presentation-slide[data-active="true"].is-anim {
+  animation: slide-enter-from-right 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+[data-presentation-mode="on"][data-direction="back"] .presentation-slide[data-active="true"].is-anim {
+  animation: slide-enter-from-left 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes slide-enter-from-right {
+  0% {
+    opacity: 0;
+    transform: translateX(7%) scale(0.985) !important;
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1) !important;
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-enter-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-7%) scale(0.985) !important;
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1) !important;
+    filter: blur(0);
+  }
+}
+
+/* Stagger sutil del contenido interno del slide activo */
+[data-presentation-mode="on"] .presentation-slide[data-active="true"].is-anim .presentation-slide-shell > * {
+  animation: slide-content-rise 540ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: 120ms;
+}
+
+[data-presentation-mode="on"] .presentation-slide[data-active="true"].is-anim .presentation-slide-shell > *:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+[data-presentation-mode="on"] .presentation-slide[data-active="true"].is-anim .presentation-slide-shell > *:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+@keyframes slide-content-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  [data-presentation-mode="on"] .presentation-slide[data-active="true"].is-anim,
+  [data-presentation-mode="on"] .presentation-slide[data-active="true"].is-anim .presentation-slide-shell > * {
+    animation: none !important;
+  }
 }
 
 /* Slide-shell escala al viewport, con scroll interno si el contenido excede. */

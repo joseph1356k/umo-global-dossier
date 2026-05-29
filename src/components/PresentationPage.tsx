@@ -1405,8 +1405,10 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [expandedVisual, setExpandedVisual] = useState<ExpandedVisual | null>(null);
   const [presentationMode, setPresentationMode] = useState(false);
+  const [direction, setDirection] = useState<"forward" | "back">("forward");
   const slideRefs = useRef<Record<string, HTMLElement | null>>({});
   const mainRef = useRef<HTMLElement | null>(null);
+  const previousIndexRef = useRef(0);
 
   const turfgrass2025 = getLatestSeriesPoint("turfgrass");
   const agriculture2025 = getLatestSeriesPoint("agricultura");
@@ -1537,14 +1539,26 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
     return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
   }, []);
 
-  // Marca el slide activo con data-active para que CSS muestre solo ese en modo presentación.
+  // Marca el slide activo con data-active y actualiza la dirección del cambio para animaciones direccionales.
   useEffect(() => {
+    const nextDirection = activeIndex >= previousIndexRef.current ? "forward" : "back";
+    setDirection(nextDirection);
+    previousIndexRef.current = activeIndex;
+
     const activeId = deckSlides[activeIndex]?.id;
     document.querySelectorAll("[data-presentation-slide]").forEach((el) => {
       el.removeAttribute("data-active");
     });
     if (activeId) {
-      document.getElementById(activeId)?.setAttribute("data-active", "true");
+      const node = document.getElementById(activeId);
+      node?.setAttribute("data-active", "true");
+      // Reinicia la animación quitando y reaplicando la clase de animación
+      if (node) {
+        node.classList.remove("is-anim");
+        // Forzar reflow para reiniciar keyframes
+        void node.offsetWidth;
+        node.classList.add("is-anim");
+      }
     }
   }, [activeIndex]);
 
@@ -1555,6 +1569,7 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
       ref={mainRef}
       className="presentation-page presentation-deck-page"
       data-presentation-mode={presentationMode ? "on" : "off"}
+      data-direction={direction}
       style={{ ["--presentation-progress" as string]: `${progressPercent}%` }}
       lang={locale === "es" ? "es" : "es"}
     >
