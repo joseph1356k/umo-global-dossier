@@ -6778,7 +6778,10 @@ main {
 
 .presentation-roadmap-line {
   position: absolute;
-  top: 96px;
+  /* El track tiene padding-top:72px y el marker queda con top:-52px (size 56px),
+     así que su centro está a 48px del top del track. Restamos 1.5px (mitad del
+     grosor de la línea) para que quede centrada con los círculos. */
+  top: 46.5px;
   left: 8%;
   right: 8%;
   height: 3px;
@@ -6787,6 +6790,7 @@ main {
     rgba(240, 78, 54, 0.85) 0%,
     rgba(240, 78, 54, 0.85) 70%,
     rgba(181, 255, 101, 0.75) 100%);
+  z-index: 1;
 }
 
 .presentation-roadmap-node {
