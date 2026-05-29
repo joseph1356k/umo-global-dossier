@@ -5440,8 +5440,77 @@ main {
   top: 88px;
   z-index: 9;
   display: inline-grid;
-  grid-template-columns: repeat(2, 44px);
+  grid-template-columns: 44px;
   gap: 8px;
+}
+
+/* ─── Modo presentación ────────────────────────────────── */
+[data-presentation-mode="on"] .presentation-side-rail,
+[data-presentation-mode="on"] .presentation-deck-status,
+[data-presentation-mode="on"] .presentation-locale-switcher,
+[data-presentation-mode="on"] .presentation-hero-actions-v2 {
+  display: none !important;
+}
+
+[data-presentation-mode="on"] .presentation-deck-controls {
+  right: 24px;
+  top: 24px;
+}
+
+[data-presentation-mode="on"] .presentation-deck-controls button {
+  background: rgba(8, 8, 8, 0.55);
+  opacity: 0.5;
+  transition: opacity 200ms ease;
+}
+
+[data-presentation-mode="on"] .presentation-deck-controls button:hover {
+  opacity: 1;
+}
+
+[data-presentation-mode="on"] .presentation-deck-shell {
+  width: min(1500px, calc(100% - 80px));
+  scroll-snap-type: y mandatory;
+}
+
+[data-presentation-mode="on"] .presentation-slide {
+  min-height: 100vh;
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  scroll-margin-top: 0;
+  padding: clamp(24px, 4vh, 56px) 0;
+}
+
+[data-presentation-mode="on"] {
+  background: rgb(15, 12, 10);
+}
+
+.presentation-mode-hint {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 242, 232, 0.14);
+  background: rgba(8, 8, 8, 0.65);
+  backdrop-filter: blur(14px);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 242, 232, 0.7);
+  pointer-events: none;
+  opacity: 0;
+  animation: presentation-hint-fade 4s ease forwards;
+}
+
+@keyframes presentation-hint-fade {
+  0% { opacity: 0; transform: translate(-50%, 8px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 8px); }
 }
 
 .presentation-deck-controls button,
@@ -5852,10 +5921,16 @@ main {
   border-color: var(--line-red);
 }
 
-.presentation-stat-hero strong {
+.presentation-stat-hero > strong {
   font-family: var(--font-display);
   font-size: clamp(4.8rem, 7vw, 7.6rem);
   line-height: 0.82;
+}
+
+.presentation-stat-hero p strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--umo-cream, rgba(245, 242, 232, 0.96));
 }
 
 .presentation-stat-hero h3 {

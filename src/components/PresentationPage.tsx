@@ -747,10 +747,14 @@ function DeckChrome({
   slides,
   activeIndex,
   onGo,
+  presentationMode,
+  onTogglePresentation,
 }: {
   slides: DeckSlide[];
   activeIndex: number;
   onGo: (index: number) => void;
+  presentationMode: boolean;
+  onTogglePresentation: () => void;
 }) {
   const activeSlide = slides[activeIndex] ?? slides[0];
   const progress = ((activeIndex + 1) / slides.length) * 100;
@@ -786,18 +790,21 @@ function DeckChrome({
       </div>
 
       <div className="presentation-deck-controls" aria-label="Controles de diapositivas">
-        <button type="button" onClick={() => onGo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Diapositiva anterior">
-          <ChevronUp size={18} />
-        </button>
         <button
           type="button"
-          onClick={() => onGo(activeIndex + 1)}
-          disabled={activeIndex === slides.length - 1}
-          aria-label="Diapositiva siguiente"
+          onClick={onTogglePresentation}
+          aria-label={presentationMode ? "Salir del modo presentación" : "Entrar al modo presentación"}
+          title={presentationMode ? "Salir (Esc)" : "Modo presentación"}
         >
-          <ChevronDown size={18} />
+          {presentationMode ? <X size={18} /> : <Maximize2 size={18} />}
         </button>
       </div>
+
+      {presentationMode ? (
+        <div className="presentation-mode-hint" aria-hidden="true">
+          ← → para navegar · Esc para salir
+        </div>
+      ) : null}
     </>
   );
 }
@@ -1397,7 +1404,9 @@ function HeroRouteCanvas() {
 export default function PresentationPage({ locale }: { locale: Locale }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [expandedVisual, setExpandedVisual] = useState<ExpandedVisual | null>(null);
+  const [presentationMode, setPresentationMode] = useState(false);
   const slideRefs = useRef<Record<string, HTMLElement | null>>({});
+  const mainRef = useRef<HTMLElement | null>(null);
 
   const turfgrass2025 = getLatestSeriesPoint("turfgrass");
   const agriculture2025 = getLatestSeriesPoint("agricultura");
@@ -1459,12 +1468,12 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
       const target = event.target as HTMLElement | null;
       if (target?.closest("input, textarea, select, button, a")) return;
 
-      if (["ArrowDown", "PageDown"].includes(event.key)) {
+      if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
         event.preventDefault();
         goToSlide(activeIndex + 1);
       }
 
-      if (["ArrowUp", "PageUp"].includes(event.key)) {
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
         event.preventDefault();
         goToSlide(activeIndex - 1);
       }
@@ -1491,9 +1500,44 @@ export default function PresentationPage({ locale }: { locale: Locale }) {
     node?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  async function togglePresentationMode() {
+    const target = mainRef.current ?? document.documentElement;
+    try {
+      if (!document.fullscreenElement) {
+        await target.requestFullscreen?.();
+        setPresentationMode(true);
+      } else {
+        await document.exitFullscreen?.();
+        setPresentationMode(false);
+      }
+    } catch {
+      // si fullscreen falla, igual activa el modo visual
+      setPresentationMode((prev) => !prev);
+    }
+  }
+
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setPresentationMode(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+  }, []);
+
   return (
-    <main className="presentation-page presentation-deck-page" lang={locale === "es" ? "es" : "es"}>
-      <DeckChrome slides={deckSlides} activeIndex={activeIndex} onGo={goToSlide} />
+    <main
+      ref={mainRef}
+      className="presentation-page presentation-deck-page"
+      data-presentation-mode={presentationMode ? "on" : "off"}
+      lang={locale === "es" ? "es" : "es"}
+    >
+      <DeckChrome
+        slides={deckSlides}
+        activeIndex={activeIndex}
+        onGo={goToSlide}
+        presentationMode={presentationMode}
+        onTogglePresentation={togglePresentationMode}
+      />
 
       <div className="presentation-deck-shell">
         <motion.section
